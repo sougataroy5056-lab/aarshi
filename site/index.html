@@ -6,7 +6,7 @@
 @font-face{font-family:"Pagella";src:url(fonts/pagella-italic.woff2) format("woff2");font-weight:400;font-style:italic;font-display:swap}
 @font-face{font-family:"Pagella";src:url(fonts/pagella-bold.woff2) format("woff2");font-weight:500 700;font-style:normal;font-display:swap}
 @font-face{font-family:"Pagella";src:url(fonts/pagella-bolditalic.woff2) format("woff2");font-weight:500 700;font-style:italic;font-display:swap}
-/* Layout: a white gallery with navy type and sapphire accents; each fragrance brings its own box colour into the page. Mobile first in spirit: every control >= 44px, labels >= 11px. */
+/* Layout: a white gallery with navy type and sapphire accents; each fragrance brings its own box colour into the page. Mobile first: every control >= 48px, labels >= 11px. */
 :root{
   --stone:#FFFFFF;      /* page ground */
   --paper:#EEF3FA;      /* pale blue surfaces */
@@ -22,11 +22,12 @@
   --sans:var(--pal);
   --gut:clamp(16px,4vw,56px);
   --max:1360px;
-  --tap:44px;
+  --tap:48px;
   --ease:cubic-bezier(.2,.7,.1,1);
   color-scheme:light;
 }
 *{box-sizing:border-box}
+[hidden]{display:none!important}
 html{scroll-behavior:smooth;-webkit-text-size-adjust:100%}
 body{margin:0;background:var(--stone);color:var(--ink);font-family:var(--pal);font-size:16px;line-height:1.65;-webkit-font-smoothing:antialiased;overflow-x:clip}
 img{max-width:100%;display:block}
@@ -412,6 +413,7 @@ footer{background:var(--ink);color:var(--on-dark)}
 .snone{margin-top:18px;color:var(--muted)}
 .toast{position:fixed;left:50%;bottom:calc(24px + env(safe-area-inset-bottom,0px));transform:translate(-50%,20px);background:var(--ink);color:var(--on-dark);padding:14px 20px;font-size:14px;z-index:90;opacity:0;pointer-events:none;transition:all .4s var(--ease);max-width:calc(100% - 32px)}
 .toast.on{opacity:1;transform:translate(-50%,0)}
+.tabbar{display:none}
 
 @media (max-width:1020px){
   .nav,.hright .finder-link{display:none}.menubtn{display:inline-grid}
@@ -473,6 +475,23 @@ footer{background:var(--ink);color:var(--on-dark)}
   .mobile-buy .n small{display:block;font-family:var(--sans);font-size:13px;color:var(--muted)}
   .mobile-buy .btn{min-height:48px;padding-inline:22px}
   .fgrid{gap:28px 16px;padding-block:48px 28px}
+  /* thumb-zone navigation */
+  .tabbar{display:grid;grid-template-columns:repeat(4,1fr);position:fixed;left:0;right:0;bottom:0;z-index:30;background:color-mix(in srgb,var(--stone) 94%,transparent);backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);border-top:1px solid var(--line);padding-bottom:env(safe-area-inset-bottom,0px);transition:transform .4s var(--ease)}
+  .tabbar a,.tabbar button{position:relative;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:3px;min-height:58px;font-size:11px;letter-spacing:.04em;color:var(--muted)}
+  .tabbar svg{width:22px;height:22px}
+  .tabbar [aria-current="page"]{color:var(--ink);font-weight:600}
+  .tabbar.hide{transform:translateY(110%)}
+  .tabcount{position:absolute;top:6px;left:calc(50% + 6px);min-width:18px;height:18px;border-radius:9px;background:var(--foil);color:#fff;font-size:10px;font-weight:600;display:grid;place-items:center;padding-inline:4px}
+  body{padding-bottom:calc(58px + env(safe-area-inset-bottom,0px))}
+  .toast{bottom:calc(74px + env(safe-area-inset-bottom,0px))}
+  .hright .bagbtn{display:none}
+  /* calmer headings on small screens */
+  .hero-top h1{font-size:36px}
+  .shead h2{font-size:28px}
+  .ch-body h3{font-size:44px}
+  .buy h1{font-size:40px}
+  .mhero h1,.help h1{font-size:38px}
+  .finder h2{font-size:30px}
 }
 @media (prefers-reduced-motion:reduce){
   *,*::before,*::after{animation:none!important;transition:none!important}
@@ -507,7 +526,7 @@ footer{background:var(--ink);color:var(--on-dark)}
   <div class="wrap hero-top">
     <div>
       <span class="label eyebrow">Eau de Parfum · 50 ml</span>
-      <h1><span class="ln"><span>Ars, the art of</span></span><span class="ln"><span class="it">leaving a trace.</span></span></h1>
+      <h1><span class="ln"><span>Ars, the art of</span></span> <span class="ln"><span class="it">leaving a trace.</span></span></h1>
     </div>
     <div>
       <p class="lede">Six compositions, each dressed in its own textured, foil-pressed box. Made to be worn every day and remembered long after you leave the room.</p>
@@ -688,6 +707,12 @@ footer{background:var(--ink);color:var(--on-dark)}
     <div id="sres"></div>
   </div>
 </aside>
+<nav class="tabbar" id="tabbar" aria-label="Quick links">
+  <a href="#" data-tab="home"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4"><path d="M4 11 12 4l8 7v9h-5v-6H9v6H4z"/></svg>Home</a>
+  <a href="#shop" data-tab="shop"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4"><rect x="4" y="4" width="7" height="7"/><rect x="13" y="4" width="7" height="7"/><rect x="4" y="13" width="7" height="7"/><rect x="13" y="13" width="7" height="7"/></svg>Shop</a>
+  <a href="#finder" data-tab="finder"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4"><path d="M12 3c2 3 5 5 5 9a5 5 0 0 1-10 0c0-4 3-6 5-9Z"/></svg>Scent finder</a>
+  <button type="button" id="tabBag" aria-controls="bag" aria-expanded="false"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4"><path d="M5 8h14l-1 13H6L5 8Z"/><path d="M9 8V6a3 3 0 0 1 6 0v2"/></svg>Bag<span class="tabcount" id="tabCount" aria-hidden="true">0</span></button>
+</nav>
 <div class="mobile-buy" id="mobileBuy" aria-hidden="true"></div>
 <div class="toast" id="toast" role="status"></div>
 
@@ -854,7 +879,7 @@ function addToBag(id, qty=1, open=true){
 function setQty(id,q){ const l=cart.find(x=>x.id===id); if(!l) return; l.qty=Math.min(10,q); if(q<=0) cart=cart.filter(x=>x.id!==id); saveCart(); renderBag(); }
 function renderBag(){
   const count = cart.reduce((a,l)=>a+l.qty,0), sub = count*PRICE, left = FREE_SHIP - sub;
-  $("#bagCount").textContent = count;
+  $("#bagCount").textContent = count; $("#tabCount").textContent = count; $("#tabCount").hidden = count===0;
   $("#bagBtn").setAttribute("aria-label", `Open bag, ${count} item${count===1?"":"s"}`);
   $("#shipMsg").innerHTML = (count===0 ? `Free shipping on orders above ${inr(FREE_SHIP)}.` : left>0 ? `You're <b>${inr(left)}</b> away from free shipping.` : `Your order ships free.`) + `<div class="bar"><i style="width:${Math.min(100,sub/FREE_SHIP*100)}%"></i></div>`;
   const others=P.filter(p=>!cart.some(l=>l.id===p.id));
@@ -884,7 +909,7 @@ document.addEventListener("click",e=>{
 
 /* ---------- drawers: page behind goes inert, focus moves in and back ---------- */
 let lastFocus=null, openId=null;
-const bgEls=()=>[$("#main"),$("#siteHeader"),$("#siteFooter"),$(".announce"),$("#mobileBuy")];
+const bgEls=()=>[$("#main"),$("#siteHeader"),$("#siteFooter"),$(".announce"),$("#mobileBuy"),$("#tabbar")];
 function openDrawer(id){
   if(openId) closeDrawers(true);
   lastFocus=document.activeElement; openId=id;
@@ -903,6 +928,7 @@ function closeDrawers(silent){
   openId=null;
 }
 $("#bagBtn").onclick=()=>openDrawer("bag");
+$("#tabBag").onclick=()=>openDrawer("bag");
 $("#menuBtn").onclick=()=>openDrawer("menu");
 $("#searchBtn").onclick=()=>{ openDrawer("search"); runSearch(); };
 $("#scrim").onclick=()=>closeDrawers();
@@ -923,6 +949,7 @@ const shelfOrder=["femme-fuchsia","femme-rose","creer-vert","creer-ambre","homme
 function sbox(id,i,style){ const p=byId[id]; return `<a class="sbox" href="#${id}" style="--i:${i};${style}" aria-label="${p.name} ${p.ed}"><span class="lift" style="background:${p.color}">${pic("face-"+id,"","(max-width:640px) 25vw, 14vw")}<span class="glint" style="--i:${i}"></span></span><span class="tag">${p.name} · ${p.ed}</span></a>`; }
 (function(){
   const bw = 46*600/1016/2, gap = (100 - 6*bw - 8)/5;
+  $$(".stage .sbox").forEach(n=>n.remove());
   $("#stageWide").insertAdjacentHTML("beforeend", shelfOrder.map((id,i)=>sbox(id,i,`left:${(4+i*(bw+gap)).toFixed(2)}%`)).join(""));
   // phone: two shelves of three (ledges sit at 42.7% and 92% of the image height)
   const lefts=[6,37.8,69.6];
@@ -1095,6 +1122,9 @@ function route(){
   else if(helpIds[h]){ $("#v-help").classList.add("on"); target=$("#"+helpIds[h]); document.title="Help · ARS SHI Parfums"; }
   else { $("#v-home").classList.add("on"); renderHomeAnat(); if(h==="finder") target=$("#finderBlock"); document.title="ARS SHI Parfums"; }
   const nav=document.querySelector(`[data-nav="${h}"]`); if(nav) nav.setAttribute("aria-current","page");
+  const tab = byId[h] ? null : h.startsWith("shop") ? "shop" : h==="finder" ? "finder" : (h===""||h==="home") ? "home" : null;
+  $$(".tabbar [data-tab]").forEach(a=>a.toggleAttribute("aria-current",a.dataset.tab===tab)); $$(".tabbar [aria-current]").forEach(a=>a.setAttribute("aria-current","page"));
+  $("#tabbar").classList.toggle("hide", !!byId[h]);
   closeDrawers(true);
   if(target) requestAnimationFrame(()=>target.scrollIntoView({block:"start"})); else window.scrollTo(0,0);
   if(mbOn) checkSticky();

@@ -1,8 +1,11 @@
 // Builds the deployable site into public/.
 // site/index.html is written as a page fragment (title + style + body markup + script),
 // which is the format the Claude artifact preview expects. This wraps it in a full
-// HTML document for Vercel and copies the assets it references.
+// HTML document, pre-renders the JavaScript-built content (products, prices, Add to bag
+// buttons) into the HTML so search engines, link previews and no-JS visitors see it,
+// and copies the assets it references.
 import { readFileSync, writeFileSync, mkdirSync, cpSync, rmSync } from "node:fs";
+import { JSDOM, VirtualConsole } from "jsdom";
 
 const src = readFileSync("site/index.html", "utf8");
 const bodyStart = src.indexOf('<div class="announce">');
@@ -14,7 +17,7 @@ const body = src.slice(bodyStart).trim();
 const description =
   "ARS SHI Parfums: six Eaux de Parfum in textured, foil-pressed boxes. 50 ml, ₹899 each. Free shipping over ₹1,499 and cash on delivery across India.";
 
-const html = `<!doctype html>
+const shell = `<!doctype html>
 <html lang="en">
 <head>
 <meta charset="utf-8">
@@ -25,7 +28,7 @@ const html = `<!doctype html>
 <meta property="og:site_name" content="ARS SHI Parfums">
 <meta property="og:title" content="ARS SHI Parfums">
 <meta property="og:description" content="${description}">
-<meta property="og:image" content="/img/w/stage-wide.webp">
+<meta property="og:image" content="https://ars-shi.vercel.app/img/w/stage-wide.webp">
 <meta name="twitter:card" content="summary_large_image">
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' fill='%230E1B36'/%3E%3Ctext x='32' y='43' text-anchor='middle' font-family='Palatino Linotype,Palatino,serif' font-size='30' fill='%23F4F7FC'%3EA%3C/text%3E%3C/svg%3E">
 <link rel="preload" href="/fonts/pagella-regular.woff2" as="font" type="font/woff2" crossorigin>
@@ -36,6 +39,35 @@ ${body}
 </body>
 </html>
 `;
+
+// ---- pre-render: run the page script once in a simulated browser ----
+const errors = [];
+const vc = new VirtualConsole();
+vc.on("jsdomError", e => errors.push(e.message));
+const dom = new JSDOM(shell, {
+  url: "https://ars-shi.vercel.app/",
+  runScripts: "dangerously",
+  pretendToBeVisual: true,
+  virtualConsole: vc,
+  beforeParse(win) {
+    win.matchMedia = q => ({ matches: false, media: q, addEventListener() {}, removeEventListener() {} });
+    win.IntersectionObserver = class { observe() {} unobserve() {} disconnect() {} };
+    win.scrollTo = () => {};
+    win.Element.prototype.scrollIntoView = () => {};
+  },
+});
+const w = dom.window;
+if (errors.length) throw new Error("Page script failed during pre-render:\n" + errors.join("\n"));
+w.renderShop(); // fill the collection grid too, so every product is in the HTML
+
+// leave no runtime-only state in the saved HTML
+w.document.body.removeAttribute("style");
+w.document.querySelectorAll("[inert]").forEach(el => { if (!el.classList.contains("drawer")) el.removeAttribute("inert"); });
+const html = "<!doctype html>\n" + w.document.documentElement.outerHTML + "\n";
+w.close();
+
+const count = (re) => (html.match(re) || []).length;
+console.log(`Pre-rendered: ${count(/Add to bag/g)} "Add to bag" buttons, ${count(/₹899/g)} prices`);
 
 rmSync("public", { recursive: true, force: true });
 mkdirSync("public/img", { recursive: true });
