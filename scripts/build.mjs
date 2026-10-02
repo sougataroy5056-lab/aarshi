@@ -33,6 +33,8 @@ const shell = `<!doctype html>
 <meta name="twitter:card" content="summary_large_image">
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' fill='%230E1B36'/%3E%3Ctext x='32' y='43' text-anchor='middle' font-family='Palatino Linotype,Palatino,serif' font-size='30' fill='%23F4F7FC'%3EA%3C/text%3E%3C/svg%3E">
 <link rel="preload" href="/fonts/pagella-regular.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" as="image" href="img/w/stage-mobile-600.webp" imagesrcset="img/w/stage-mobile-600.webp 600w, img/w/stage-mobile.webp 1200w" imagesizes="100vw" media="(max-width:640px)" fetchpriority="high">
+<link rel="preload" as="image" href="img/w/stage-wide.webp" imagesrcset="img/w/stage-wide-600.webp 600w, img/w/stage-wide.webp 2000w" imagesizes="(max-width:1600px) 100vw, 1600px" media="(min-width:641px)" fetchpriority="high">
 ${head}
 </head>
 <body>

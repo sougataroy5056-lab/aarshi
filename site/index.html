@@ -181,10 +181,10 @@ header.site{position:sticky;top:env(safe-area-inset-top,0px);z-index:40;backgrou
 .act .notes em{font-style:italic;color:var(--muted)}
 .act .when{font-size:11px;letter-spacing:.16em;text-transform:uppercase;color:var(--muted);text-align:right;white-space:nowrap}
 .act .when b{display:block;font-weight:600;color:var(--ink);margin-bottom:2px}
-.act.past{opacity:.42}
+.act.past .notes,.act.past .dot{opacity:.45}
 .act.now .dot{box-shadow:0 0 0 6px color-mix(in srgb,var(--foil) 25%,transparent)}
 .act.now .when b{color:var(--foil)}
-.act.next{opacity:.7}
+.act.next .notes{opacity:.75}
 
 /* finder */
 .finder{background:var(--ink);color:var(--on-dark)}
@@ -210,6 +210,28 @@ fieldset{border:0;margin:0;padding:0;min-width:0}
 .result .row{display:flex;gap:14px;align-items:center;flex-wrap:wrap;margin-top:12px}
 .result .reset{font-size:11px;letter-spacing:.16em;text-transform:uppercase;min-height:var(--tap);opacity:.85;text-decoration:underline;text-underline-offset:5px}
 
+/* scent advisor */
+.ftabs{display:flex;gap:8px;margin-top:24px;flex-wrap:wrap}
+.ftabs button{min-height:var(--tap);padding-inline:16px;border:1px solid rgba(244,247,252,.35);font-size:12px;font-weight:600;letter-spacing:.14em;text-transform:uppercase}
+.ftabs button[aria-selected="true"]{background:var(--on-dark);color:var(--ink);border-color:var(--on-dark)}
+.chat{display:flex;flex-direction:column;gap:12px;max-height:440px;overflow:auto;padding-right:4px;overscroll-behavior:contain}
+.msg{max-width:88%;padding:12px 16px;font-size:15px;line-height:1.5}
+.msg.bot{align-self:flex-start;background:rgba(244,247,252,.08);border:1px solid rgba(244,247,252,.16)}
+.msg.me{align-self:flex-end;background:var(--on-dark);color:var(--ink)}
+.msg .pick-card{display:grid;grid-template-columns:72px minmax(0,1fr);gap:12px;align-items:center;margin-top:10px}
+.msg .pick-card img{width:72px;aspect-ratio:4/5;object-fit:cover}
+.msg .pick-card b{display:block;font-weight:400;font-size:19px}
+.msg .acts2{display:flex;gap:8px;flex-wrap:wrap;margin-top:8px}
+.msg .acts2 a,.msg .acts2 button{display:inline-flex;align-items:center;min-height:40px;padding-inline:12px;border:1px solid rgba(244,247,252,.4);font-size:11px;font-weight:600;letter-spacing:.12em;text-transform:uppercase}
+.sugg{display:flex;gap:8px;overflow-x:auto;scrollbar-width:none;padding-block:14px}
+.sugg::-webkit-scrollbar{display:none}
+.sugg button{flex:none;min-height:var(--tap);padding-inline:14px;border:1px dashed rgba(244,247,252,.4);font-size:13px;font-style:italic}
+.ask{display:flex;border-bottom:1px solid rgba(244,247,252,.6)}
+.ask input{flex:1;min-width:0;min-height:52px;background:transparent;border:0;color:var(--on-dark);font:inherit;font-size:16px}
+.ask input::placeholder{color:rgba(244,247,252,.6)}
+.ask input:focus{outline:none}
+.ask button{min-height:52px;padding-left:14px;font-size:12px;font-weight:600;letter-spacing:.18em;text-transform:uppercase}
+
 /* maison teaser + trust */
 .maison{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:clamp(28px,6vw,96px);align-items:center;padding-block:clamp(56px,9vw,120px)}
 .maison .big{font-family:var(--serif);font-size:clamp(24px,3vw,42px);line-height:1.18}
@@ -221,7 +243,7 @@ fieldset{border:0;margin:0;padding:0;min-width:0}
 .promises{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));border-top:1px solid var(--line)}
 .promises div{padding:30px 24px 34px 0;display:flex;flex-direction:column;gap:8px}
 .promises div+div{padding-left:24px;border-left:1px solid var(--line)}
-.promises h5{margin:0;font-family:var(--display);font-weight:400;font-size:19px}
+.promises .h5{margin:0;font-family:var(--display);font-weight:400;font-size:19px}
 .promises p{font-size:14px;color:var(--muted)}
 .trust{display:flex;flex-wrap:wrap;gap:8px}
 .trust span{display:inline-flex;align-items:center;gap:6px;min-height:32px;padding-inline:12px;border:1px solid var(--line);font-size:11.5px;font-weight:500;letter-spacing:.06em;color:var(--muted);background:var(--stone)}
@@ -247,6 +269,7 @@ fieldset{border:0;margin:0;padding:0;min-width:0}
 .card h3{font-size:24px}
 .card h3 .it{font-size:.9em;color:var(--muted)}
 .card .fam{font-size:13px;color:var(--muted);margin-top:2px}
+.card .sig{font-size:12.5px;color:var(--muted);font-style:italic;margin-top:2px;line-height:1.4}
 .card .price{font-family:var(--display);font-size:18px;white-space:nowrap}
 .card .madd{display:none}
 .swatch{display:inline-block;width:10px;height:10px;border-radius:50%;margin-right:8px}
@@ -307,6 +330,15 @@ details summary::-webkit-details-marker{display:none}
 details summary::after{content:"+";font-size:18px;letter-spacing:0;transition:transform .3s var(--ease)}
 details[open] summary::after{transform:rotate(45deg)}
 details .dbody{padding-bottom:18px;color:var(--muted);font-size:14.5px;max-width:56ch}
+.smap{display:flex;flex-direction:column;gap:10px;padding:16px;background:var(--paper)}
+.smap-bar{display:flex;gap:3px;height:8px}
+.smap-bar i{display:block;border-radius:2px}
+.smap-cols{display:flex;gap:10px}
+.smap-cols div{min-width:0;display:flex;flex-direction:column;gap:1px}
+.smap-cols b{font-size:11px;font-weight:600;letter-spacing:.16em;text-transform:uppercase}
+.smap-cols small{font-size:11px;color:var(--muted)}
+.smap-cols span{font-style:italic;font-size:14.5px;line-height:1.3;margin-top:4px}
+.smap-more{align-self:flex-start;min-height:var(--tap);font-size:11.5px;font-weight:600;letter-spacing:.16em;text-transform:uppercase;text-decoration:underline;text-underline-offset:5px}
 .pdp-anat{padding-block:clamp(48px,7vw,96px);border-top:1px solid var(--line)}
 .pairs{padding-bottom:clamp(56px,8vw,110px)}
 .pairs .grid{grid-template-columns:repeat(4,minmax(0,1fr));padding-bottom:0}
@@ -353,7 +385,7 @@ footer{background:var(--ink);color:var(--on-dark)}
 .fgrid .wordmark small{color:rgba(244,247,252,.6)}
 .fgrid p{opacity:.75;font-size:14px;max-width:34ch;margin-top:20px}
 .fgrid .trust span{background:transparent;color:rgba(244,247,252,.8);border-color:rgba(244,247,252,.25)}
-.fgrid h6{margin:0 0 8px;font-size:11px;font-weight:500;letter-spacing:.2em;text-transform:uppercase;opacity:.7}
+.fgrid .h6{font-family:var(--pal);margin:0 0 8px;font-size:11px;font-weight:500;letter-spacing:.2em;text-transform:uppercase;opacity:.7}
 .fgrid ul{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;font-size:14.5px}
 .fgrid ul a{display:inline-flex;align-items:center;min-height:var(--tap);opacity:.9}
 .fgrid ul a:hover{opacity:1;color:var(--foil-hi)}
@@ -383,7 +415,7 @@ footer{background:var(--ink);color:var(--on-dark)}
 .line .rm{min-height:var(--tap);padding-inline:8px;font-size:11.5px;letter-spacing:.14em;text-transform:uppercase;color:var(--muted);text-decoration:underline;text-underline-offset:5px}
 .line .lp{font-variant-numeric:tabular-nums;font-size:15px}
 .upsell{padding:16px 0 8px}
-.upsell h5{margin:0 0 10px;font-size:11px;font-weight:600;letter-spacing:.16em;text-transform:uppercase;color:var(--foil)}
+.upsell .h5{margin:0 0 10px;font-size:11px;font-weight:600;letter-spacing:.16em;text-transform:uppercase;color:var(--foil)}
 .uplist{display:flex;gap:10px;overflow-x:auto;scrollbar-width:none;padding-bottom:6px}
 .uplist::-webkit-scrollbar{display:none}
 .up{flex:none;width:118px;display:flex;flex-direction:column;gap:6px}
@@ -465,6 +497,13 @@ footer{background:var(--ink);color:var(--on-dark)}
   .card .madd{display:flex;align-items:center;justify-content:center;min-height:var(--tap);border:1px solid var(--ink);font-size:11px;font-weight:600;letter-spacing:.14em;text-transform:uppercase}
   .card .tag{font-size:10.5px;padding:4px 8px}
   .gal{grid-template-columns:minmax(0,1fr)}
+  .viewer{aspect-ratio:1/1}
+  .pdp{gap:18px}
+  .buy{gap:14px}
+  .buy>div:first-child{order:1}.buy .pr{order:2;padding-block:10px}.buy .addrow{order:3}.buy>.trust{order:4}
+  .buy .smap{order:5}.buy .desc{order:6}.buy .assure{order:7}.buy>div:last-child{order:8}
+  .buy .ed{font-size:22px}
+  .crumbs{display:none}
   .thumbs{display:none}
   .dots{display:flex}
   .assure{grid-template-columns:1fr}
@@ -512,7 +551,7 @@ footer{background:var(--ink);color:var(--on-dark)}
         <a href="#maison" data-nav="maison">The maison</a>
       </nav>
     </div>
-    <a href="#" class="wordmark" aria-label="ARS SHI home"><b>ARS SHI</b><small>Parfums</small></a>
+    <a href="#" class="wordmark"><b>ARS SHI</b><small>Parfums</small></a>
     <div class="hright">
       <a href="#finder" class="label finder-link">Scent finder</a>
       <button class="iconbtn" id="searchBtn" aria-label="Search" aria-controls="search" aria-expanded="false"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4"><circle cx="10.5" cy="10.5" r="6.5"/><path d="M15.5 15.5 21 21"/></svg></button>
@@ -534,8 +573,8 @@ footer{background:var(--ink);color:var(--on-dark)}
     </div>
   </div>
   <div class="shelf">
-    <div class="stage wide" id="stageWide"><img class="stage-bg" src="img/w/stage-wide.webp" alt=""></div>
-    <div class="stage tall" id="stageTall"><img class="stage-bg" src="img/w/stage-mobile-600.webp" srcset="img/w/stage-mobile-600.webp 600w, img/w/stage-mobile.webp 1200w" sizes="100vw" alt=""></div>
+    <div class="stage wide" id="stageWide"><img class="stage-bg" src="img/w/stage-wide.webp" srcset="img/w/stage-wide-600.webp 600w, img/w/stage-wide.webp 2000w" sizes="(max-width:1600px) 100vw, 1600px" alt="" loading="lazy" fetchpriority="high"></div>
+    <div class="stage tall" id="stageTall"><img class="stage-bg" src="img/w/stage-mobile-600.webp" srcset="img/w/stage-mobile-600.webp 600w, img/w/stage-mobile.webp 1200w" sizes="100vw" alt="" fetchpriority="high"></div>
     <p class="shelf-hint">Tap a box to explore it</p>
   </div>
   <div class="wrap hero-meta">
@@ -566,9 +605,23 @@ footer{background:var(--ink);color:var(--on-dark)}
       <div class="intro">
         <span class="label eyebrow" style="color:var(--foil-hi)">Scent finder</span>
         <h2>Not sure where<br>to begin?</h2>
-        <p>Answer three questions. We'll point you to the box that suits you best.</p>
+        <p>Tell our advisor what you like, in your own words, or take the three-question quiz.</p>
+        <div class="ftabs" role="tablist" aria-label="Scent finder mode">
+          <button type="button" role="tab" id="tabAdvisor" aria-selected="true" aria-controls="advisor">Ask the advisor</button>
+          <button type="button" role="tab" id="tabQuiz" aria-selected="false" aria-controls="quiz">Take the quiz</button>
+        </div>
       </div>
-      <form id="quiz" autocomplete="off">
+      <div>
+      <div id="advisor" role="tabpanel" aria-labelledby="tabAdvisor">
+        <div class="chat" id="chatLog" aria-live="polite"></div>
+        <div class="sugg" id="chatSugg"></div>
+        <form class="ask" id="askForm" autocomplete="off">
+          <label for="askInput" class="sr">Ask the scent advisor</label>
+          <input id="askInput" type="text" placeholder="e.g. warm but not too sweet" maxlength="160">
+          <button type="submit" aria-label="Send">Ask</button>
+        </form>
+      </div>
+      <form id="quiz" autocomplete="off" role="tabpanel" aria-labelledby="tabQuiz" hidden>
         <fieldset class="q"><legend><b>01</b>Who is it for?</legend><div class="chips">
           <label class="chip"><input type="radio" name="who" id="who-her" value="her"><span>Her</span></label>
           <label class="chip"><input type="radio" name="who" id="who-him" value="him"><span>Him</span></label>
@@ -584,6 +637,7 @@ footer{background:var(--ink);color:var(--on-dark)}
           <label class="chip"><input type="radio" name="when" id="when-all" value="all"><span>Every day</span></label></div></fieldset>
         <div class="result empty-r" id="quizResult" aria-live="polite">Answer all three to see your match.</div>
       </form>
+      </div>
     </div>
   </section>
 
@@ -598,10 +652,10 @@ footer{background:var(--ink);color:var(--on-dark)}
   </div>
   <div class="wrap">
     <div class="promises">
-      <div><h5>Eau de Parfum</h5><p>A higher concentration of perfume oil than eau de toilette, for a longer wear.</p></div>
-      <div><h5>Gift-ready box</h5><p>Every bottle arrives in its signature textured, foil-pressed box.</p></div>
-      <div><h5>Cash on delivery</h5><p>Pay when it arrives, anywhere we deliver in India.</p></div>
-      <div><h5>Free shipping</h5><p>On every order above ₹1,499. Two bottles and you're there.</p></div>
+      <div><h3 class="h5">Eau de Parfum</h3><p>A higher concentration of perfume oil than eau de toilette, for a longer wear.</p></div>
+      <div><h3 class="h5">Gift-ready box</h3><p>Every bottle arrives in its signature textured, foil-pressed box.</p></div>
+      <div><h3 class="h5">Cash on delivery</h3><p>Pay when it arrives, anywhere we deliver in India.</p></div>
+      <div><h3 class="h5">Free shipping</h3><p>On every order above ₹1,499. Two bottles and you're there.</p></div>
     </div>
   </div>
 </section>
@@ -682,9 +736,9 @@ footer{background:var(--ink);color:var(--on-dark)}
   <div class="wrap fgrid">
     <div><span class="wordmark"><b>ARS SHI</b><small>Parfums</small></span><p>Eau de Parfum in textured, foil-pressed boxes. Composed with care, priced for every day.</p>
       <div class="trust" style="margin-top:20px"><span class="lock">Secure checkout</span><span>UPI</span><span>Cards</span><span>COD</span></div></div>
-    <div><h6>Shop</h6><ul><li><a href="#shop">All fragrances</a></li><li><a href="#shop-her">For her</a></li><li><a href="#shop-him">For him</a></li><li><a href="#finder">Scent finder</a></li></ul></div>
-    <div><h6>Maison</h6><ul><li><a href="#maison">Our story</a></li><li><a href="#contact">Contact</a></li></ul></div>
-    <div><h6>Help</h6><ul><li><a href="#shipping">Shipping</a></li><li><a href="#track">Track order</a></li><li><a href="#returns">Returns</a></li></ul></div>
+    <div><h2 class="h6">Shop</h2><ul><li><a href="#shop">All fragrances</a></li><li><a href="#shop-her">For her</a></li><li><a href="#shop-him">For him</a></li><li><a href="#finder">Scent finder</a></li></ul></div>
+    <div><h2 class="h6">Maison</h2><ul><li><a href="#maison">Our story</a></li><li><a href="#contact">Contact</a></li></ul></div>
+    <div><h2 class="h6">Help</h2><ul><li><a href="#shipping">Shipping</a></li><li><a href="#track">Track order</a></li><li><a href="#returns">Returns</a></li></ul></div>
   </div>
   <div class="wrap fbase"><span>© 2026 ARS SHI Parfums · arsshiperfume.in</span><span>Prices in INR, inclusive of GST</span></div>
 </footer>
@@ -747,8 +801,8 @@ const reduce = matchMedia("(prefers-reduced-motion: reduce)").matches;
 const isPhone = () => matchMedia("(max-width:640px)").matches;
 
 /* responsive WebP: every image ships as a 600w file and a full-size file */
-const pic = (n, alt="", sizes="(max-width:640px) 100vw, 50vw", cls="") =>
-  `<img${cls?` class="${cls}"`:""} src="img/w/${n}-600.webp" srcset="img/w/${n}-600.webp 600w, img/w/${n}.webp 1200w" sizes="${sizes}" alt="${alt}" decoding="async">`;
+const pic = (n, alt="", sizes="(max-width:640px) 100vw, 50vw", cls="", eager=false) =>
+  `<img${cls?` class="${cls}"`:""} src="img/w/${n}-600.webp" srcset="img/w/${n}-600.webp 600w, img/w/${n}.webp 1200w" sizes="${sizes}" alt="${alt}" decoding="async"${eager?"":` loading="lazy"`}>`;
 
 const hex = h => [1,3,5].map(i=>parseInt(h.slice(i,i+2),16));
 const mix = (h,w,t) => { const a=hex(h), b=w==="w"?[250,250,252]:[10,12,20]; return "rgb("+a.map((v,i)=>Math.round(v+(b[i]-v)*t)).join(",")+")"; };
@@ -793,7 +847,19 @@ function bottle(p, strata){
   <rect x="68" y="58" width="64" height="2" fill="rgba(0,0,0,.2)"/>
 </svg>`;
 }
-function scene(p){ return `<div class="scene" style="--c:${p.color}"><img class="sc-bg" src="img/w/stage-tall-600.webp" srcset="img/w/stage-tall-600.webp 600w, img/w/stage-tall.webp 1200w" sizes="(max-width:640px) 100vw, 50vw" alt=""><div class="sc-box">${pic("face-"+p.id, p.name+" "+p.ed+" box", "40vw")}</div><div class="sc-bottle">${bottle(p)}</div></div>`; }
+function scene(p){ return `<div class="scene" style="--c:${p.color}"><img class="sc-bg" src="img/w/stage-tall-600.webp" srcset="img/w/stage-tall-600.webp 600w, img/w/stage-tall.webp 1200w" sizes="(max-width:640px) 100vw, 50vw" alt="" loading="lazy" decoding="async"><div class="sc-box">${pic("face-"+p.id, p.name+" "+p.ed+" box", "40vw")}</div><div class="sc-bottle">${bottle(p)}</div></div>`; }
+
+/* ---------- compact scent map: three acts on one time line ---------- */
+function scentMap(p){
+  const c=[mix(p.color,"w",.38), mix(p.color,"w",.06), mix(p.color,"k",.32)];
+  const acts=[["Top","0–15 min",p.top,15],["Heart","15 min–3 h",p.heart,33],["Base","3 h on",p.base,52]];
+  return `<div class="smap" aria-label="Scent map">
+    <div class="smap-bar">${acts.map((a,i)=>`<i style="flex:${a[3]};background:${c[i]}"></i>`).join("")}</div>
+    <div class="smap-cols">${acts.map(a=>`<div style="flex:${a[3]}"><b>${a[0]}</b><small>${a[1]}</small><span>${a[2].join(", ")}</span></div>`).join("")}</div>
+    <button type="button" class="smap-more" data-unfold>Watch it unfold</button>
+  </div>`;
+}
+document.addEventListener("click",e=>{ if(e.target.closest("[data-unfold]")){ const t=$("#pdpAnat"); t && t.scrollIntoView({behavior:reduce?"auto":"smooth",block:"start"}); } });
 
 /* ---------- anatomy (ingredient view) ---------- */
 let anatStops = [];
@@ -828,9 +894,9 @@ function anatomy(p, mountId){
   const acts=[...root.querySelectorAll(".act")], clock=root.querySelector("[data-clock]"), read=root.querySelector("[data-readout]");
   const capName=root.querySelector("[data-capname]"), capNotes=root.querySelector("[data-capnotes]"), mistEl=root.querySelector(".mist");
   const groups=[["Top notes",p.top],["Heart notes",p.heart],["Base notes",p.base]];
-  const lines = [`The ${p.top.join(" and ").toLowerCase()} reach you first. Bright, quick, gone within the quarter hour.`,
-                 `The heart is speaking now: ${p.heart.join(" and ").toLowerCase()}. This is what people remember.`,
-                 `Only the base remains, ${p.base.join(" and ").toLowerCase()}, warm and close to the skin.`];
+  const lines = [`The ${notesText(p.top)} reach you first. Bright, quick, gone within the quarter hour.`,
+                 `The heart is speaking now: ${notesText(p.heart)}. This is what people remember.`,
+                 `Only the base remains, ${notesText(p.base)}, warm and close to the skin.`];
   const clamp=(v,a,b)=>Math.max(a,Math.min(b,v));
   let shown=-1;
   function set(m){
@@ -883,7 +949,7 @@ function renderBag(){
   $("#bagBtn").setAttribute("aria-label", `Open bag, ${count} item${count===1?"":"s"}`);
   $("#shipMsg").innerHTML = (count===0 ? `Free shipping on orders above ${inr(FREE_SHIP)}.` : left>0 ? `You're <b>${inr(left)}</b> away from free shipping.` : `Your order ships free.`) + `<div class="bar"><i style="width:${Math.min(100,sub/FREE_SHIP*100)}%"></i></div>`;
   const others=P.filter(p=>!cart.some(l=>l.id===p.id));
-  const upsell = cart.length && others.length ? `<div class="upsell"><h5>${left>0?"Add a second fragrance for free shipping":"Complete your collection"}</h5><div class="uplist">${others.map(p=>`<div class="up">${pic("orig-"+p.id,"","120px")}<span>${p.name} <span class="it">${p.ed}</span></span><button type="button" data-addq="${p.id}" aria-label="Add ${p.name} ${p.ed}">Add</button></div>`).join("")}</div></div>` : "";
+  const upsell = cart.length && others.length ? `<div class="upsell"><h3 class="h5">${left>0?"Add a second fragrance for free shipping":"Complete your collection"}</h3><div class="uplist">${others.map(p=>`<div class="up">${pic("orig-"+p.id,"","120px")}<span>${p.name} <span class="it">${p.ed}</span></span><button type="button" data-addq="${p.id}" aria-label="Add ${p.name} ${p.ed}">Add</button></div>`).join("")}</div></div>` : "";
   $("#lines").innerHTML = cart.length ? cart.map(l=>{const p=byId[l.id];return `
     <div class="line">${pic("orig-"+p.id,"","80px")}
       <div><h4>${p.name} <span class="it">${p.ed}</span></h4><div class="sub">Eau de Parfum · 50 ml</div>
@@ -959,7 +1025,7 @@ const mq = ["Eau de Parfum","Femme","Créer","Homme","Raviver","50 ml · ₹899"
 $("#marquee").innerHTML = [...mq,...mq].map(s=>`<span>${s}</span>`).join("");
 $("#chapters").innerHTML = P.map((p,i)=>`
   <article class="chapter wrap" data-color="${mix(p.color,"k",.14)}">
-    <a class="ch-img" href="#${p.id}" aria-label="${p.name} ${p.ed}">${scene(p)}</a>
+    <a class="ch-img" href="#${p.id}">${scene(p)}</a>
     <div class="ch-body">
       <span class="ch-no">${i+1} of 6 &nbsp;·&nbsp; ${p.fam}</span>
       <h3>${p.name}</h3><span class="ed">${p.ed} — ${p.meaning}</span>
@@ -981,6 +1047,89 @@ function renderHomeAnat(){
   anatomy(byId[homeSel],"homeAnat");
 }
 $("#homePick").addEventListener("click",e=>{ const b=e.target.closest("[data-pick]"); if(!b) return; homeSel=b.dataset.pick; clearAnat(); renderHomeAnat(); });
+
+/* ---------- scent advisor: scripted, plain-language matching (no AI service) ---------- */
+const lc = x => x.toLowerCase().replace(/\bturkish\b/g,"Turkish").replace(/\bmadagascar\b/g,"Madagascar");
+const notesText = (arr, first=false) => arr.map((n,i)=> (first && i===0) ? n : lc(n)).join(" and ");
+const STOP=new Set("the and for her him his she with who loves love like want something some that this not too very but just bit any one perfume fragrance scent smell".split(" "));
+const NOTE_WORDS = w => w.toLowerCase().split(/[^a-zé]+/).filter(x=>x.length>2 && !STOP.has(x));
+const LEX = [
+  [/\b(warm|spic|amber|cosy|cozy|winter|evening|night|saffron|leather|tobacco|smok)/, {warm:3}],
+  [/\b(fresh|clean|office|work|summer|day|citrus|light|airy|crisp|sea|aquatic|gym)/, {fresh:3}],
+  [/\b(flor|flower|rose|peony|jasmine|romantic|feminine|petal)/, {floral:3}],
+  [/\b(wood|green|earth|vetiver|cedar|moss|forest|fig|natural)/, {woody:3}],
+  [/\b(sweet|vanilla|gourmand|dessert|creamy)/, {sweet:3}],
+  [/\b(musk|skin|soft|subtle|close|quiet)/, {soft:2}],
+];
+const WHO = [[/\b(him|man|men|male|husband|boyfriend|father|dad|brother)\b/,"him"],[/\b(her|woman|women|female|wife|girlfriend|mother|mom|mum|sister)\b/,"her"],[/\b(unisex|anyone|everyone|share)\b/,"unisex"]];
+const OCC = [[/wedding|party|celebrat|festive|diwali/,"femme-fuchsia creer-ambre"],[/date|dinner|romance/,"femme-rose creer-ambre"],[/travel|flight|sunday|morning|revive|tired/,"raviver"],[/office|meeting|interview|commute/,"homme creer-vert"]];
+const FAQ = [
+  [/\bcod\b|cash on delivery|pay on delivery|cash/, "Yes, cash on delivery is available at checkout, along with UPI and cards."],
+  [/ship|deliver|dispatch|how long|when will/, "We dispatch within 24–48 hours and deliver in 3–7 working days across India. Shipping is free on orders above ₹1,499, which is any two bottles."],
+  [/return|refund|exchange/, "Unopened bottles in their sealed box can be returned within 7 days of delivery. If anything arrives damaged, write to us within 48 hours with a photo and we'll replace it."],
+  [/price|cost|how much|₹|rupee/, "Every ARS SHI Eau de Parfum is ₹899 for 50 ml, inclusive of GST."],
+  [/last|longevity|how long does|stay|projection/, "These are Eaux de Parfum, a higher concentration than eau de toilette. How long a scent lasts depends on skin; two sprays on the pulse points and one on clothing help it carry through the day."],
+  [/sample|tester|try before/, "We don't offer samples yet. If you're unsure, the advisor can narrow it down, and sealed bottles can be returned within 7 days."],
+];
+const ADV_SUGG = ["Warm but not too sweet","Fresh for the office","A gift for her","Something for him","For a summer wedding","Difference between the two Femme"];
+function advisorReply(q){
+  const t=q.toLowerCase();
+  // compare the two editions people ask about
+  if(/(differ|compare|vs|versus)/.test(t) && /femme/.test(t)) return {text:`Both are for her, with different moods. Femme Fuchsia is bright and fruity: ${notesText(byId["femme-fuchsia"].top)} over ${notesText(byId["femme-fuchsia"].heart)}. Femme Rosé is softer and warmer: ${notesText(byId["femme-rose"].heart)} on ${notesText(byId["femme-rose"].base)}. Daytime and celebrations: Fuchsia. Evenings and closeness: Rosé.`, picks:["femme-fuchsia","femme-rose"]};
+  if(/(differ|compare|vs|versus)/.test(t) && /cr[eé]er/.test(t)) return {text:`Créer Vert is green and woody, ${notesText(byId["creer-vert"].top)} over vetiver and cedar: crisp, daytime. Créer Ambre is warm and spiced, saffron over leather and tobacco: made for evenings.`, picks:["creer-vert","creer-ambre"]};
+  for(const [re,ans] of FAQ) if(re.test(t)) return {text:ans, picks:[]};
+  // named product
+  const named=P.find(p=>t.includes(p.ed.toLowerCase()) || (t.includes(p.name.toLowerCase()) && P.filter(x=>x.name===p.name).length===1));
+  if(named && !/(similar|like|instead|other)/.test(t)) return {text:`${named.name} ${named.ed} is ${named.fam.toLowerCase()}. ${named.desc}`, picks:[named.id]};
+  // preference scoring
+  const want={}; let signal=0;
+  LEX.forEach(([re,w])=>{ if(re.test(t)) { Object.entries(w).forEach(([k,v])=>want[k]=(want[k]||0)+v); signal++; } });
+  const negSweet=/(not|no|less|without|avoid)\s+(too\s+|very\s+|overly\s+)?sweet|not.*gourmand/.test(t);
+  if(negSweet){ want.sweet=-4; }
+  let who=null; WHO.forEach(([re,w])=>{ if(re.test(t)) who=w; });
+  let occ=""; OCC.forEach(([re,ids])=>{ if(re.test(t)) occ+=" "+ids; });
+  const words=NOTE_WORDS(t);
+  const scored=P.map(p=>{
+    let s=0, why=[];
+    p.tags.forEach((tag,i)=>{ if(want[tag]) { s+=want[tag]*(i===0?1.3:1); why.push(tag); } });
+    const isSweet = /vanilla|gourmand/i.test(p.base.join(" ")+p.fam);
+    if(want.sweet) s += isSweet ? want.sweet : (want.sweet<0 ? 1 : 0);
+    if(want.soft && /musk|suede|sandalwood/i.test(p.base.join(" "))) s+=want.soft;
+    const noteSet=new Set([...p.top,...p.heart,...p.base].join(" ").toLowerCase().split(/[^a-zé]+/));
+    words.forEach(w=>{ if(noteSet.has(w) || noteSet.has(w.replace(/s$/,"")) || noteSet.has(w+"s")) { s+=3; why.push(w); signal++; } });
+    if(who){ s += (p.who===who?3:p.who==="unisex"?1.5:-6); signal++; }
+    if(occ.includes(p.id)){ s+=4.5; signal++; }
+    return {p,s,why};
+  }).sort((a,b)=>b.s-a.s);
+  const gift=/gift|present|surprise/.test(t);
+  if(!signal && gift) return {text:"Every bottle arrives in its textured, foil-pressed box, ready to give. Tell me who it's for and what they like, and I'll suggest one.", picks:[]};
+  if(!signal) return {text:"I can help by mood, notes, person or occasion. Try “fresh for the office”, “a gift for her”, or name a note you love, like rose or vetiver.", picks:[]};
+  const best=scored[0].p, alt=scored[1];
+  let text=`${gift?"As a gift, ":""}${best.name} ${best.ed} ${gift?"would be a lovely choice":"would suit you"}. ${notesText(best.top,true)} open onto ${notesText(best.heart)}, settling into ${notesText(best.base)}.`;
+  if(negSweet && best.tags.includes("warm") && !/vanilla|gourmand/i.test(best.base.join(" ")+best.fam)) text+=" It's warm and spiced without tipping into sweet.";
+  const picks=[best.id];
+  if(alt && alt.s>0 && scored[0].s-alt.s<=2){ text+=` If you'd like a second option, try ${alt.p.name} ${alt.p.ed}.`; picks.push(alt.p.id); }
+  return {text, picks};
+}
+function chatSay(who, html){ const log=$("#chatLog"); log.insertAdjacentHTML("beforeend",`<div class="msg ${who}">${html}</div>`); log.scrollTop=log.scrollHeight; }
+const esc = s => s.replace(/[&<>"]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"})[c]);
+function ask(q){
+  q=q.trim(); if(!q) return;
+  chatSay("me", esc(q));
+  const r=advisorReply(q);
+  const cards=r.picks.map(id=>{const p=byId[id]; return `<div class="pick-card">${pic("orig-"+id,"","72px")}<div><b>${p.name} <span class="it">${p.ed}</span></b><span style="opacity:.8;font-size:13px">${p.fam} · ${inr(PRICE)}</span><div class="acts2"><a href="#${id}">Discover</a><button type="button" data-addq="${id}">Add to bag</button></div></div></div>`;}).join("");
+  setTimeout(()=>chatSay("bot", esc(r.text)+cards), reduce?0:350);
+}
+function initAdvisor(){
+  if($("#chatLog").childElementCount) return;
+  chatSay("bot","Hello. Tell me what you like: a mood, a note, who it's for or where you'll wear it. I'll suggest a fragrance from the collection.");
+  $("#chatSugg").innerHTML=ADV_SUGG.map(x=>`<button type="button" data-ask="${x}">${x}</button>`).join("");
+}
+$("#askForm").addEventListener("submit",e=>{ e.preventDefault(); const i=$("#askInput"); ask(i.value); i.value=""; });
+$("#chatSugg").addEventListener("click",e=>{ const b=e.target.closest("[data-ask]"); if(b) ask(b.dataset.ask); });
+function finderTab(which){ const adv=which==="advisor"; $("#advisor").hidden=!adv; $("#quiz").hidden=adv; $("#tabAdvisor").setAttribute("aria-selected",adv); $("#tabQuiz").setAttribute("aria-selected",!adv); }
+$("#tabAdvisor").onclick=()=>finderTab("advisor"); $("#tabQuiz").onclick=()=>finderTab("quiz");
+initAdvisor();
 
 /* quiz: nothing is pre-picked; the match appears once all three are answered */
 function quiz(){
@@ -1007,7 +1156,7 @@ function card(p){return `
   <article class="card">
     <div class="ph"><a href="#${p.id}" aria-label="${p.name} ${p.ed}">${pic("orig-"+p.id, p.name+" "+p.ed+" box", "(max-width:1020px) 50vw, 33vw", "main")}${pic(p.id+"-angle","","(max-width:1020px) 50vw, 33vw","alt")}</a><span class="tag">${whoLabel(p.who)}</span>
       <div class="quick"><button class="btn" data-add="${p.id}">Add to bag</button></div></div>
-    <div class="meta"><div><h3><a href="#${p.id}">${p.name} <span class="it">${p.ed}</span></a></h3><div class="fam"><span class="swatch" style="background:${p.color}"></span>${p.fam}</div></div><span class="price">${inr(PRICE)}</span></div>
+    <div class="meta"><div><h3><a href="#${p.id}">${p.name} <span class="it">${p.ed}</span></a></h3><div class="fam"><span class="swatch" style="background:${p.color}"></span>${p.fam}</div><div class="sig">${p.top[0]} · ${p.heart[0]} · ${p.base[0]}</div></div><span class="price">${inr(PRICE)}</span></div>
     <button class="madd" data-addq="${p.id}" aria-label="Add ${p.name} ${p.ed} to bag">Add to bag</button>
   </article>`}
 function renderShop(){
@@ -1019,13 +1168,32 @@ function renderShop(){
 }
 $$(".filters button").forEach(b=>b.onclick=()=>{filter=b.dataset.f;renderShop();});
 
+/* ---------- recommendations ---------- */
+const COMP={floral:["woody","fresh"],woody:["floral","warm"],fresh:["woody","floral"],warm:["floral","woody"]};
+function viewed(){ try{ return JSON.parse(localStorage.getItem("arsshi-viewed")||"[]"); }catch(e){ return []; } }
+function rememberView(id){ try{ const v=viewed().filter(x=>x!==id); v.unshift(id); localStorage.setItem("arsshi-viewed",JSON.stringify(v.slice(0,12))); }catch(e){} }
+function recommend(p){
+  const seen=viewed(), inBag=new Set(cart.map(l=>l.id));
+  const fits=(a,b)=>a===b||a==="unisex"||b==="unisex";
+  return P.filter(x=>x.id!==p.id).map(x=>{
+    let s=0;
+    if(COMP[p.tags[0]].includes(x.tags[0])) s+=2;
+    if(x.tags.some(t=>p.tags.includes(t))) s+=1;
+    s+= fits(p.who,x.who) ? 2 : -3;
+    if(seen.includes(x.id)) s+= 1;            // they showed interest
+    if(inBag.has(x.id)) s-= 4;                // already chosen
+    return [s,x];
+  }).sort((a,b)=>b[0]-a[0]).slice(0,4).map(a=>a[1]);
+}
+
 /* ---------- product ---------- */
 let pq=1, spin=null, spinOn=false;
 function renderPDP(p){
   pq=1;
-  const others=P.filter(x=>x.id!==p.id).slice(0,4);
+  rememberView(p.id);
+  const others=recommend(p);
   const slides=[
-    {thumb:"orig-"+p.id, html:pic("orig-"+p.id, p.name+" "+p.ed+" box","(max-width:640px) 100vw, 55vw"), zoom:1, cap:"The box"},
+    {thumb:"orig-"+p.id, html:pic("orig-"+p.id, p.name+" "+p.ed+" box","(max-width:640px) 100vw, 55vw","",true), zoom:1, cap:"The box"},
     {thumb:p.id, html:pic(p.id, p.name+" "+p.ed+" box in the studio","(max-width:640px) 100vw, 55vw"), zoom:1, cap:"Studio"},
     {thumb:p.id+"-angle", html:pic(p.id+"-angle", p.name+" "+p.ed+" box at an angle","(max-width:640px) 100vw, 55vw"), zoom:1, cap:"Three-quarter"},
     {thumb:null, kind:"duo", html:scene(p), cap:"Bottle and box"},
@@ -1037,7 +1205,7 @@ function renderPDP(p){
   <div class="pdp">
     <div>
       <div class="gal">
-        <div class="thumbs" role="tablist" aria-label="Product images">${slides.map((s,i)=>`<button role="tab" data-slide="${i}" aria-selected="${i===0}" aria-label="${s.cap||"3D view"}">${s.thumb?`<img src="img/w/${s.thumb}-600.webp" alt="">`: s.kind==="duo"?`<span style="display:block;height:100%;padding:12% 22%;background:var(--paper)">${bottle(p)}</span>`:`<span class="t3d">3D</span>`}</button>`).join("")}</div>
+        <div class="thumbs" role="tablist" aria-label="Product images">${slides.map((s,i)=>`<button role="tab" data-slide="${i}" aria-selected="${i===0}" aria-label="${s.cap||"3D view"}">${s.thumb?`<img src="img/w/${s.thumb}-600.webp" alt="" loading="lazy">`: s.kind==="duo"?`<span style="display:block;height:100%;padding:12% 22%;background:var(--paper)">${bottle(p)}</span>`:`<span class="t3d">3D</span>`}</button>`).join("")}</div>
         <div class="viewer" id="viewer">${slides.map((s,i)=>`<div class="slide${i===0?" on":""}${s.zoom?" zoomable":""}" data-i="${i}" ${s.kind==="3d"?'data-turn="1"':''}>${s.html}${s.cap?`<span class="cap">${s.cap}</span>`:""}</div>`).join("")}</div>
       </div>
       <div class="dots">${slides.map((s,i)=>`<i class="${i===0?"on":""}"></i>`).join("")}<span class="sr" id="slideStatus" aria-live="polite"></span></div>
@@ -1047,6 +1215,7 @@ function renderPDP(p){
       <h1 style="margin-top:12px">${p.name}</h1><div class="ed">${p.ed}</div></div>
       <div class="pr"><strong>${inr(PRICE)}</strong><span>50 ml Eau de Parfum · incl. GST</span></div>
       <p class="desc">${p.desc}</p>
+      ${scentMap(p)}
       <div class="addrow">
         <div class="qty"><button aria-label="Decrease quantity" id="pqm">−</button><output id="pqo" aria-live="polite">1</output><button aria-label="Increase quantity" id="pqp">+</button></div>
         <button class="btn" id="pdpAdd">Add to bag</button>
@@ -1064,7 +1233,7 @@ function renderPDP(p){
     <div class="shead" style="padding-top:0;padding-bottom:24px"><div><span class="label eyebrow">Anatomy of ${p.name} ${p.ed}</span><h2 style="font-size:clamp(28px,3.6vw,52px)">Three acts,<br><span class="it">one day on skin.</span></h2></div><p>Press play or drag the dial to watch the notes lift away in order: top, heart, then base.</p></div>
     <div id="pdpAnat"></div>
   </div>
-  <div class="pairs"><div class="shead" style="padding-top:0;padding-bottom:24px"><h2 style="font-size:clamp(26px,3.2vw,44px)">You may also wear</h2><a class="link" href="#shop">View all</a></div><div class="grid">${others.map(card).join("")}</div></div>`;
+  <div class="pairs"><div class="shead" style="padding-top:0;padding-bottom:24px"><div><h2 style="font-size:clamp(26px,3.2vw,44px)">Chosen to pair with ${p.name} ${p.ed}</h2><p style="margin-top:8px">Picked from what you've browsed and what complements its ${p.fam.toLowerCase()} character.</p></div><a class="link" href="#shop">View all</a></div><div class="grid">${others.map(card).join("")}</div></div>`;
 
   const slidesEl=$$("#pdp .slide"), th=$$("#pdp .thumbs button"), dots=$$("#pdp .dots i");
   let cur=0, swiped=false;
@@ -1091,9 +1260,9 @@ function renderPDP(p){
   $("#mobileBuy").innerHTML=`<div class="n">${p.name} ${p.ed}<small>${inr(PRICE)} · 50 ml</small></div><button class="btn" data-add="${p.id}">Add to bag</button>`;
   anatomy(p,"pdpAnat");
 }
-/* sticky bar appears only once the main Add to bag button has scrolled up out of view */
+/* sticky bar appears whenever the main Add to bag button is off screen (scrolled past, or below the fold on short phones) */
 let mbOn=false;
-function checkSticky(){ const btn=mbOn && $("#pdpAdd"); const show=!!btn && btn.getBoundingClientRect().bottom<0; const bar=$("#mobileBuy"); if(bar.classList.contains("on")!==show){ bar.classList.toggle("on",show); bar.setAttribute("aria-hidden",String(!show)); bar.inert=!show; } }
+function checkSticky(){ const btn=mbOn && $("#pdpAdd"); const r=btn && btn.getBoundingClientRect(); const show=!!btn && (r.bottom<0 || r.top>innerHeight); const bar=$("#mobileBuy"); if(bar.classList.contains("on")!==show){ bar.classList.toggle("on",show); bar.setAttribute("aria-hidden",String(!show)); bar.inert=!show; } }
 addEventListener("scroll",()=>{ if(mbOn) checkSticky(); },{passive:true});
 const mb={ observe(){ mbOn=true; checkSticky(); }, disconnect(){ mbOn=false; } };
 
