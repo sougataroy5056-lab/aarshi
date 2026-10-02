@@ -5,3 +5,4 @@ public/
 .claude/
 # old JPEG working files; the site ships WebP from site/img/w
 site/img/*.jpg
+.vercel

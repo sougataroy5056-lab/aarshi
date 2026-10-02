@@ -124,6 +124,7 @@ header.site{position:sticky;top:env(safe-area-inset-top,0px);z-index:40;backgrou
 /* box + bottle scene */
 .scene{position:relative;aspect-ratio:4/5;background:var(--paper);overflow:hidden}
 .scene .sc-box{position:absolute;left:12%;bottom:14.6%;height:60%;aspect-ratio:600/1016;box-shadow:16px 20px 40px -12px rgba(16,28,56,.55),2px 2px 6px rgba(16,28,56,.22)}
+.scene .sc-box{background:var(--c,#8a8f9c)}
 .scene .sc-box img{width:100%;height:100%;object-fit:cover}
 .scene .sc-bottle{position:absolute;left:51%;bottom:13.6%;height:47%;aspect-ratio:200/340;animation:float 6s ease-in-out infinite}
 .scene .sc-bottle svg{width:100%;height:100%;overflow:visible}
@@ -767,7 +768,7 @@ function bottle(p, strata){
   <rect x="68" y="58" width="64" height="2" fill="rgba(0,0,0,.2)"/>
 </svg>`;
 }
-function scene(p){ return `<div class="scene"><img class="sc-bg" src="img/w/stage-tall-600.webp" srcset="img/w/stage-tall-600.webp 600w, img/w/stage-tall.webp 1200w" sizes="(max-width:640px) 100vw, 50vw" alt=""><div class="sc-box">${pic("face-"+p.id, p.name+" "+p.ed+" box", "40vw")}</div><div class="sc-bottle">${bottle(p)}</div></div>`; }
+function scene(p){ return `<div class="scene" style="--c:${p.color}"><img class="sc-bg" src="img/w/stage-tall-600.webp" srcset="img/w/stage-tall-600.webp 600w, img/w/stage-tall.webp 1200w" sizes="(max-width:640px) 100vw, 50vw" alt=""><div class="sc-box">${pic("face-"+p.id, p.name+" "+p.ed+" box", "40vw")}</div><div class="sc-bottle">${bottle(p)}</div></div>`; }
 
 /* ---------- anatomy (ingredient view) ---------- */
 let anatStops = [];
@@ -919,7 +920,7 @@ $("#q").addEventListener("input",runSearch);
 
 /* ---------- home ---------- */
 const shelfOrder=["femme-fuchsia","femme-rose","creer-vert","creer-ambre","homme","raviver"];
-function sbox(id,i,style){ const p=byId[id]; return `<a class="sbox" href="#${id}" style="--i:${i};${style}" aria-label="${p.name} ${p.ed}"><span class="lift">${pic("face-"+id,"","(max-width:640px) 25vw, 14vw")}<span class="glint" style="--i:${i}"></span></span><span class="tag">${p.name} · ${p.ed}</span></a>`; }
+function sbox(id,i,style){ const p=byId[id]; return `<a class="sbox" href="#${id}" style="--i:${i};${style}" aria-label="${p.name} ${p.ed}"><span class="lift" style="background:${p.color}">${pic("face-"+id,"","(max-width:640px) 25vw, 14vw")}<span class="glint" style="--i:${i}"></span></span><span class="tag">${p.name} · ${p.ed}</span></a>`; }
 (function(){
   const bw = 46*600/1016/2, gap = (100 - 6*bw - 8)/5;
   $("#stageWide").insertAdjacentHTML("beforeend", shelfOrder.map((id,i)=>sbox(id,i,`left:${(4+i*(bw+gap)).toFixed(2)}%`)).join(""));
