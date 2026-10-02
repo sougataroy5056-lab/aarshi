@@ -4,12 +4,13 @@
   "private": true,
   "description": "ARS SHI Parfums storefront design",
   "scripts": {
-    "build": "node scripts/build.mjs"
+    "build": "node scripts/build.mjs && node scripts/build-theme.mjs"
   },
   "engines": {
     "node": ">=18"
   },
   "devDependencies": {
+    "fflate": "^0.8.3",
     "jsdom": "^26.1.0"
   }
 }

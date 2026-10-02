@@ -771,7 +771,11 @@ footer{background:var(--ink);color:var(--on-dark)}
 <div class="toast" id="toast" role="status"></div>
 
 <script>
-const PRICE = 899, FREE_SHIP = 1499;
+/* When the page runs inside the Shopify theme, the layout sets window.SHOP:
+   { products: {handle: {v: variantId, price: paise, ok: available}}, cart: <cart json>, route }.
+   Without it (Vercel / preview) the bag works locally. */
+const SHOP = window.SHOP || null;
+const PRICE = (SHOP && Object.values(SHOP.products||{})[0] && Object.values(SHOP.products)[0].price/100) || 899, FREE_SHIP = 1499;
 const P = [
   {id:"femme-fuchsia", name:"Femme", ed:"Fuchsia", color:"#8A1E5B", foil:"silver", who:"her", fam:"Floral · Fruity", tags:["floral"], when:["day","all"], meaning:"woman",
    desc:"Bright, confident and impossible to ignore. Litchi and pink pepper open onto Turkish rose and peony, resting on white musk and cashmere wood.",
@@ -934,15 +938,35 @@ function clearAnat(){ anatStops.forEach(f=>f()); anatStops=[]; }
 
 /* ---------- cart ---------- */
 let cart = [];
-try{ cart = JSON.parse(localStorage.getItem("arsshi-bag")||"[]").filter(l=>byId[l.id]); }catch(e){ cart = []; }
-function saveCart(){ try{ localStorage.setItem("arsshi-bag", JSON.stringify(cart)); }catch(e){} }
-function addToBag(id, qty=1, open=true){
-  const l = cart.find(x=>x.id===id); l ? l.qty = Math.min(10,l.qty+qty) : cart.push({id,qty});
-  saveCart(); renderBag();
-  if(open) openDrawer("bag"); else toast(`${byId[id].name} ${byId[id].ed} added to your bag.`);
+function fromShopify(c){ cart=(c&&c.items||[]).filter(i=>byId[i.handle]).map(i=>({id:i.handle, qty:i.quantity, key:i.key})); }
+if(SHOP) fromShopify(SHOP.cart);
+else { try{ cart = JSON.parse(localStorage.getItem("arsshi-bag")||"[]").filter(l=>byId[l.id]); }catch(e){ cart = []; } }
+function saveCart(){ if(SHOP) return; try{ localStorage.setItem("arsshi-bag", JSON.stringify(cart)); }catch(e){} }
+const cartJSON = (url, body) => fetch(url,{method:"POST",headers:{"Content-Type":"application/json",Accept:"application/json"},body:JSON.stringify(body)})
+  .then(r=>r.json().then(j=>{ if(!r.ok) throw new Error(j.description||j.message||"Shopify could not update the bag."); return j; }));
+function bagChanged(id, open){
+  renderBag();
+  if(open) openDrawer("bag"); else if(id) toast(`${byId[id].name} ${byId[id].ed} added to your bag.`);
   const c=$("#bagCount"); c.classList.add("bump"); setTimeout(()=>c.classList.remove("bump"),400);
 }
-function setQty(id,q){ const l=cart.find(x=>x.id===id); if(!l) return; l.qty=Math.min(10,q); if(q<=0) cart=cart.filter(x=>x.id!==id); saveCart(); renderBag(); }
+function addToBag(id, qty=1, open=true){
+  if(SHOP){
+    const pr=SHOP.products[id];
+    if(!pr || !pr.ok){ toast(`${byId[id].name} ${byId[id].ed} is not available right now.`); return; }
+    cartJSON("/cart/add.js",{items:[{id:pr.v,quantity:qty}]})
+      .then(()=>fetch("/cart.js",{headers:{Accept:"application/json"}}).then(r=>r.json()))
+      .then(c=>{ fromShopify(c); bagChanged(id,open); })
+      .catch(err=>toast(err.message));
+    return;
+  }
+  const l = cart.find(x=>x.id===id); l ? l.qty = Math.min(10,l.qty+qty) : cart.push({id,qty});
+  saveCart(); bagChanged(id,open);
+}
+function setQty(id,q){
+  const l=cart.find(x=>x.id===id); if(!l) return; q=Math.max(0,Math.min(10,q));
+  if(SHOP){ cartJSON("/cart/change.js",{id:l.key,quantity:q}).then(c=>{ fromShopify(c); renderBag(); }).catch(err=>toast(err.message)); return; }
+  l.qty=q; if(q<=0) cart=cart.filter(x=>x.id!==id); saveCart(); renderBag();
+}
 function renderBag(){
   const count = cart.reduce((a,l)=>a+l.qty,0), sub = count*PRICE, left = FREE_SHIP - sub;
   $("#bagCount").textContent = count; $("#tabCount").textContent = count; $("#tabCount").hidden = count===0;
@@ -969,7 +993,7 @@ document.addEventListener("click",e=>{
   else if(t.dataset.rm) setQty(t.dataset.rm,0);
   else if(t.dataset.addq){ addToBag(t.dataset.addq,1,false); }
   else if(t.dataset.add){ e.preventDefault(); addToBag(t.dataset.add, +(t.dataset.qty||1)); }
-  else if(t.id==="checkout") toast("Checkout opens in Shopify's secure checkout once the store is live.");
+  else if(t.id==="checkout"){ if(SHOP) location.href="/checkout"; else toast("Checkout opens in Shopify's secure checkout once the store is live."); }
   if(t.hasAttribute("data-close")) closeDrawers();
 });
 
@@ -1271,15 +1295,24 @@ $("#strip").innerHTML=P.map(p=>`<a href="#${p.id}" aria-label="${p.name} ${p.ed}
 $("#copyEmail").onclick=()=>{ const t=$("#emailText").textContent;
   const fallback=()=>{ const r=document.createRange(); r.selectNodeContents($("#emailText")); getSelection().removeAllRanges(); getSelection().addRange(r); toast("Address selected. Copy it from here."); };
   try{ navigator.clipboard.writeText(t).then(()=>toast("Email address copied."),fallback); }catch(e){ fallback(); } };
+if(SHOP){ const f=$("#newsForm"); f.method="post"; f.action="/contact#newsForm"; $("#email").name="contact[email]";
+  f.insertAdjacentHTML("afterbegin",'<input type="hidden" name="form_type" value="customer"><input type="hidden" name="utf8" value="✓"><input type="hidden" name="contact[tags]" value="newsletter">');
+  if(/customer_posted=true/.test(location.search)) $("#newsNote").textContent = "Thank you. You're on the list."; }
 $("#newsForm").addEventListener("submit",e=>{
-  e.preventDefault(); const v=$("#email").value.trim();
+  const v=$("#email").value.trim();
+  if(SHOP && /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(v)) return;   // let Shopify save the subscriber
+  e.preventDefault();
   $("#newsNote").textContent = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(v) ? "Thank you. You're on the list." : "Enter a valid email address, like name@example.com.";
 });
 
 /* router */
 const helpIds={shipping:"h-shipping",returns:"h-returns",contact:"h-contact",track:"h-track"};
+let firstRoute = SHOP && SHOP.route;
 function route(){
-  const h=location.hash.slice(1);
+  let h=location.hash.slice(1);
+  if(!h && firstRoute) h=firstRoute;
+  firstRoute=null;
+  const sc=document.getElementById("shopify-content"); if(sc) sc.hidden = h!=="page";
   $$(".view").forEach(v=>v.classList.remove("on"));
   $$("[data-nav]").forEach(a=>a.removeAttribute("aria-current"));
   const bar=$("#mobileBuy"); bar.classList.remove("on"); bar.inert=true; mb.disconnect(); clearAnat();
@@ -1289,6 +1322,7 @@ function route(){
   else if(h.startsWith("shop")){ filter=({"shop-her":"her","shop-him":"him"})[h]||"all"; renderShop(); $("#v-shop").classList.add("on"); document.title="Shop · ARS SHI Parfums"; }
   else if(h==="maison"){ $("#v-maison").classList.add("on"); document.title="The maison · ARS SHI Parfums"; }
   else if(helpIds[h]){ $("#v-help").classList.add("on"); target=$("#"+helpIds[h]); document.title="Help · ARS SHI Parfums"; }
+  else if(h==="page"){ document.title=document.title; }
   else { $("#v-home").classList.add("on"); renderHomeAnat(); if(h==="finder") target=$("#finderBlock"); document.title="ARS SHI Parfums"; }
   const nav=document.querySelector(`[data-nav="${h}"]`); if(nav) nav.setAttribute("aria-current","page");
   const tab = byId[h] ? null : h.startsWith("shop") ? "shop" : h==="finder" ? "finder" : (h===""||h==="home") ? "home" : null;
@@ -1300,4 +1334,5 @@ function route(){
 }
 addEventListener("hashchange",route);
 renderBag(); route();
+if(SHOP && SHOP.openBag) openDrawer("bag");
 </script>
