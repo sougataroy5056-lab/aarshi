@@ -1,0 +1,1103 @@
+<title>ARS SHI Parfums</title>
+<style>
+/* Palatino Linotype everywhere. Windows has Palatino Linotype, Apple devices have Palatino;
+   Android has neither, so TeX Gyre Pagella (a free Palatino-metric font, GUST licence) is self-hosted as the fallback. */
+@font-face{font-family:"Pagella";src:url(fonts/pagella-regular.woff2) format("woff2");font-weight:400;font-style:normal;font-display:swap}
+@font-face{font-family:"Pagella";src:url(fonts/pagella-italic.woff2) format("woff2");font-weight:400;font-style:italic;font-display:swap}
+@font-face{font-family:"Pagella";src:url(fonts/pagella-bold.woff2) format("woff2");font-weight:500 700;font-style:normal;font-display:swap}
+@font-face{font-family:"Pagella";src:url(fonts/pagella-bolditalic.woff2) format("woff2");font-weight:500 700;font-style:italic;font-display:swap}
+/* Layout: a white gallery with navy type and sapphire accents; each fragrance brings its own box colour into the page. Mobile first in spirit: every control >= 44px, labels >= 11px. */
+:root{
+  --stone:#FFFFFF;      /* page ground */
+  --paper:#EEF3FA;      /* pale blue surfaces */
+  --ink:#0E1B36;        /* deep navy: text, buttons, footer */
+  --muted:#4F607C;
+  --line:rgba(14,27,54,.12);
+  --foil:#2A55C4;       /* sapphire accent */
+  --foil-hi:#A9C2F5;
+  --on-dark:#F4F7FC;
+  --pal:"Palatino Linotype","Palatino","Book Antiqua","Pagella","URW Palladio L","P052",Georgia,serif;
+  --display:var(--pal);
+  --serif:var(--pal);
+  --sans:var(--pal);
+  --gut:clamp(16px,4vw,56px);
+  --max:1360px;
+  --tap:44px;
+  --ease:cubic-bezier(.2,.7,.1,1);
+  color-scheme:light;
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth;-webkit-text-size-adjust:100%}
+body{margin:0;background:var(--stone);color:var(--ink);font-family:var(--pal);font-size:16px;line-height:1.65;-webkit-font-smoothing:antialiased;overflow-x:clip}
+img{max-width:100%;display:block}
+a{color:inherit;text-decoration:none}
+button{font:inherit;color:inherit;background:none;border:0;cursor:pointer;padding:0;-webkit-tap-highlight-color:transparent}
+:focus-visible{outline:2px solid var(--foil);outline-offset:3px}
+h1,h2,h3{font-family:var(--display);font-weight:400;margin:0;text-wrap:balance;letter-spacing:.01em}
+p{margin:0}
+.wrap{max-width:var(--max);margin-inline:auto;padding-inline:var(--gut)}
+.label{font-size:11px;font-weight:500;letter-spacing:.2em;text-transform:uppercase}
+.it{font-family:var(--serif);font-style:italic;font-weight:400}
+.eyebrow{display:block;margin-bottom:16px;color:var(--foil)}
+.sr{position:absolute!important;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
+.btn{position:relative;overflow:hidden;display:inline-flex;align-items:center;justify-content:center;gap:.7em;min-height:52px;padding-inline:28px;font-size:11.5px;font-weight:600;letter-spacing:.2em;text-transform:uppercase;border:1px solid var(--ink);background:var(--ink);color:var(--stone);transition:background .35s var(--ease),color .35s var(--ease)}
+.btn::after{content:"";position:absolute;inset:0;background:linear-gradient(105deg,transparent 35%,rgba(255,255,255,.28) 50%,transparent 65%);transform:translateX(-120%);transition:transform .9s var(--ease)}
+@media (hover:hover){.btn:hover::after{transform:translateX(120%)}.btn:hover{background:transparent;color:var(--ink)}.btn.ghost:hover{background:var(--ink);color:var(--stone)}.btn.light:hover{background:transparent;color:var(--on-dark)}}
+.btn.ghost{background:transparent;color:var(--ink)}
+.btn.light{background:var(--on-dark);color:var(--ink);border-color:var(--on-dark)}
+.link{display:inline-flex;align-items:center;min-height:var(--tap);font-size:11.5px;font-weight:600;letter-spacing:.2em;text-transform:uppercase;text-decoration:underline;text-underline-offset:6px;text-decoration-thickness:1px}
+.iconbtn{display:inline-grid;place-items:center;min-width:var(--tap);min-height:var(--tap)}
+.iconbtn svg{width:20px;height:20px}
+
+/* header */
+.announce{background:var(--ink);color:var(--on-dark);text-align:center;padding:9px 16px;font-size:11px;letter-spacing:.16em;text-transform:uppercase;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.announce .short{display:none}
+header.site{position:sticky;top:env(safe-area-inset-top,0px);z-index:40;background:color-mix(in srgb,var(--stone) 92%,transparent);backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);border-bottom:1px solid var(--line)}
+.hbar{display:grid;grid-template-columns:1fr auto 1fr;align-items:center;height:72px}
+.hleft{display:flex;align-items:center;gap:30px}
+.nav{display:flex;gap:30px}
+.nav a{display:inline-flex;align-items:center;min-height:var(--tap);font-size:11px;font-weight:500;letter-spacing:.2em;text-transform:uppercase;position:relative}
+.nav a::after{content:"";position:absolute;left:0;right:0;bottom:10px;height:1px;background:currentColor;transform:scaleX(0);transform-origin:left;transition:transform .4s var(--ease)}
+.nav a:hover::after,.nav a[aria-current="page"]::after{transform:scaleX(1)}
+.wordmark{display:flex;flex-direction:column;align-items:center;gap:3px;line-height:1}
+.wordmark b{font-family:var(--display);font-weight:400;font-size:26px;letter-spacing:.32em;margin-right:-.32em;background:linear-gradient(100deg,var(--ink) 40%,var(--foil) 50%,var(--ink) 60%) 0 0/300% 100%;-webkit-background-clip:text;background-clip:text;color:transparent;animation:foil 7s ease-in-out infinite}
+@keyframes foil{0%,70%{background-position:100% 0}100%{background-position:0 0}}
+.wordmark small{font-size:9.5px;letter-spacing:.46em;margin-right:-.46em;color:var(--muted);text-transform:uppercase}
+.hright{display:flex;justify-content:flex-end;gap:6px;align-items:center}
+.hright .label{display:inline-flex;align-items:center;min-height:var(--tap);padding-inline:10px}
+.bagbtn{position:relative}
+.bagcount{position:absolute;top:4px;right:2px;display:grid;place-items:center;min-width:18px;height:18px;border-radius:9px;background:var(--foil);color:#fff;font-size:10px;font-weight:600;padding-inline:4px;transition:transform .4s var(--ease)}
+.bagcount.bump{transform:scale(1.35)}
+.menubtn{display:none}
+
+.view{display:none}
+.view.on{display:block;animation:viewin .7s var(--ease)}
+@keyframes viewin{from{opacity:.001;transform:translateY(10px)}to{opacity:1;transform:none}}
+
+/* hero */
+.hero-top{display:grid;grid-template-columns:minmax(0,1.3fr) minmax(0,.7fr);gap:clamp(20px,5vw,80px);align-items:end;padding-block:clamp(32px,6vw,84px) clamp(24px,4vw,48px)}
+.hero-top h1{font-size:clamp(42px,7.6vw,118px);line-height:.98}
+.hero-top h1 .ln{display:block;overflow:hidden;padding-bottom:.04em}
+.hero-top h1 .ln>span{display:inline-block;animation:lineup 1.1s var(--ease) both}
+.hero-top h1 .ln:nth-child(2)>span{animation-delay:.12s}
+.hero-top h1 .it{color:var(--foil);font-size:.8em}
+@keyframes lineup{from{transform:translateY(105%)}to{transform:none}}
+.hero-top .lede{color:var(--muted);font-size:16px;max-width:36ch}
+.hero-top .ctas{display:flex;flex-wrap:wrap;gap:12px;margin-top:24px}
+.shelf{max-width:1600px;margin-inline:auto;padding-inline:var(--gut)}
+.stage{position:relative;overflow:hidden;background:var(--paper)}
+.stage.wide{aspect-ratio:2/1}
+.stage.tall{aspect-ratio:4/5;display:none}
+.stage-bg,.sc-bg{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
+.stage::before{content:"";position:absolute;inset:0;z-index:1;background:radial-gradient(60% 50% at 50% 30%,rgba(255,255,255,.35),transparent 70%);pointer-events:none}
+.sbox{position:absolute;z-index:2;aspect-ratio:600/1016;animation:rise 1.2s var(--ease) both;animation-delay:calc(.25s + var(--i)*.09s)}
+.stage.wide .sbox{bottom:18.4%;height:46%}
+.stage.tall .sbox{height:33%}
+.sbox .lift{position:absolute;inset:0;transition:transform .7s var(--ease)}
+.sbox img{width:100%;height:100%;object-fit:cover;box-shadow:14px 18px 34px -10px rgba(16,28,56,.5),2px 2px 6px rgba(16,28,56,.22)}
+.sbox::after{content:"";position:absolute;left:-6%;right:-14%;bottom:-3%;height:7%;background:radial-gradient(closest-side,rgba(16,28,56,.45),transparent);z-index:-1;transition:opacity .7s var(--ease),transform .7s var(--ease)}
+@media (hover:hover){.sbox:hover .lift{transform:translateY(-7%)}.sbox:hover::after{opacity:.45;transform:scaleX(.85)}.sbox:hover .tag{opacity:1;transform:translate(-50%,-7%)}}
+.sbox:focus-visible .lift{transform:translateY(-7%)}
+.sbox:active .lift{transform:translateY(-4%)}
+.glint{position:absolute;inset:0;overflow:hidden;pointer-events:none}
+.glint::after{content:"";position:absolute;top:-10%;bottom:-10%;width:45%;left:-60%;background:linear-gradient(100deg,transparent,rgba(255,255,255,.42),transparent);mix-blend-mode:soft-light;animation:glint 7s ease-in-out infinite;animation-delay:calc(1.6s + var(--i)*.35s)}
+@keyframes glint{0%{left:-60%}22%,100%{left:130%}}
+.sbox .tag{position:absolute;left:50%;bottom:calc(100% + 12px);transform:translate(-50%,8px);white-space:nowrap;background:var(--stone);color:var(--ink);padding:7px 12px;font-size:11px;letter-spacing:.14em;text-transform:uppercase;opacity:0;transition:all .45s var(--ease);pointer-events:none}
+.sbox:focus-visible .tag{opacity:1;transform:translate(-50%,-7%)}
+@keyframes rise{from{transform:translateY(16%);opacity:0}to{transform:none;opacity:1}}
+.shelf-hint{display:none;font-size:11px;letter-spacing:.16em;text-transform:uppercase;color:var(--muted);margin-top:12px;text-align:center}
+.hero-meta{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:20px;padding-block:28px;border-bottom:1px solid var(--line)}
+.hero-meta div{display:flex;flex-direction:column;gap:2px}
+.hero-meta strong{font-family:var(--display);font-weight:400;font-size:26px;white-space:nowrap}
+.hero-meta span{font-size:11px;letter-spacing:.16em;text-transform:uppercase;color:var(--muted)}
+
+.marquee{border-bottom:1px solid var(--line);overflow:hidden;white-space:nowrap;padding-block:16px}
+.marquee .track{display:inline-flex;gap:48px;animation:mq 46s linear infinite;padding-left:48px}
+.marquee span{font-family:var(--serif);font-style:italic;font-size:20px;color:var(--muted)}
+.marquee span::after{content:"✦";font-style:normal;font-size:11px;margin-left:48px;color:var(--foil);vertical-align:middle}
+@keyframes mq{to{transform:translateX(-50%)}}
+
+.shead{display:flex;justify-content:space-between;align-items:end;gap:20px;flex-wrap:wrap;padding-block:clamp(56px,9vw,120px) 36px}
+.shead h2{font-size:clamp(32px,4.6vw,64px);line-height:1.05}
+.shead p{max-width:44ch;color:var(--muted)}
+
+/* box + bottle scene */
+.scene{position:relative;aspect-ratio:4/5;background:var(--paper);overflow:hidden}
+.scene .sc-box{position:absolute;left:12%;bottom:14.6%;height:60%;aspect-ratio:600/1016;box-shadow:16px 20px 40px -12px rgba(16,28,56,.55),2px 2px 6px rgba(16,28,56,.22)}
+.scene .sc-box img{width:100%;height:100%;object-fit:cover}
+.scene .sc-bottle{position:absolute;left:51%;bottom:13.6%;height:47%;aspect-ratio:200/340;animation:float 6s ease-in-out infinite}
+.scene .sc-bottle svg{width:100%;height:100%;overflow:visible}
+@keyframes float{0%,100%{transform:translateY(0)}50%{transform:translateY(-1.6%)}}
+
+/* chapters */
+.chapters{--ch:#2F4A33;background:var(--ch);color:var(--on-dark);transition:background-color 1.1s var(--ease)}
+.chapter{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:clamp(28px,6vw,110px);align-items:center;padding-block:clamp(48px,7vw,96px)}
+.chapter:nth-child(even) .ch-img{order:2}
+.ch-img{display:block;box-shadow:0 50px 90px -40px rgba(0,0,0,.55);transform:translateY(var(--py,0))}
+.ch-no{font-size:11.5px;font-weight:500;letter-spacing:.2em;text-transform:uppercase}
+.ch-body h3{font-size:clamp(52px,8vw,124px);line-height:.95;margin-top:16px}
+.ch-body .ed{display:block;font-family:var(--serif);font-style:italic;font-size:clamp(23px,2.4vw,34px);margin-top:8px}
+.ch-body .desc{max-width:44ch;margin-top:22px;font-size:16px}
+.notes-inline{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:18px;margin:30px 0 0;padding-top:22px;border-top:1px solid rgba(244,247,252,.3);max-width:520px}
+.notes-inline dt{font-size:11px;font-weight:500;letter-spacing:.2em;text-transform:uppercase;margin-bottom:6px}
+.notes-inline dd{margin:0;font-family:var(--serif);font-size:17px;line-height:1.3}
+.ch-buy{display:flex;align-items:center;flex-wrap:wrap;gap:20px;margin-top:32px}
+.ch-buy .price{font-family:var(--display);font-size:24px}
+
+/* anatomy */
+.pick{display:flex;gap:10px;margin-bottom:24px;overflow-x:auto;scrollbar-width:none;padding-bottom:4px}
+.pick::-webkit-scrollbar{display:none}
+.pick button{flex:none;display:inline-flex;align-items:center;gap:10px;min-height:var(--tap);padding:0 16px 0 10px;border:1px solid var(--line);font-size:13px;letter-spacing:.04em;transition:all .3s var(--ease)}
+.pick button[aria-pressed="true"]{border-color:var(--ink);background:var(--ink);color:var(--stone)}
+.pick .sw{width:16px;height:16px;border-radius:50%}
+.anat{--c:#2E4733;--c1:#cfd8cf;display:grid;grid-template-columns:minmax(0,.85fr) minmax(0,1.15fr);gap:clamp(24px,5vw,80px);align-items:start}
+.anat-left{display:flex;flex-direction:column;gap:18px}
+.anat-visual{position:relative;aspect-ratio:4/5;background:radial-gradient(70% 60% at 50% 45%,color-mix(in srgb,var(--c) 18%,var(--paper)),var(--paper));overflow:hidden}
+.anat-visual>svg{position:absolute;left:50%;top:50%;height:78%;width:auto;transform:translate(-50%,-50%);overflow:visible}
+.anat-visual .clock{position:absolute;left:18px;top:16px;font-size:14px;font-weight:500;letter-spacing:.06em}
+.anat-visual .clock small{display:block;font-size:11px;letter-spacing:.16em;text-transform:uppercase;color:var(--muted);margin-top:2px;font-weight:400}
+.anat-visual .nowcap{position:absolute;left:12px;right:12px;bottom:12px;background:rgba(255,255,255,.9);backdrop-filter:blur(6px);padding:10px 14px;display:none}
+.anat-visual .nowcap b{display:block;font-size:11px;font-weight:600;letter-spacing:.18em;text-transform:uppercase;color:var(--foil)}
+.anat-visual .nowcap span{font-family:var(--serif);font-size:21px;line-height:1.2}
+.mist{position:absolute;left:50%;top:12%;width:0;height:0}
+.mist i{position:absolute;width:26px;height:26px;border-radius:50%;background:radial-gradient(closest-side,color-mix(in srgb,var(--c1) 70%,white),transparent);filter:blur(3px);opacity:0;animation:mist 3.6s ease-out infinite;animation-delay:calc(var(--k)*.6s);animation-play-state:paused}
+.anat.live .mist i{animation-play-state:running}
+@keyframes mist{0%{transform:translate(calc(var(--x)*1px),40px) scale(.4);opacity:0}25%{opacity:.9}100%{transform:translate(calc(var(--x)*3px),-90px) scale(1.6);opacity:0}}
+.dial{display:grid;grid-template-columns:auto minmax(0,1fr);gap:16px;align-items:center}
+.play{width:52px;height:52px;border:1px solid var(--ink);border-radius:50%;display:grid;place-items:center;transition:background .3s var(--ease),color .3s var(--ease)}
+.play:hover{background:var(--ink);color:var(--stone)}
+.play svg{width:14px;height:14px}
+.range{display:flex;flex-direction:column;gap:4px}
+.range input{width:100%;accent-color:var(--foil);height:var(--tap);cursor:pointer;margin:0}
+.range .ticks{display:flex;justify-content:space-between;font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:var(--muted)}
+.readout{font-family:var(--serif);font-style:italic;font-size:20px;color:var(--muted);min-height:2.6em}
+.acts{display:flex;flex-direction:column}
+.act{display:grid;grid-template-columns:20px minmax(0,1fr) auto;gap:16px;align-items:baseline;padding-block:22px;border-top:1px solid var(--line);transition:opacity .6s var(--ease)}
+.act:last-child{border-bottom:1px solid var(--line)}
+.act .dot{width:12px;height:12px;border-radius:50%;transform:translateY(-2px);transition:box-shadow .6s var(--ease)}
+.act .notes{font-family:var(--serif);font-size:clamp(21px,2.4vw,32px);line-height:1.15}
+.act .notes em{font-style:italic;color:var(--muted)}
+.act .when{font-size:11px;letter-spacing:.16em;text-transform:uppercase;color:var(--muted);text-align:right;white-space:nowrap}
+.act .when b{display:block;font-weight:600;color:var(--ink);margin-bottom:2px}
+.act.past{opacity:.42}
+.act.now .dot{box-shadow:0 0 0 6px color-mix(in srgb,var(--foil) 25%,transparent)}
+.act.now .when b{color:var(--foil)}
+.act.next{opacity:.7}
+
+/* finder */
+.finder{background:var(--ink);color:var(--on-dark)}
+.finder .inner{display:grid;grid-template-columns:minmax(0,.8fr) minmax(0,1.2fr);gap:clamp(28px,6vw,96px);padding-block:clamp(56px,9vw,120px)}
+.finder h2{font-size:clamp(32px,4.4vw,60px);line-height:1.05}
+.finder .intro p{opacity:.8;margin-top:18px;max-width:38ch}
+.q{border-top:1px solid rgba(244,247,252,.2);padding-block:22px}
+.q legend{padding:0;margin-bottom:14px;font-family:var(--serif);font-size:23px}
+.q legend b{font-family:var(--sans);font-weight:500;font-size:11px;letter-spacing:.2em;margin-right:12px;opacity:.7;vertical-align:middle}
+fieldset{border:0;margin:0;padding:0;min-width:0}
+.chips{display:flex;flex-wrap:wrap;gap:10px}
+.chip{position:relative}
+.chip input{position:absolute;opacity:0;pointer-events:none}
+.chip span{display:inline-flex;align-items:center;min-height:var(--tap);padding-inline:18px;border:1px solid rgba(244,247,252,.35);font-size:13px;letter-spacing:.04em;transition:all .3s var(--ease);cursor:pointer}
+.chip input:checked+span{background:var(--on-dark);color:var(--ink);border-color:var(--on-dark)}
+.chip input:focus-visible+span{outline:2px solid var(--foil-hi);outline-offset:3px}
+.result{margin-top:22px;padding:20px;background:rgba(244,247,252,.06);border:1px solid rgba(244,247,252,.16)}
+.result.empty-r{font-family:var(--serif);font-style:italic;font-size:20px;opacity:.85}
+.result .match{display:grid;grid-template-columns:110px minmax(0,1fr);gap:20px;align-items:center}
+.result img{width:110px;aspect-ratio:4/5;object-fit:cover}
+.result h4{margin:4px 0;font-family:var(--display);font-weight:400;font-size:30px}
+.result p{opacity:.85;font-size:14px}
+.result .row{display:flex;gap:14px;align-items:center;flex-wrap:wrap;margin-top:12px}
+.result .reset{font-size:11px;letter-spacing:.16em;text-transform:uppercase;min-height:var(--tap);opacity:.85;text-decoration:underline;text-underline-offset:5px}
+
+/* maison teaser + trust */
+.maison{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:clamp(28px,6vw,96px);align-items:center;padding-block:clamp(56px,9vw,120px)}
+.maison .big{font-family:var(--serif);font-size:clamp(24px,3vw,42px);line-height:1.18}
+.maison .big em{color:var(--foil)}
+.maison p.body{color:var(--muted);margin-top:22px;max-width:46ch}
+.maison .duo{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+.maison .duo img{aspect-ratio:4/5;object-fit:cover;width:100%}
+.maison .duo img:last-child{margin-top:22%}
+.promises{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));border-top:1px solid var(--line)}
+.promises div{padding:30px 24px 34px 0;display:flex;flex-direction:column;gap:8px}
+.promises div+div{padding-left:24px;border-left:1px solid var(--line)}
+.promises h5{margin:0;font-family:var(--display);font-weight:400;font-size:19px}
+.promises p{font-size:14px;color:var(--muted)}
+.trust{display:flex;flex-wrap:wrap;gap:8px}
+.trust span{display:inline-flex;align-items:center;gap:6px;min-height:32px;padding-inline:12px;border:1px solid var(--line);font-size:11.5px;font-weight:500;letter-spacing:.06em;color:var(--muted);background:var(--stone)}
+.trust span.lock::before{content:"";width:9px;height:11px;border:1.5px solid currentColor;border-radius:2px;border-top-width:4px}
+
+/* shop */
+.filters{display:flex;flex-wrap:wrap;gap:4px 24px;padding-bottom:20px;border-bottom:1px solid var(--line);margin-bottom:32px;align-items:center}
+.filters button{display:inline-flex;align-items:center;min-height:var(--tap);font-size:11.5px;font-weight:500;letter-spacing:.18em;text-transform:uppercase;color:var(--muted);border-bottom:1px solid transparent}
+.filters button[aria-pressed="true"]{color:var(--ink);border-color:var(--ink)}
+.filters .count{margin-left:auto;font-size:13px;color:var(--muted)}
+.grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:52px 28px;padding-bottom:clamp(56px,9vw,120px)}
+.card{display:flex;flex-direction:column;gap:14px}
+.card .ph{position:relative;overflow:hidden;background:var(--paper);aspect-ratio:4/5}
+.card .ph>a{position:absolute;inset:0}
+.card .ph img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;transition:opacity .8s var(--ease),transform 1.4s var(--ease)}
+.card .ph img.alt{opacity:0;transform:scale(1.04)}
+@media (hover:hover){.card:hover .ph img.alt{opacity:1;transform:none}.card:hover .ph img.main{transform:scale(1.04)}.card:hover .quick{transform:none}}
+.card .quick{position:absolute;left:12px;right:12px;bottom:12px;transform:translateY(calc(100% + 16px));transition:transform .5s var(--ease);z-index:2}
+.card:focus-within .quick{transform:none}
+.card .quick .btn{width:100%;min-height:46px;background:var(--on-dark);color:var(--ink);border-color:var(--on-dark)}
+.card .tag{position:absolute;top:12px;left:12px;background:var(--stone);padding:5px 10px;font-size:11px;letter-spacing:.14em;text-transform:uppercase;z-index:2}
+.card .meta{display:flex;justify-content:space-between;gap:12px;align-items:baseline}
+.card h3{font-size:24px}
+.card h3 .it{font-size:.9em;color:var(--muted)}
+.card .fam{font-size:13px;color:var(--muted);margin-top:2px}
+.card .price{font-family:var(--display);font-size:18px;white-space:nowrap}
+.card .madd{display:none}
+.swatch{display:inline-block;width:10px;height:10px;border-radius:50%;margin-right:8px}
+
+/* product */
+.crumbs{font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:var(--muted);padding-block:18px;display:flex;flex-wrap:wrap;gap:6px 10px;align-items:center}
+.crumbs a{display:inline-flex;align-items:center;min-height:var(--tap)}
+.crumbs a:hover{color:var(--ink)}
+.pdp{display:grid;grid-template-columns:minmax(0,1.15fr) minmax(0,.85fr);gap:clamp(28px,6vw,96px);padding-bottom:clamp(56px,8vw,110px)}
+.gal{display:grid;grid-template-columns:76px minmax(0,1fr);gap:14px;align-items:start}
+.thumbs{display:flex;flex-direction:column;gap:10px}
+.thumbs button{position:relative;aspect-ratio:4/5;overflow:hidden;background:var(--paper);opacity:.55;transition:opacity .3s var(--ease)}
+.thumbs button[aria-selected="true"]{opacity:1;outline:1.5px solid var(--ink);outline-offset:2px}
+.thumbs button img{width:100%;height:100%;object-fit:cover}
+.thumbs .t3d{display:grid;place-items:center;height:100%;font-size:12px;font-weight:600;letter-spacing:.1em}
+.viewer{position:relative;aspect-ratio:4/5;background:var(--paper);overflow:hidden;touch-action:pan-y}
+.slide{position:absolute;inset:0;opacity:0;transition:opacity .6s var(--ease);pointer-events:none}
+.slide.on{opacity:1;pointer-events:auto}
+.slide>img{width:100%;height:100%;object-fit:cover}
+.slide.zoomable{cursor:zoom-in}
+.slide.zoomable img{transition:transform .6s var(--ease)}
+.slide.zoomable.zoom img{transform:scale(1.8);cursor:zoom-out}
+.slide .cap{position:absolute;left:12px;bottom:12px;background:rgba(14,27,54,.72);color:#fff;padding:6px 10px;font-size:11px;letter-spacing:.14em;text-transform:uppercase}
+.dots{display:none;justify-content:center;gap:8px;padding-top:12px}
+.dots i{width:7px;height:7px;border-radius:50%;background:rgba(14,27,54,.2);transition:all .3s var(--ease)}
+.dots i.on{background:var(--ink);width:20px;border-radius:4px}
+.turn{position:absolute;inset:0;container-type:size;background:radial-gradient(70% 60% at 50% 40%,#f4f7fc,#cdd8e8);display:grid;place-items:center;perspective:1400px;cursor:grab;touch-action:none}
+.turn:active{cursor:grabbing}
+.cube{--w:min(40cqw,34cqh,300px);--h:calc(var(--w)*1.693);--d:calc(var(--w)*.36);position:relative;top:-3%;width:var(--w);height:var(--h);transform-style:preserve-3d;transform:rotateX(-9deg) rotateY(var(--ry,-28deg))}
+.cube .f{position:absolute;backface-visibility:hidden}
+.cube .fr,.cube .bk{inset:0;background-size:cover}
+.cube .fr{transform:translateZ(calc(var(--d)/2))}
+.cube .bk{transform:rotateY(180deg) translateZ(calc(var(--d)/2));filter:brightness(.8)}
+.cube .sd{top:0;height:100%;width:var(--d);left:calc((var(--w) - var(--d))/2);background:var(--c)}
+.cube .sd::after{content:"";position:absolute;inset:0;background:linear-gradient(90deg,rgba(0,0,0,.18),rgba(0,0,0,.32))}
+.cube .rt{transform:rotateY(90deg) translateZ(calc(var(--w)/2))}
+.cube .lt{transform:rotateY(-90deg) translateZ(calc(var(--w)/2))}
+.cube .tp{left:0;width:100%;height:var(--d);top:calc((var(--h) - var(--d))/2);background:var(--c);transform:rotateX(90deg) translateZ(calc(var(--h)/2))}
+.turn .floor{position:absolute;bottom:12%;left:50%;width:56%;height:5%;transform:translateX(-50%);background:radial-gradient(closest-side,rgba(16,28,56,.35),transparent)}
+.turn .hint{position:absolute;bottom:14px;left:0;right:0;text-align:center;font-size:11px;letter-spacing:.18em;text-transform:uppercase;color:var(--muted)}
+.buy{position:sticky;top:calc(env(safe-area-inset-top,0px) + 96px);align-self:start;display:flex;flex-direction:column;gap:20px}
+.buy h1{font-size:clamp(46px,5.6vw,84px);line-height:.95}
+.buy .ed{font-family:var(--serif);font-style:italic;font-size:28px;color:var(--muted);margin-top:4px}
+.buy .pr{display:flex;justify-content:space-between;align-items:baseline;gap:12px;flex-wrap:wrap;border-block:1px solid var(--line);padding-block:14px}
+.buy .pr strong{font-family:var(--display);font-weight:400;font-size:28px}
+.buy .pr span{font-size:13px;color:var(--muted)}
+.buy .desc{color:var(--muted);font-size:15.5px}
+.addrow{display:grid;grid-template-columns:128px minmax(0,1fr);gap:10px}
+.qty{display:grid;grid-template-columns:var(--tap) 1fr var(--tap);align-items:center;border:1px solid var(--line);min-height:52px}
+.qty button{height:100%;min-height:var(--tap);font-size:20px}
+.qty output{text-align:center;font-variant-numeric:tabular-nums}
+.addrow .btn{width:100%}
+.assure{display:grid;grid-template-columns:1fr 1fr;gap:10px 18px;font-size:13px;color:var(--muted)}
+.assure div::before{content:"✦";color:var(--foil);font-size:9px;margin-right:8px;vertical-align:2px}
+details{border-bottom:1px solid var(--line)}
+details summary{list-style:none;cursor:pointer;display:flex;justify-content:space-between;align-items:center;min-height:56px;font-size:11.5px;font-weight:500;letter-spacing:.18em;text-transform:uppercase}
+details summary::-webkit-details-marker{display:none}
+details summary::after{content:"+";font-size:18px;letter-spacing:0;transition:transform .3s var(--ease)}
+details[open] summary::after{transform:rotate(45deg)}
+details .dbody{padding-bottom:18px;color:var(--muted);font-size:14.5px;max-width:56ch}
+.pdp-anat{padding-block:clamp(48px,7vw,96px);border-top:1px solid var(--line)}
+.pairs{padding-bottom:clamp(56px,8vw,110px)}
+.pairs .grid{grid-template-columns:repeat(4,minmax(0,1fr));padding-bottom:0}
+.mobile-buy{display:none}
+
+/* maison + help pages */
+.mhero{padding-block:clamp(48px,9vw,130px) clamp(36px,6vw,80px);text-align:center}
+.mhero h1{font-size:clamp(46px,8vw,124px);line-height:.95}
+.mhero h1 .it{color:var(--foil)}
+.mhero p{max-width:56ch;margin:24px auto 0;color:var(--muted);font-size:16px}
+.strip{display:grid;grid-template-columns:repeat(6,minmax(0,1fr));gap:8px}
+.strip img{aspect-ratio:4/5;object-fit:cover;width:100%;transition:transform 1s var(--ease)}
+.strip a{overflow:hidden}
+.chapters-text{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:clamp(24px,4vw,64px);padding-block:clamp(56px,8vw,110px)}
+.chapters-text h3{font-size:30px;margin-bottom:12px}
+.chapters-text p{color:var(--muted)}
+.lexicon{border-top:1px solid var(--line);padding-block:clamp(48px,8vw,100px)}
+.lexicon dl{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:28px;margin:36px 0 0}
+.lexicon dt{font-family:var(--display);font-size:34px}
+.lexicon dd{margin:6px 0 0;font-family:var(--serif);font-style:italic;font-size:19px;color:var(--muted)}
+.help{max-width:820px;margin-inline:auto;padding-block:clamp(40px,7vw,96px)}
+.help h1{font-size:clamp(40px,6vw,72px);line-height:1}
+.help section{padding-block:32px;border-top:1px solid var(--line);scroll-margin-top:90px}
+.help section:first-of-type{margin-top:36px}
+.help h2{font-size:28px;margin-bottom:14px}
+.help p,.help li{color:var(--muted);font-size:15.5px}
+.help ul{padding-left:20px;margin:10px 0 0;display:flex;flex-direction:column;gap:6px}
+.help .copy{display:inline-flex;align-items:center;gap:12px;margin-top:12px;min-height:var(--tap);padding-inline:16px;border:1px solid var(--line);font-size:15px;font-weight:500;color:var(--ink)}
+
+/* newsletter + footer */
+.news{border-top:1px solid var(--line);display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:28px;align-items:end;padding-block:clamp(48px,8vw,96px)}
+.news h2{font-size:clamp(28px,3.6vw,48px);line-height:1.08}
+.news form{display:flex;border-bottom:1px solid var(--ink)}
+.news input{flex:1;min-width:0;min-height:52px;background:transparent;border:0;padding:0;font:inherit;font-size:16px;color:var(--ink)}
+.news input:focus{outline:none}
+.news form:focus-within{border-color:var(--foil)}
+.news input::placeholder{color:var(--muted)}
+.news button{min-height:52px;padding-left:16px;font-size:11.5px;font-weight:600;letter-spacing:.2em;text-transform:uppercase}
+.news .note{grid-column:2;font-size:13px;color:var(--muted);margin-top:-12px}
+footer{background:var(--ink);color:var(--on-dark)}
+.fgrid{display:grid;grid-template-columns:1.4fr repeat(3,minmax(0,1fr));gap:36px;padding-block:64px 40px}
+.fgrid .wordmark{align-items:flex-start}
+.fgrid .wordmark b{font-size:30px;background:none;color:var(--on-dark);animation:none}
+.fgrid .wordmark small{color:rgba(244,247,252,.6)}
+.fgrid p{opacity:.75;font-size:14px;max-width:34ch;margin-top:20px}
+.fgrid .trust span{background:transparent;color:rgba(244,247,252,.8);border-color:rgba(244,247,252,.25)}
+.fgrid h6{margin:0 0 8px;font-size:11px;font-weight:500;letter-spacing:.2em;text-transform:uppercase;opacity:.7}
+.fgrid ul{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;font-size:14.5px}
+.fgrid ul a{display:inline-flex;align-items:center;min-height:var(--tap);opacity:.9}
+.fgrid ul a:hover{opacity:1;color:var(--foil-hi)}
+.fbase{display:flex;justify-content:space-between;flex-wrap:wrap;gap:12px;border-top:1px solid rgba(244,247,252,.14);padding-block:20px calc(20px + env(safe-area-inset-bottom,0px));font-size:12px;opacity:.7}
+
+/* drawers + search */
+.scrim{position:fixed;inset:0;background:rgba(14,27,54,.4);z-index:60;opacity:0;pointer-events:none;transition:opacity .45s var(--ease)}
+.scrim.on{opacity:1;pointer-events:auto}
+.drawer{position:fixed;top:0;bottom:0;right:0;width:min(440px,100%);background:var(--stone);z-index:70;transform:translateX(102%);transition:transform .55s var(--ease),visibility 0s .55s;display:flex;flex-direction:column;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px);visibility:hidden}
+.drawer.on{transform:none;visibility:visible;transition:transform .55s var(--ease)}
+.drawer.left{right:auto;left:0;transform:translateX(-102%)}
+.drawer.left.on{transform:none}
+.drawer.top{left:0;right:0;bottom:auto;width:100%;max-height:100%;transform:translateY(-102%)}
+.drawer.top.on{transform:none}
+.dhead{display:flex;justify-content:space-between;align-items:center;padding:12px 12px 12px 20px;border-bottom:1px solid var(--line)}
+.close{display:inline-flex;align-items:center;min-height:var(--tap);padding-inline:12px;font-size:11.5px;font-weight:500;letter-spacing:.16em;text-transform:uppercase;color:var(--muted)}
+.ship{padding:16px 20px;border-bottom:1px solid var(--line);font-size:14px}
+.bar{height:3px;background:var(--line);margin-top:10px;position:relative;overflow:hidden}
+.bar i{position:absolute;inset:0 auto 0 0;background:var(--foil);transition:width .6s var(--ease)}
+.lines{flex:1;overflow:auto;padding:4px 20px;overscroll-behavior:contain}
+.line{display:grid;grid-template-columns:80px minmax(0,1fr) auto;gap:14px;padding-block:16px;border-bottom:1px solid var(--line)}
+.line img{width:80px;aspect-ratio:4/5;object-fit:cover}
+.line h4{margin:0;font-family:var(--display);font-weight:400;font-size:19px}
+.line .sub{font-size:13px;color:var(--muted)}
+.line .ctrl{display:flex;align-items:center;gap:8px;margin-top:8px;flex-wrap:wrap}
+.line .qty{min-height:var(--tap);width:132px}
+.line .rm{min-height:var(--tap);padding-inline:8px;font-size:11.5px;letter-spacing:.14em;text-transform:uppercase;color:var(--muted);text-decoration:underline;text-underline-offset:5px}
+.line .lp{font-variant-numeric:tabular-nums;font-size:15px}
+.upsell{padding:16px 0 8px}
+.upsell h5{margin:0 0 10px;font-size:11px;font-weight:600;letter-spacing:.16em;text-transform:uppercase;color:var(--foil)}
+.uplist{display:flex;gap:10px;overflow-x:auto;scrollbar-width:none;padding-bottom:6px}
+.uplist::-webkit-scrollbar{display:none}
+.up{flex:none;width:118px;display:flex;flex-direction:column;gap:6px}
+.up img{width:100%;aspect-ratio:4/5;object-fit:cover}
+.up span{font-size:13px;line-height:1.3}
+.up button{min-height:var(--tap);border:1px solid var(--ink);font-size:11px;font-weight:600;letter-spacing:.14em;text-transform:uppercase}
+.empty{padding:40px 0;text-align:center;color:var(--muted);display:flex;flex-direction:column;gap:18px;align-items:center}
+.empty p{font-family:var(--serif);font-size:24px;font-style:italic}
+.dfoot{padding:18px 20px;border-top:1px solid var(--line);display:flex;flex-direction:column;gap:12px}
+.dfoot .tot{display:flex;justify-content:space-between;align-items:baseline;font-size:15px}
+.dfoot .tot strong{font-family:var(--display);font-weight:400;font-size:24px}
+.dfoot small{color:var(--muted);font-size:13px}
+.dfoot .btn{width:100%}
+.dfoot .trust{gap:6px;flex-wrap:nowrap;overflow:hidden}.dfoot .trust span{min-height:28px;padding-inline:8px;font-size:11px;white-space:nowrap}
+.mnav{display:flex;flex-direction:column;padding:8px 20px;overflow:auto}
+.mnav a{display:flex;align-items:center;min-height:64px;font-family:var(--display);font-size:30px;border-bottom:1px solid var(--line)}
+.mnav a.small{font-family:var(--sans);font-size:15px;min-height:var(--tap);border:0;color:var(--muted)}
+.sbox-in{padding:16px 20px 24px;max-width:var(--max);margin-inline:auto;width:100%}
+.sfield{display:flex;align-items:center;gap:10px;border-bottom:1px solid var(--ink)}
+.sfield input{flex:1;min-width:0;min-height:56px;border:0;background:transparent;font:inherit;font-size:20px;color:var(--ink)}
+.sfield input:focus{outline:none}
+.sres{display:grid;grid-template-columns:repeat(auto-fill,minmax(140px,1fr));gap:14px;margin-top:18px;max-height:62vh;overflow:auto}
+.sres a{display:flex;flex-direction:column;gap:6px}
+.sres img{aspect-ratio:4/5;object-fit:cover;width:100%}
+.sres span{font-size:14px}
+.sres small{font-size:12px;color:var(--muted)}
+.snone{margin-top:18px;color:var(--muted)}
+.toast{position:fixed;left:50%;bottom:calc(24px + env(safe-area-inset-bottom,0px));transform:translate(-50%,20px);background:var(--ink);color:var(--on-dark);padding:14px 20px;font-size:14px;z-index:90;opacity:0;pointer-events:none;transition:all .4s var(--ease);max-width:calc(100% - 32px)}
+.toast.on{opacity:1;transform:translate(-50%,0)}
+
+@media (max-width:1020px){
+  .nav,.hright .finder-link{display:none}.menubtn{display:inline-grid}
+  .hero-top,.chapter,.anat,.finder .inner,.maison,.pdp,.news{grid-template-columns:minmax(0,1fr)}
+  .chapter:nth-child(even) .ch-img{order:0}
+  .grid,.pairs .grid{grid-template-columns:repeat(2,minmax(0,1fr))}
+  .promises{grid-template-columns:repeat(2,minmax(0,1fr))}
+  .promises div:nth-child(3){padding-left:0;border-left:0}
+  .promises div{border-bottom:1px solid var(--line)}
+  .fgrid{grid-template-columns:1fr 1fr}
+  .fgrid>div:first-child{grid-column:1/-1}
+  .buy{position:static}
+  .news .note{grid-column:1;margin-top:-8px}
+  .chapters-text,.lexicon dl{grid-template-columns:1fr 1fr}
+  .strip{grid-template-columns:repeat(3,minmax(0,1fr))}
+  .hero-meta{grid-template-columns:1fr 1fr}
+  .anat-visual{max-width:520px}
+}
+@media (max-width:640px){
+  .announce .long{display:none}.announce .short{display:inline}
+  .hbar{height:60px}
+  .wordmark b{font-size:20px}
+  .hero-top .ctas .btn{flex:1 1 100%}
+  .stage.wide{display:none}.stage.tall{display:block}
+  .shelf-hint{display:block}
+  .hero-meta{gap:18px 12px;padding-block:22px}
+  .hero-meta strong{font-size:23px}
+  .chapter{gap:24px;padding-block:44px}
+  .ch-body h3{margin-top:10px}
+  .notes-inline{grid-template-columns:1fr;gap:10px}
+  .notes-inline div{display:grid;grid-template-columns:72px 1fr;align-items:baseline}
+  .ch-buy{gap:12px}.ch-buy .btn{flex:1}
+  .anat-visual{aspect-ratio:1/1}
+  .anat-visual>svg{height:74%;top:46%}
+  .anat-visual .nowcap{display:block}
+  .act{grid-template-columns:14px minmax(0,1fr) auto;gap:12px;padding-block:14px}
+  .act .notes{font-size:19px}
+  .readout{font-size:18px;min-height:0}
+  .result .match{grid-template-columns:84px minmax(0,1fr);gap:14px}
+  .result img{width:84px}
+  .result .row .btn{flex:1 1 100%}
+  .promises{grid-template-columns:1fr}
+  .promises div,.promises div+div{padding:22px 0;border-left:0}
+  .chapters-text,.lexicon dl{grid-template-columns:1fr}
+  .maison .duo img:last-child{margin-top:14%}
+  .grid{gap:36px 12px}
+  .card h3{font-size:19px}.card .meta{flex-direction:column;gap:2px}
+  .card .quick{display:none}
+  .card .madd{display:flex;align-items:center;justify-content:center;min-height:var(--tap);border:1px solid var(--ink);font-size:11px;font-weight:600;letter-spacing:.14em;text-transform:uppercase}
+  .card .tag{font-size:10.5px;padding:4px 8px}
+  .gal{grid-template-columns:minmax(0,1fr)}
+  .thumbs{display:none}
+  .dots{display:flex}
+  .assure{grid-template-columns:1fr}
+  .crumbs{padding-block:8px}
+  .mobile-buy{display:flex;position:fixed;left:0;right:0;bottom:0;z-index:30;background:var(--stone);border-top:1px solid var(--line);padding:10px 16px calc(10px + env(safe-area-inset-bottom,0px));gap:12px;align-items:center;transform:translateY(110%);transition:transform .45s var(--ease)}
+  .mobile-buy.on{transform:none}
+  .mobile-buy .n{flex:1;min-width:0;font-family:var(--display);font-size:17px;line-height:1.2}
+  .mobile-buy .n small{display:block;font-family:var(--sans);font-size:13px;color:var(--muted)}
+  .mobile-buy .btn{min-height:48px;padding-inline:22px}
+  .fgrid{gap:28px 16px;padding-block:48px 28px}
+}
+@media (prefers-reduced-motion:reduce){
+  *,*::before,*::after{animation:none!important;transition:none!important}
+  html{scroll-behavior:auto}
+}
+</style>
+
+<div class="announce"><span class="long">Free shipping across India on orders above ₹1,499 &nbsp;·&nbsp; Cash on delivery available</span><span class="short">Free shipping over ₹1,499 · COD</span></div>
+
+<header class="site" id="siteHeader">
+  <div class="wrap hbar">
+    <div class="hleft">
+      <button class="iconbtn menubtn" id="menuBtn" aria-label="Open menu" aria-controls="menu" aria-expanded="false"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4"><path d="M3 7h18M3 12h18M3 17h12"/></svg></button>
+      <nav class="nav" aria-label="Main">
+        <a href="#shop" data-nav="shop">Shop all</a>
+        <a href="#shop-her" data-nav="shop-her">For her</a>
+        <a href="#shop-him" data-nav="shop-him">For him</a>
+        <a href="#maison" data-nav="maison">The maison</a>
+      </nav>
+    </div>
+    <a href="#" class="wordmark" aria-label="ARS SHI home"><b>ARS SHI</b><small>Parfums</small></a>
+    <div class="hright">
+      <a href="#finder" class="label finder-link">Scent finder</a>
+      <button class="iconbtn" id="searchBtn" aria-label="Search" aria-controls="search" aria-expanded="false"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4"><circle cx="10.5" cy="10.5" r="6.5"/><path d="M15.5 15.5 21 21"/></svg></button>
+      <button class="iconbtn bagbtn" id="bagBtn" aria-label="Open bag" aria-controls="bag" aria-expanded="false"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4"><path d="M5 8h14l-1 13H6L5 8Z"/><path d="M9 8V6a3 3 0 0 1 6 0v2"/></svg><span class="bagcount" id="bagCount" aria-hidden="true">0</span></button>
+    </div>
+  </div>
+</header>
+
+<main id="main">
+<section class="view" id="v-home">
+  <div class="wrap hero-top">
+    <div>
+      <span class="label eyebrow">Eau de Parfum · 50 ml</span>
+      <h1><span class="ln"><span>Ars, the art of</span></span><span class="ln"><span class="it">leaving a trace.</span></span></h1>
+    </div>
+    <div>
+      <p class="lede">Six compositions, each dressed in its own textured, foil-pressed box. Made to be worn every day and remembered long after you leave the room.</p>
+      <div class="ctas"><a class="btn" href="#shop">Shop the collection</a><a class="btn ghost" href="#finder">Find your scent</a></div>
+    </div>
+  </div>
+  <div class="shelf">
+    <div class="stage wide" id="stageWide"><img class="stage-bg" src="img/w/stage-wide.webp" alt=""></div>
+    <div class="stage tall" id="stageTall"><img class="stage-bg" src="img/w/stage-mobile-600.webp" srcset="img/w/stage-mobile-600.webp 600w, img/w/stage-mobile.webp 1200w" sizes="100vw" alt=""></div>
+    <p class="shelf-hint">Tap a box to explore it</p>
+  </div>
+  <div class="wrap hero-meta">
+    <div><strong>₹899</strong><span>Every fragrance</span></div>
+    <div><strong>50 ml</strong><span>Eau de Parfum</span></div>
+    <div><strong>Six</strong><span>Compositions</span></div>
+    <div><strong>COD</strong><span>Pay on delivery</span></div>
+  </div>
+  <div class="marquee" aria-hidden="true"><div class="track" id="marquee"></div></div>
+
+  <div class="wrap shead">
+    <div><span class="label eyebrow">The collection</span><h2>Six boxes.<br><span class="it">Six moods.</span></h2></div>
+    <p>Each fragrance is named in French for the feeling it carries. Scroll through, and let the colour of each box fill the room.</p>
+  </div>
+  <div class="chapters" id="chapters"></div>
+
+  <div class="wrap">
+    <div class="shead" style="padding-bottom:28px">
+      <div><span class="label eyebrow">Anatomy of a scent</span><h2>Watch a fragrance<br><span class="it">unfold on skin.</span></h2></div>
+      <p>The lightest notes lift off first; the deepest stay for hours. Pick a fragrance, then press play or drag through the day.</p>
+    </div>
+    <div class="pick" id="homePick" role="group" aria-label="Choose a fragrance"></div>
+    <div id="homeAnat" style="padding-bottom:clamp(56px,9vw,120px)"></div>
+  </div>
+
+  <section class="finder" id="finderBlock">
+    <div class="wrap inner">
+      <div class="intro">
+        <span class="label eyebrow" style="color:var(--foil-hi)">Scent finder</span>
+        <h2>Not sure where<br>to begin?</h2>
+        <p>Answer three questions. We'll point you to the box that suits you best.</p>
+      </div>
+      <form id="quiz" autocomplete="off">
+        <fieldset class="q"><legend><b>01</b>Who is it for?</legend><div class="chips">
+          <label class="chip"><input type="radio" name="who" id="who-her" value="her"><span>Her</span></label>
+          <label class="chip"><input type="radio" name="who" id="who-him" value="him"><span>Him</span></label>
+          <label class="chip"><input type="radio" name="who" id="who-any" value="any"><span>Anyone</span></label></div></fieldset>
+        <fieldset class="q"><legend><b>02</b>Which do you reach for?</legend><div class="chips">
+          <label class="chip"><input type="radio" name="fam" id="fam-floral" value="floral"><span>Flowers</span></label>
+          <label class="chip"><input type="radio" name="fam" id="fam-fresh" value="fresh"><span>Fresh &amp; airy</span></label>
+          <label class="chip"><input type="radio" name="fam" id="fam-woody" value="woody"><span>Woods &amp; greens</span></label>
+          <label class="chip"><input type="radio" name="fam" id="fam-warm" value="warm"><span>Warm &amp; spiced</span></label></div></fieldset>
+        <fieldset class="q"><legend><b>03</b>When will you wear it?</legend><div class="chips">
+          <label class="chip"><input type="radio" name="when" id="when-day" value="day"><span>Daytime</span></label>
+          <label class="chip"><input type="radio" name="when" id="when-eve" value="evening"><span>Evenings</span></label>
+          <label class="chip"><input type="radio" name="when" id="when-all" value="all"><span>Every day</span></label></div></fieldset>
+        <div class="result empty-r" id="quizResult" aria-live="polite">Answer all three to see your match.</div>
+      </form>
+    </div>
+  </section>
+
+  <div class="wrap maison">
+    <div class="duo" id="maisonDuo"></div>
+    <div>
+      <span class="label eyebrow">The maison</span>
+      <p class="big"><em>Ars</em> is Latin for art. We started ARS SHI to make fine fragrance feel personal again, and within reach.</p>
+      <p class="body">Every box is wrapped in textured paper and pressed with metallic foil, the way old perfume houses dressed their bottles. Inside is an Eau de Parfum concentrated to last through your day.</p>
+      <div style="margin-top:20px"><a class="link" href="#maison">Read our story</a></div>
+    </div>
+  </div>
+  <div class="wrap">
+    <div class="promises">
+      <div><h5>Eau de Parfum</h5><p>A higher concentration of perfume oil than eau de toilette, for a longer wear.</p></div>
+      <div><h5>Gift-ready box</h5><p>Every bottle arrives in its signature textured, foil-pressed box.</p></div>
+      <div><h5>Cash on delivery</h5><p>Pay when it arrives, anywhere we deliver in India.</p></div>
+      <div><h5>Free shipping</h5><p>On every order above ₹1,499. Two bottles and you're there.</p></div>
+    </div>
+  </div>
+</section>
+
+<section class="view" id="v-shop">
+  <div class="wrap">
+    <div class="shead" style="padding-bottom:28px">
+      <div><span class="label eyebrow">Eau de Parfum · 50 ml · ₹899</span><h2 id="shopTitle">The collection</h2></div>
+      <p>Six compositions, one size, one price. Choose by mood, by moment, or by the colour of the box.</p>
+    </div>
+    <div class="filters" role="group" aria-label="Filter fragrances">
+      <button data-f="all" aria-pressed="true">All</button>
+      <button data-f="her" aria-pressed="false">For her</button>
+      <button data-f="him" aria-pressed="false">For him</button>
+      <button data-f="unisex" aria-pressed="false">Unisex</button>
+      <span class="count" id="shopCount" aria-live="polite"></span>
+    </div>
+    <div class="grid" id="shopGrid"></div>
+  </div>
+</section>
+
+<section class="view" id="v-product"><div class="wrap" id="pdp"></div></section>
+
+<section class="view" id="v-maison">
+  <div class="wrap mhero">
+    <span class="label eyebrow">The maison</span>
+    <h1>The art<br><span class="it">of a trace.</span></h1>
+    <p>ARS SHI began with a simple belief: a beautiful fragrance shouldn't be kept behind a glass counter. We compose Eaux de Parfum with the care of a heritage house, dress them in boxes worth keeping, and price them so you can wear one every day.</p>
+  </div>
+  <div class="wrap"><div class="strip" id="strip"></div></div>
+  <div class="wrap chapters-text">
+    <div><span class="label eyebrow">I</span><h3>Composed</h3><p>Each fragrance starts as a brief: a feeling, a place, a time of day. It is then built, revised and worn for weeks before it earns a name.</p></div>
+    <div><span class="label eyebrow">II</span><h3>Dressed</h3><p>Textured paper in deep fuchsia, forest, midnight, rose, cognac and taupe. Pressed with gold or silver foil and finished by hand.</p></div>
+    <div><span class="label eyebrow">III</span><h3>Worn</h3><p>Eau de Parfum concentration means fewer sprays and a longer trail. Two on the pulse points, one on the collar.</p></div>
+  </div>
+  <div class="wrap lexicon">
+    <span class="label eyebrow">A small lexicon</span>
+    <h2 style="font-size:clamp(28px,3.6vw,48px)">Why French names?</h2>
+    <dl>
+      <div><dt>Femme</dt><dd>woman</dd></div>
+      <div><dt>Homme</dt><dd>man</dd></div>
+      <div><dt>Créer</dt><dd>to create</dd></div>
+      <div><dt>Raviver</dt><dd>to revive, to rekindle</dd></div>
+    </dl>
+  </div>
+</section>
+
+<section class="view" id="v-help">
+  <div class="wrap help">
+    <span class="label eyebrow">Help</span>
+    <h1>Orders &amp; care</h1>
+    <section id="h-shipping"><h2>Shipping &amp; delivery</h2>
+      <ul><li>Orders are dispatched within 24–48 hours.</li><li>Delivery takes 3–7 working days across India.</li><li>Shipping is free on orders above ₹1,499.</li><li>Cash on delivery is available at checkout.</li></ul></section>
+    <section id="h-track"><h2>Track your order</h2>
+      <p>Once your order ships, we send a tracking link by email and SMS. Open it any time to see where your parcel is.</p></section>
+    <section id="h-returns"><h2>Returns</h2>
+      <p>Unopened bottles in their original sealed box can be returned within 7 days of delivery. For hygiene reasons, opened fragrances cannot be returned. If your order arrives damaged, write to us within 48 hours with a photo and we'll replace it.</p></section>
+    <section id="h-contact"><h2>Contact</h2>
+      <p>Write to us and we'll reply within one working day.</p>
+      <button class="copy" type="button" id="copyEmail"><span id="emailText">hello@arsshiperfume.in</span><span class="label" style="font-size:10.5px;color:var(--foil)">Copy</span></button></section>
+  </div>
+</section>
+
+<div class="wrap">
+  <div class="news">
+    <div><span class="label eyebrow">Letters from the maison</span><h2>New compositions, quiet launches,<br><span class="it">first access.</span></h2></div>
+    <form id="newsForm" novalidate>
+      <label for="email" class="sr">Email address</label>
+      <input id="email" type="email" inputmode="email" autocomplete="email" placeholder="Your email address" required>
+      <button type="submit">Subscribe</button>
+    </form>
+    <p class="note" id="newsNote">One letter a month. Unsubscribe in one click.</p>
+  </div>
+</div>
+</main>
+
+<footer id="siteFooter">
+  <div class="wrap fgrid">
+    <div><span class="wordmark"><b>ARS SHI</b><small>Parfums</small></span><p>Eau de Parfum in textured, foil-pressed boxes. Composed with care, priced for every day.</p>
+      <div class="trust" style="margin-top:20px"><span class="lock">Secure checkout</span><span>UPI</span><span>Cards</span><span>COD</span></div></div>
+    <div><h6>Shop</h6><ul><li><a href="#shop">All fragrances</a></li><li><a href="#shop-her">For her</a></li><li><a href="#shop-him">For him</a></li><li><a href="#finder">Scent finder</a></li></ul></div>
+    <div><h6>Maison</h6><ul><li><a href="#maison">Our story</a></li><li><a href="#contact">Contact</a></li></ul></div>
+    <div><h6>Help</h6><ul><li><a href="#shipping">Shipping</a></li><li><a href="#track">Track order</a></li><li><a href="#returns">Returns</a></li></ul></div>
+  </div>
+  <div class="wrap fbase"><span>© 2026 ARS SHI Parfums · arsshiperfume.in</span><span>Prices in INR, inclusive of GST</span></div>
+</footer>
+
+<div class="scrim" id="scrim"></div>
+<aside class="drawer" id="bag" aria-label="Your bag" role="dialog" aria-modal="true" inert>
+  <div class="dhead"><span class="label">Your bag</span><button class="close" data-close>Close</button></div>
+  <div class="ship" id="shipMsg"></div>
+  <div class="lines" id="lines"></div>
+  <div class="dfoot" id="dfoot"></div>
+</aside>
+<aside class="drawer left" id="menu" aria-label="Menu" role="dialog" aria-modal="true" inert>
+  <div class="dhead"><span class="wordmark" style="align-items:flex-start"><b style="font-size:20px">ARS SHI</b></span><button class="close" data-close>Close</button></div>
+  <nav class="mnav"><a href="#shop">Shop all</a><a href="#shop-her">For her</a><a href="#shop-him">For him</a><a href="#finder">Scent finder</a><a href="#maison">The maison</a>
+    <div style="height:16px"></div><a class="small" href="#shipping">Shipping</a><a class="small" href="#returns">Returns</a><a class="small" href="#contact">Contact</a></nav>
+</aside>
+<aside class="drawer top" id="search" aria-label="Search" role="dialog" aria-modal="true" inert>
+  <div class="sbox-in">
+    <div class="sfield"><label for="q" class="sr">Search fragrances</label><input id="q" type="search" placeholder="Search by name or note, e.g. rose" autocomplete="off"><button class="close" data-close>Close</button></div>
+    <div id="sres"></div>
+  </div>
+</aside>
+<div class="mobile-buy" id="mobileBuy" aria-hidden="true"></div>
+<div class="toast" id="toast" role="status"></div>
+
+<script>
+const PRICE = 899, FREE_SHIP = 1499;
+const P = [
+  {id:"femme-fuchsia", name:"Femme", ed:"Fuchsia", color:"#8A1E5B", foil:"silver", who:"her", fam:"Floral · Fruity", tags:["floral"], when:["day","all"], meaning:"woman",
+   desc:"Bright, confident and impossible to ignore. Litchi and pink pepper open onto Turkish rose and peony, resting on white musk and cashmere wood.",
+   top:["Pink pepper","Litchi"], heart:["Turkish rose","Peony"], base:["White musk","Cashmere wood"], line:"For celebrations, and for days that should feel like one."},
+  {id:"femme-rose", name:"Femme", ed:"Rosé", color:"#9C5A58", foil:"gold", who:"her", fam:"Floral · Gourmand", tags:["floral","warm"], when:["evening","all"], meaning:"woman",
+   desc:"Soft, luminous and close to the skin. Bergamot and pear melt into jasmine sambac and iris, then into Madagascar vanilla and sandalwood.",
+   top:["Bergamot","Pear"], heart:["Jasmine sambac","Iris"], base:["Madagascar vanilla","Sandalwood"], line:"For dinners that run late and conversations that run longer."},
+  {id:"creer-vert", name:"Créer", ed:"Vert", color:"#2E4733", foil:"silver", who:"unisex", fam:"Green · Woody", tags:["woody","fresh"], when:["day","all"], meaning:"to create",
+   desc:"The scent of a studio window left open. Fig leaf and green cardamom snap like fresh-cut stems, then settle into vetiver, cedar and a soft moss.",
+   top:["Fig leaf","Green cardamom"], heart:["Violet leaf","Vetiver"], base:["Cedarwood","Oakmoss"], line:"For the hour you begin something new."},
+  {id:"creer-ambre", name:"Créer", ed:"Ambre", color:"#A85A33", foil:"gold", who:"unisex", fam:"Amber · Spicy", tags:["warm","woody"], when:["evening"], meaning:"to create",
+   desc:"Warmth you can almost see. Saffron and mandarin glow over a heart of supple leather and tobacco leaf, sinking into amber and tonka bean.",
+   top:["Saffron","Mandarin"], heart:["Leather accord","Tobacco leaf"], base:["Amber","Tonka bean"], line:"For cold evenings, candlelight and slow music."},
+  {id:"homme", name:"Homme", ed:"Minuit", color:"#1E2839", foil:"silver", who:"him", fam:"Fresh · Aromatic", tags:["fresh"], when:["day","all"], meaning:"man",
+   desc:"Clean lines and a cool head. Grapefruit and sea salt over lavender and geranium, finished with an ambergris accord and dry vetiver.",
+   top:["Grapefruit","Sea salt"], heart:["Lavender","Geranium"], base:["Ambergris accord","Vetiver"], line:"For the boardroom, the commute and the late drive home."},
+  {id:"raviver", name:"Raviver", ed:"Taupe", color:"#665A50", foil:"silver", who:"unisex", fam:"Musky · Woody", tags:["woody","fresh","warm"], when:["all","day"], meaning:"to revive",
+   desc:"A second wind in a bottle. Neroli and black tea lift the spirits; orris and pink pepper add texture; suede and white musk keep it close.",
+   top:["Neroli","Black tea"], heart:["Orris","Pink peppercorn"], base:["Suede","White musk"], line:"For Sunday mornings, long flights and fresh starts."}
+];
+const byId = Object.fromEntries(P.map(p=>[p.id,p]));
+const inr = n => "₹" + n.toLocaleString("en-IN");
+const whoLabel = w => ({her:"For her",him:"For him",unisex:"Unisex"})[w];
+const $ = s => document.querySelector(s);
+const $$ = s => [...document.querySelectorAll(s)];
+const reduce = matchMedia("(prefers-reduced-motion: reduce)").matches;
+const isPhone = () => matchMedia("(max-width:640px)").matches;
+
+/* responsive WebP: every image ships as a 600w file and a full-size file */
+const pic = (n, alt="", sizes="(max-width:640px) 100vw, 50vw", cls="") =>
+  `<img${cls?` class="${cls}"`:""} src="img/w/${n}-600.webp" srcset="img/w/${n}-600.webp 600w, img/w/${n}.webp 1200w" sizes="${sizes}" alt="${alt}" decoding="async">`;
+
+const hex = h => [1,3,5].map(i=>parseInt(h.slice(i,i+2),16));
+const mix = (h,w,t) => { const a=hex(h), b=w==="w"?[250,250,252]:[10,12,20]; return "rgb("+a.map((v,i)=>Math.round(v+(b[i]-v)*t)).join(",")+")"; };
+
+/* ---------- bottle render ---------- */
+let uid = 0;
+function bottle(p, strata){
+  const u = "b"+(++uid);
+  const metal = p.foil==="gold" ? ["#7d5f33","#e9d3a1","#a4814c","#f6e7c3","#86683a"] : ["#6f7277","#eceef1","#9a9da2","#fafbfc","#73767b"];
+  const lt = mix(p.color,"w",.38), md = mix(p.color,"w",.06), dk = mix(p.color,"k",.32);
+  const liquid = strata
+    ? `<g clip-path="url(#${u}c)"><rect class="L3" x="36" y="96" width="128" height="222" fill="${dk}"/><rect class="L2" x="36" y="96" width="128" height="222" fill="${md}"/><rect class="L1" x="36" y="96" width="128" height="222" fill="${lt}"/><rect class="men" x="36" y="96" width="128" height="2.5" fill="rgba(255,255,255,.6)"/></g>`
+    : `<g clip-path="url(#${u}c)"><rect x="36" y="110" width="128" height="208" fill="url(#${u}l)"/><rect x="36" y="110" width="128" height="2.5" fill="rgba(255,255,255,.55)"/></g>`;
+  return `<svg viewBox="0 0 200 340" aria-hidden="true">
+  <defs>
+    <linearGradient id="${u}m" x1="0" x2="1">${metal.map((c,i)=>`<stop offset="${i/4}" stop-color="${c}"/>`).join("")}</linearGradient>
+    <linearGradient id="${u}g" x1="0" x2="1"><stop offset="0" stop-color="#fff" stop-opacity=".6"/><stop offset=".14" stop-color="#fff" stop-opacity=".12"/><stop offset=".55" stop-color="#fff" stop-opacity=".03"/><stop offset=".88" stop-color="#fff" stop-opacity=".2"/><stop offset="1" stop-color="#fff" stop-opacity=".55"/></linearGradient>
+    <linearGradient id="${u}l" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="${lt}" stop-opacity=".92"/><stop offset=".5" stop-color="${md}" stop-opacity=".96"/><stop offset="1" stop-color="${dk}"/></linearGradient>
+    <linearGradient id="${u}e" x1="0" x2="1"><stop offset="0" stop-color="#0e1b36" stop-opacity=".22"/><stop offset=".06" stop-color="#0e1b36" stop-opacity="0"/><stop offset=".94" stop-color="#0e1b36" stop-opacity="0"/><stop offset="1" stop-color="#0e1b36" stop-opacity=".25"/></linearGradient>
+    <clipPath id="${u}c"><rect x="36" y="88" width="128" height="230" rx="21"/></clipPath>
+    <filter id="${u}s" x="-50%" y="-50%" width="200%" height="200%"><feGaussianBlur stdDeviation="6"/></filter>
+  </defs>
+  <ellipse cx="104" cy="332" rx="78" ry="7" fill="rgba(16,28,56,.3)" filter="url(#${u}s)"/>
+  <rect x="24" y="74" width="152" height="258" rx="34" fill="rgba(255,255,255,.22)"/>
+  ${liquid}
+  <rect x="24" y="74" width="152" height="258" rx="34" fill="url(#${u}e)"/>
+  <rect x="24" y="74" width="152" height="258" rx="34" fill="url(#${u}g)" stroke="rgba(255,255,255,.85)" stroke-width="1.4"/>
+  <rect x="28" y="296" width="144" height="32" rx="16" fill="rgba(255,255,255,.2)"/>
+  <rect x="38" y="94" width="10" height="204" rx="5" fill="#fff" opacity=".42"/>
+  <rect x="154" y="110" width="4" height="164" rx="2" fill="#fff" opacity=".3"/>
+  <g transform="translate(100 216)">
+    <rect x="-46" y="-52" width="92" height="104" fill="rgba(252,252,253,.96)" stroke="url(#${u}m)" stroke-width="1.8"/>
+    <rect x="-41" y="-47" width="82" height="94" fill="none" stroke="url(#${u}m)" stroke-width=".7"/>
+    <text y="-24" text-anchor="middle" font-family="'Palatino Linotype',Palatino,'Book Antiqua',Pagella,serif" font-size="10.5" letter-spacing="2.6" fill="#0e1b36">ARS SHI</text>
+    <text y="8" text-anchor="middle" font-family="'Palatino Linotype',Palatino,'Book Antiqua',Pagella,serif" font-style="italic" font-size="21" fill="${p.color}">${p.name}</text>
+    <text y="28" text-anchor="middle" font-family="'Palatino Linotype',Palatino,'Book Antiqua',Pagella,serif" font-style="italic" font-size="12" fill="#4f607c">${p.ed}</text>
+  </g>
+  <rect x="80" y="60" width="40" height="18" fill="url(#${u}m)"/>
+  <rect x="68" y="8" width="64" height="56" rx="3" fill="url(#${u}m)"/>
+  <rect x="74" y="12" width="5" height="48" rx="2.5" fill="#fff" opacity=".5"/>
+  <path d="M68 22h64M68 50h64" stroke="rgba(0,0,0,.12)" stroke-width="1"/>
+  <rect x="68" y="58" width="64" height="2" fill="rgba(0,0,0,.2)"/>
+</svg>`;
+}
+function scene(p){ return `<div class="scene"><img class="sc-bg" src="img/w/stage-tall-600.webp" srcset="img/w/stage-tall-600.webp 600w, img/w/stage-tall.webp 1200w" sizes="(max-width:640px) 100vw, 50vw" alt=""><div class="sc-box">${pic("face-"+p.id, p.name+" "+p.ed+" box", "40vw")}</div><div class="sc-bottle">${bottle(p)}</div></div>`; }
+
+/* ---------- anatomy (ingredient view) ---------- */
+let anatStops = [];
+function anatomy(p, mountId){
+  const host = document.getElementById(mountId);
+  const cols = [mix(p.color,"w",.38), mix(p.color,"w",.06), mix(p.color,"k",.32)];
+  host.innerHTML = `<div class="anat" style="--c:${p.color};--c1:${cols[0]}">
+    <div class="anat-left">
+      <div class="anat-visual">
+        <div class="clock"><span data-clock>On spray</span><small>${p.name} ${p.ed}</small></div>
+        <div class="mist">${[0,1,2,3,4,5].map(k=>`<i style="--k:${k};--x:${[-14,10,-4,16,-18,4][k]}"></i>`).join("")}</div>
+        ${bottle(p,true)}
+        <div class="nowcap" aria-hidden="true"><b data-capname>Top notes</b><span data-capnotes></span></div>
+      </div>
+      <div class="dial">
+        <button class="play" type="button" aria-label="Play the day"><svg viewBox="0 0 14 14"><path d="M3 1.5v11l9-5.5z" fill="currentColor"/></svg></button>
+        <div class="range">
+          <label for="${mountId}-t" class="sr">Hours on skin</label>
+          <input type="range" id="${mountId}-t" min="0" max="600" step="5" value="0">
+          <div class="ticks"><span>Spray</span><span>1 h</span><span>3 h</span><span>6 h</span><span>10 h</span></div>
+        </div>
+      </div>
+      <p class="readout" data-readout aria-live="polite"></p>
+    </div>
+    <div class="acts">
+      <div class="act" data-act="0"><span class="dot" style="background:${cols[0]}"></span><div class="notes">${p.top.join(" <em>&amp;</em> ")}</div><div class="when"><b>Top</b>0–15 min</div></div>
+      <div class="act" data-act="1"><span class="dot" style="background:${cols[1]}"></span><div class="notes">${p.heart.join(" <em>&amp;</em> ")}</div><div class="when"><b>Heart</b>15 min–3 h</div></div>
+      <div class="act" data-act="2"><span class="dot" style="background:${cols[2]}"></span><div class="notes">${p.base.join(" <em>&amp;</em> ")}</div><div class="when"><b>Base</b>3 h on</div></div>
+    </div>
+  </div>`;
+  const root = host.querySelector(".anat"), input = root.querySelector("input"), L = [1,2,3].map(i=>root.querySelector(".L"+i)), men=root.querySelector(".men");
+  const acts=[...root.querySelectorAll(".act")], clock=root.querySelector("[data-clock]"), read=root.querySelector("[data-readout]");
+  const capName=root.querySelector("[data-capname]"), capNotes=root.querySelector("[data-capnotes]"), mistEl=root.querySelector(".mist");
+  const groups=[["Top notes",p.top],["Heart notes",p.heart],["Base notes",p.base]];
+  const lines = [`The ${p.top.join(" and ").toLowerCase()} reach you first. Bright, quick, gone within the quarter hour.`,
+                 `The heart is speaking now: ${p.heart.join(" and ").toLowerCase()}. This is what people remember.`,
+                 `Only the base remains, ${p.base.join(" and ").toLowerCase()}, warm and close to the skin.`];
+  const clamp=(v,a,b)=>Math.max(a,Math.min(b,v));
+  let shown=-1;
+  function set(m){
+    const t = 1 - clamp(m/20,0,1), h = 1 - clamp((m-10)/170,0,1), b = 1 - .7*clamp((m-150)/450,0,1);
+    const H=226, bottom=318, hb=H*.42*b, hh=H*.33*h, ht=H*.25*t;
+    let y = bottom - hb; L[0].setAttribute("y",y); L[0].setAttribute("height",hb);
+    y -= hh; L[1].setAttribute("y",y); L[1].setAttribute("height",hh);
+    y -= ht; L[2].setAttribute("y",y); L[2].setAttribute("height",ht);
+    men.setAttribute("y",y);
+    const now = m<15?0 : m<180?1 : 2;
+    mistEl.style.opacity=(0.2+0.8*t).toFixed(2);
+    const hh2=Math.floor(m/60), mm=m%60;
+    clock.textContent = m===0 ? "On spray" : (hh2? hh2+" h ":"") + (mm? mm+" min":"") + " on skin";
+    if(now!==shown){ shown=now; acts.forEach((a,i)=>a.className="act "+(i<now?"past":i===now?"now":"next")); read.textContent = lines[now]; capName.textContent=groups[now][0]; capNotes.textContent=groups[now][1].join(" & "); }
+  }
+  let raf=null, hold=null;
+  function stop(){ if(raf) cancelAnimationFrame(raf); raf=null; clearTimeout(hold); }
+  function play(){
+    stop(); const from=+input.value>=600?0:+input.value, dur=7000*(1-from/600), t0=performance.now();
+    const step=now=>{ const k=Math.min(1,(now-t0)/dur), v=Math.round(from+(600-from)*k); input.value=v; set(v); if(k<1) raf=requestAnimationFrame(step); else { raf=null; hold=setTimeout(refill,1600); } };
+    raf=requestAnimationFrame(step);
+  }
+  function refill(){ const t0=performance.now(), from=+input.value;
+    const step=now=>{ const k=Math.min(1,(now-t0)/1400), e=1-Math.pow(1-k,3), v=Math.round(from*(1-e)); input.value=v; set(v); if(k<1) raf=requestAnimationFrame(step); else raf=null; };
+    raf=requestAnimationFrame(step); }
+  input.addEventListener("input",()=>{ stop(); set(+input.value); });
+  root.querySelector(".play").onclick=()=>{ if(+input.value>=600) input.value=0; play(); };
+  set(0);
+  let played=false;
+  const o=new IntersectionObserver(es=>{ const vis=es[0].isIntersecting; root.classList.toggle("live",vis && !reduce); if(vis && !played && !reduce){ played=true; hold=setTimeout(play,500);} if(!vis) stop(); },{threshold:.4});
+  o.observe(root.querySelector(".anat-visual"));
+  anatStops.push(()=>{ stop(); o.disconnect(); });
+}
+function clearAnat(){ anatStops.forEach(f=>f()); anatStops=[]; }
+
+/* ---------- cart ---------- */
+let cart = [];
+try{ cart = JSON.parse(localStorage.getItem("arsshi-bag")||"[]").filter(l=>byId[l.id]); }catch(e){ cart = []; }
+function saveCart(){ try{ localStorage.setItem("arsshi-bag", JSON.stringify(cart)); }catch(e){} }
+function addToBag(id, qty=1, open=true){
+  const l = cart.find(x=>x.id===id); l ? l.qty = Math.min(10,l.qty+qty) : cart.push({id,qty});
+  saveCart(); renderBag();
+  if(open) openDrawer("bag"); else toast(`${byId[id].name} ${byId[id].ed} added to your bag.`);
+  const c=$("#bagCount"); c.classList.add("bump"); setTimeout(()=>c.classList.remove("bump"),400);
+}
+function setQty(id,q){ const l=cart.find(x=>x.id===id); if(!l) return; l.qty=Math.min(10,q); if(q<=0) cart=cart.filter(x=>x.id!==id); saveCart(); renderBag(); }
+function renderBag(){
+  const count = cart.reduce((a,l)=>a+l.qty,0), sub = count*PRICE, left = FREE_SHIP - sub;
+  $("#bagCount").textContent = count;
+  $("#bagBtn").setAttribute("aria-label", `Open bag, ${count} item${count===1?"":"s"}`);
+  $("#shipMsg").innerHTML = (count===0 ? `Free shipping on orders above ${inr(FREE_SHIP)}.` : left>0 ? `You're <b>${inr(left)}</b> away from free shipping.` : `Your order ships free.`) + `<div class="bar"><i style="width:${Math.min(100,sub/FREE_SHIP*100)}%"></i></div>`;
+  const others=P.filter(p=>!cart.some(l=>l.id===p.id));
+  const upsell = cart.length && others.length ? `<div class="upsell"><h5>${left>0?"Add a second fragrance for free shipping":"Complete your collection"}</h5><div class="uplist">${others.map(p=>`<div class="up">${pic("orig-"+p.id,"","120px")}<span>${p.name} <span class="it">${p.ed}</span></span><button type="button" data-addq="${p.id}" aria-label="Add ${p.name} ${p.ed}">Add</button></div>`).join("")}</div></div>` : "";
+  $("#lines").innerHTML = cart.length ? cart.map(l=>{const p=byId[l.id];return `
+    <div class="line">${pic("orig-"+p.id,"","80px")}
+      <div><h4>${p.name} <span class="it">${p.ed}</span></h4><div class="sub">Eau de Parfum · 50 ml</div>
+        <div class="ctrl"><div class="qty"><button aria-label="Decrease ${p.name} ${p.ed}" data-q="${p.id}" data-d="-1">−</button><output>${l.qty}</output><button aria-label="Increase ${p.name} ${p.ed}" data-q="${p.id}" data-d="1">+</button></div>
+        <button class="rm" data-rm="${p.id}">Remove</button></div></div>
+      <div class="lp">${inr(l.qty*PRICE)}</div></div>`}).join("") + upsell
+    : `<div class="empty"><p>Your bag is empty.</p><a class="btn ghost" href="#shop" data-close>Explore the collection</a></div>`;
+  $("#dfoot").innerHTML = cart.length ? `<div class="tot"><span>Subtotal</span><strong>${inr(sub)}</strong></div>
+    <small>Inclusive of GST. Shipping ${left>0?"calculated":"is free"} at checkout.</small>
+    <button class="btn" id="checkout">Checkout</button>
+    <div class="trust"><span class="lock">Secure checkout</span><span>UPI</span><span>Cards</span><span>COD</span></div>` : "";
+}
+document.addEventListener("click",e=>{
+  const t=e.target.closest("[data-q],[data-rm],[data-add],[data-addq],[data-close],#checkout");
+  if(!t) return;
+  if(t.dataset.q){ const l=cart.find(x=>x.id===t.dataset.q); setQty(t.dataset.q,l.qty+ +t.dataset.d); }
+  else if(t.dataset.rm) setQty(t.dataset.rm,0);
+  else if(t.dataset.addq){ addToBag(t.dataset.addq,1,false); }
+  else if(t.dataset.add){ e.preventDefault(); addToBag(t.dataset.add, +(t.dataset.qty||1)); }
+  else if(t.id==="checkout") toast("Checkout opens in Shopify's secure checkout once the store is live.");
+  if(t.hasAttribute("data-close")) closeDrawers();
+});
+
+/* ---------- drawers: page behind goes inert, focus moves in and back ---------- */
+let lastFocus=null, openId=null;
+const bgEls=()=>[$("#main"),$("#siteHeader"),$("#siteFooter"),$(".announce"),$("#mobileBuy")];
+function openDrawer(id){
+  if(openId) closeDrawers(true);
+  lastFocus=document.activeElement; openId=id;
+  const d=$("#"+id); d.inert=false; d.classList.add("on"); $("#scrim").classList.add("on");
+  bgEls().forEach(el=>el && (el.inert=true));
+  $$(`[aria-controls="${id}"]`).forEach(b=>b.setAttribute("aria-expanded","true"));
+  document.body.style.overflow="hidden";
+  setTimeout(()=>{ const f=id==="search"?$("#q"):d.querySelector("button,a,input"); f && f.focus({preventScroll:true}); },60);
+}
+function closeDrawers(silent){
+  $$(".drawer").forEach(d=>{d.classList.remove("on"); d.inert=true;});
+  $("#scrim").classList.remove("on"); bgEls().forEach(el=>el && (el.inert=false));
+  $$("[aria-controls]").forEach(b=>b.setAttribute("aria-expanded","false"));
+  document.body.style.overflow="";
+  if(openId && silent!==true && lastFocus && document.contains(lastFocus)) lastFocus.focus({preventScroll:true});
+  openId=null;
+}
+$("#bagBtn").onclick=()=>openDrawer("bag");
+$("#menuBtn").onclick=()=>openDrawer("menu");
+$("#searchBtn").onclick=()=>{ openDrawer("search"); runSearch(); };
+$("#scrim").onclick=()=>closeDrawers();
+document.addEventListener("keydown",e=>{ if(e.key==="Escape" && openId) closeDrawers(); });
+let tt; function toast(m){ const t=$("#toast"); t.textContent=m; t.classList.add("on"); clearTimeout(tt); tt=setTimeout(()=>t.classList.remove("on"),3200); }
+
+/* ---------- search ---------- */
+function runSearch(){
+  const q=$("#q").value.trim().toLowerCase();
+  const hits=P.filter(p=>!q || [p.name,p.ed,p.fam,p.meaning,whoLabel(p.who),...p.top,...p.heart,...p.base].join(" ").toLowerCase().includes(q));
+  $("#sres").innerHTML = hits.length ? `<div class="sres">${hits.map(p=>`<a href="#${p.id}" data-close>${pic("orig-"+p.id,"","160px")}<span>${p.name} <span class="it">${p.ed}</span></span><small>${p.fam}</small></a>`).join("")}</div>`
+    : `<p class="snone">No fragrance matches “${q.replace(/[<>&"]/g,"")}”. Try a note like rose, vanilla or vetiver.</p>`;
+}
+$("#q").addEventListener("input",runSearch);
+
+/* ---------- home ---------- */
+const shelfOrder=["femme-fuchsia","femme-rose","creer-vert","creer-ambre","homme","raviver"];
+function sbox(id,i,style){ const p=byId[id]; return `<a class="sbox" href="#${id}" style="--i:${i};${style}" aria-label="${p.name} ${p.ed}"><span class="lift">${pic("face-"+id,"","(max-width:640px) 25vw, 14vw")}<span class="glint" style="--i:${i}"></span></span><span class="tag">${p.name} · ${p.ed}</span></a>`; }
+(function(){
+  const bw = 46*600/1016/2, gap = (100 - 6*bw - 8)/5;
+  $("#stageWide").insertAdjacentHTML("beforeend", shelfOrder.map((id,i)=>sbox(id,i,`left:${(4+i*(bw+gap)).toFixed(2)}%`)).join(""));
+  // phone: two shelves of three (ledges sit at 42.7% and 92% of the image height)
+  const lefts=[6,37.8,69.6];
+  $("#stageTall").insertAdjacentHTML("beforeend", shelfOrder.map((id,i)=>sbox(id,i,`left:${lefts[i%3]}%;bottom:${i<3?57.6:8.3}%`)).join(""));
+})();
+const mq = ["Eau de Parfum","Femme","Créer","Homme","Raviver","50 ml · ₹899","Foil-pressed by hand","Free shipping over ₹1,499"];
+$("#marquee").innerHTML = [...mq,...mq].map(s=>`<span>${s}</span>`).join("");
+$("#chapters").innerHTML = P.map((p,i)=>`
+  <article class="chapter wrap" data-color="${mix(p.color,"k",.14)}">
+    <a class="ch-img" href="#${p.id}" aria-label="${p.name} ${p.ed}">${scene(p)}</a>
+    <div class="ch-body">
+      <span class="ch-no">${i+1} of 6 &nbsp;·&nbsp; ${p.fam}</span>
+      <h3>${p.name}</h3><span class="ed">${p.ed} — ${p.meaning}</span>
+      <p class="desc">${p.desc}</p>
+      <dl class="notes-inline"><div><dt>Top</dt><dd>${p.top.join(", ")}</dd></div><div><dt>Heart</dt><dd>${p.heart.join(", ")}</dd></div><div><dt>Base</dt><dd>${p.base.join(", ")}</dd></div></dl>
+      <div class="ch-buy"><span class="price">${inr(PRICE)}</span><button class="btn light" data-add="${p.id}">Add to bag</button><a class="link" href="#${p.id}">Discover</a></div>
+    </div>
+  </article>`).join("");
+const chWrap=$("#chapters"); chWrap.style.setProperty("--ch",mix(P[0].color,"k",.14));
+const chObs=new IntersectionObserver(es=>es.forEach(en=>{ if(en.isIntersecting) chWrap.style.setProperty("--ch",en.target.dataset.color); }),{rootMargin:"-45% 0px -45% 0px"});
+$$(".chapter").forEach(c=>chObs.observe(c));
+let ticking=false;
+if(!reduce) addEventListener("scroll",()=>{ if(ticking || isPhone() || !$("#v-home").classList.contains("on")) return; ticking=true; requestAnimationFrame(()=>{ ticking=false; $$(".ch-img").forEach(el=>{ const r=el.getBoundingClientRect(); if(r.bottom<0||r.top>innerHeight) return; const k=(r.top+r.height/2-innerHeight/2)/innerHeight; el.style.setProperty("--py",(k*-32).toFixed(1)+"px"); }); }); },{passive:true});
+$("#maisonDuo").innerHTML = pic("orig-raviver","Raviver box","(max-width:640px) 50vw, 25vw") + pic("orig-femme-rose","Femme Rosé box","(max-width:640px) 50vw, 25vw");
+
+let homeSel="creer-vert";
+function renderHomeAnat(){
+  $("#homePick").innerHTML=P.map(p=>`<button type="button" data-pick="${p.id}" aria-pressed="${p.id===homeSel}"><span class="sw" style="background:${p.color}"></span>${p.name} ${p.ed}</button>`).join("");
+  anatomy(byId[homeSel],"homeAnat");
+}
+$("#homePick").addEventListener("click",e=>{ const b=e.target.closest("[data-pick]"); if(!b) return; homeSel=b.dataset.pick; clearAnat(); renderHomeAnat(); });
+
+/* quiz: nothing is pre-picked; the match appears once all three are answered */
+function quiz(){
+  const f=new FormData($("#quiz")), who=f.get("who"), fam=f.get("fam"), when=f.get("when");
+  const res=$("#quizResult");
+  if(!who||!fam||!when){ const n=[who,fam,when].filter(Boolean).length; res.className="result empty-r"; res.textContent = n===0 ? "Answer all three to see your match." : `${3-n} more to go.`; return; }
+  let best=null,score=-99;
+  P.forEach(p=>{ let s=0;
+    if(who==="any") s+= p.who==="unisex"?2:1; else s+= p.who===who?3:(p.who==="unisex"?2:-4);
+    if(p.tags.includes(fam)) s+=3; if(p.tags[0]===fam) s+=1;
+    if(p.when.includes(when)) s+=1;
+    if(s>score){score=s;best=p;} });
+  res.className="result";
+  res.innerHTML=`<div class="match">${pic("orig-"+best.id,"","110px")}
+    <div><span class="label" style="opacity:.8">Your match</span><h4>${best.name} <span class="it">${best.ed}</span></h4><p>${best.line}</p></div></div>
+    <div class="row"><button type="button" class="btn light" data-add="${best.id}">Add to bag</button><a class="link" href="#${best.id}">Discover</a><button type="button" class="reset" id="quizReset">Start over</button></div>`;
+}
+$("#quiz").addEventListener("change",quiz);
+$("#quiz").addEventListener("click",e=>{ if(e.target.id==="quizReset"){ $("#quiz").reset(); quiz(); $("#who-her").focus(); } });
+
+/* ---------- shop ---------- */
+let filter="all";
+function card(p){return `
+  <article class="card">
+    <div class="ph"><a href="#${p.id}" aria-label="${p.name} ${p.ed}">${pic("orig-"+p.id, p.name+" "+p.ed+" box", "(max-width:1020px) 50vw, 33vw", "main")}${pic(p.id+"-angle","","(max-width:1020px) 50vw, 33vw","alt")}</a><span class="tag">${whoLabel(p.who)}</span>
+      <div class="quick"><button class="btn" data-add="${p.id}">Add to bag</button></div></div>
+    <div class="meta"><div><h3><a href="#${p.id}">${p.name} <span class="it">${p.ed}</span></a></h3><div class="fam"><span class="swatch" style="background:${p.color}"></span>${p.fam}</div></div><span class="price">${inr(PRICE)}</span></div>
+    <button class="madd" data-addq="${p.id}" aria-label="Add ${p.name} ${p.ed} to bag">Add to bag</button>
+  </article>`}
+function renderShop(){
+  const list=P.filter(p=>filter==="all"||p.who===filter);
+  $("#shopGrid").innerHTML=list.map(card).join("");
+  $("#shopCount").textContent=`${list.length} fragrance${list.length===1?"":"s"}`;
+  $$(".filters button").forEach(b=>b.setAttribute("aria-pressed",b.dataset.f===filter));
+  $("#shopTitle").textContent={all:"The collection",her:"For her",him:"For him",unisex:"Unisex"}[filter];
+}
+$$(".filters button").forEach(b=>b.onclick=()=>{filter=b.dataset.f;renderShop();});
+
+/* ---------- product ---------- */
+let pq=1, spin=null, spinOn=false;
+function renderPDP(p){
+  pq=1;
+  const others=P.filter(x=>x.id!==p.id).slice(0,4);
+  const slides=[
+    {thumb:"orig-"+p.id, html:pic("orig-"+p.id, p.name+" "+p.ed+" box","(max-width:640px) 100vw, 55vw"), zoom:1, cap:"The box"},
+    {thumb:p.id, html:pic(p.id, p.name+" "+p.ed+" box in the studio","(max-width:640px) 100vw, 55vw"), zoom:1, cap:"Studio"},
+    {thumb:p.id+"-angle", html:pic(p.id+"-angle", p.name+" "+p.ed+" box at an angle","(max-width:640px) 100vw, 55vw"), zoom:1, cap:"Three-quarter"},
+    {thumb:null, kind:"duo", html:scene(p), cap:"Bottle and box"},
+    {thumb:p.id+"-detail", html:pic(p.id+"-detail", (p.foil==="gold"?"Gold":"Silver")+" foil logo close-up","(max-width:640px) 100vw, 55vw"), zoom:1, cap:"Foil detail"},
+    {thumb:null, kind:"3d", html:`<div class="turn" id="turn"><div class="floor"></div><div class="cube" id="cube" style="--c:${p.color}"><div class="f fr" style="background-image:url(img/w/face-${p.id}.webp)"></div><div class="f bk" style="background-image:url(img/w/face-${p.id}.webp)"></div><div class="f sd rt"></div><div class="f sd lt"></div><div class="f tp"></div></div><div class="hint">Drag to turn the box</div></div>`, cap:""}
+  ];
+  $("#pdp").innerHTML=`
+  <nav class="crumbs" aria-label="Breadcrumb"><a href="#">Home</a><span aria-hidden="true">/</span><a href="#shop">Collection</a><span aria-hidden="true">/</span><span>${p.name} ${p.ed}</span></nav>
+  <div class="pdp">
+    <div>
+      <div class="gal">
+        <div class="thumbs" role="tablist" aria-label="Product images">${slides.map((s,i)=>`<button role="tab" data-slide="${i}" aria-selected="${i===0}" aria-label="${s.cap||"3D view"}">${s.thumb?`<img src="img/w/${s.thumb}-600.webp" alt="">`: s.kind==="duo"?`<span style="display:block;height:100%;padding:12% 22%;background:var(--paper)">${bottle(p)}</span>`:`<span class="t3d">3D</span>`}</button>`).join("")}</div>
+        <div class="viewer" id="viewer">${slides.map((s,i)=>`<div class="slide${i===0?" on":""}${s.zoom?" zoomable":""}" data-i="${i}" ${s.kind==="3d"?'data-turn="1"':''}>${s.html}${s.cap?`<span class="cap">${s.cap}</span>`:""}</div>`).join("")}</div>
+      </div>
+      <div class="dots">${slides.map((s,i)=>`<i class="${i===0?"on":""}"></i>`).join("")}<span class="sr" id="slideStatus" aria-live="polite"></span></div>
+    </div>
+    <div class="buy">
+      <div><span class="label" style="color:var(--foil)">${p.fam} · ${whoLabel(p.who)}</span>
+      <h1 style="margin-top:12px">${p.name}</h1><div class="ed">${p.ed}</div></div>
+      <div class="pr"><strong>${inr(PRICE)}</strong><span>50 ml Eau de Parfum · incl. GST</span></div>
+      <p class="desc">${p.desc}</p>
+      <div class="addrow">
+        <div class="qty"><button aria-label="Decrease quantity" id="pqm">−</button><output id="pqo" aria-live="polite">1</output><button aria-label="Increase quantity" id="pqp">+</button></div>
+        <button class="btn" id="pdpAdd">Add to bag</button>
+      </div>
+      <div class="trust"><span class="lock">Secure checkout</span><span>UPI</span><span>Cards</span><span>Cash on delivery</span></div>
+      <div class="assure"><div>Free shipping over ₹1,499</div><div>Dispatched in 24–48 h</div><div>Gift-ready box</div><div>7-day returns on sealed boxes</div></div>
+      <div>
+        <details><summary>How to wear</summary><div class="dbody">Spray from 15 cm onto pulse points: wrists, the base of the throat, behind the ears. Don't rub; let it dry on its own. One spray on clothing helps it last.</div></details>
+        <details><summary>Ingredients</summary><div class="dbody">Alcohol denat., parfum (fragrance), aqua (water). Full ingredient and allergen list printed on the box.</div></details>
+        <details><summary>Shipping &amp; returns</summary><div class="dbody">Dispatched within 24–48 hours. Delivered in 3–7 working days across India. Free shipping on orders above ₹1,499. Unopened bottles can be returned within 7 days. <a class="link" href="#shipping">Full details</a></div></details>
+      </div>
+    </div>
+  </div>
+  <div class="pdp-anat">
+    <div class="shead" style="padding-top:0;padding-bottom:24px"><div><span class="label eyebrow">Anatomy of ${p.name} ${p.ed}</span><h2 style="font-size:clamp(28px,3.6vw,52px)">Three acts,<br><span class="it">one day on skin.</span></h2></div><p>Press play or drag the dial to watch the notes lift away in order: top, heart, then base.</p></div>
+    <div id="pdpAnat"></div>
+  </div>
+  <div class="pairs"><div class="shead" style="padding-top:0;padding-bottom:24px"><h2 style="font-size:clamp(26px,3.2vw,44px)">You may also wear</h2><a class="link" href="#shop">View all</a></div><div class="grid">${others.map(card).join("")}</div></div>`;
+
+  const slidesEl=$$("#pdp .slide"), th=$$("#pdp .thumbs button"), dots=$$("#pdp .dots i");
+  let cur=0, swiped=false;
+  const go=i=>{ cur=(i+slidesEl.length)%slidesEl.length; slidesEl.forEach((s,k)=>{s.classList.toggle("on",k===cur);s.classList.remove("zoom")}); th.forEach((t,k)=>t.setAttribute("aria-selected",k===cur)); dots.forEach((d,k)=>d.classList.toggle("on",k===cur)); spinOn = !!slidesEl[cur].dataset.turn; $("#slideStatus").textContent=`Image ${cur+1} of ${slidesEl.length}`; };
+  th.forEach(b=>b.onclick=()=>go(+b.dataset.slide));
+  slidesEl.forEach(s=>{ if(s.classList.contains("zoomable")) s.onclick=()=>{ if(!swiped) s.classList.toggle("zoom"); }; });
+  // swipe between images on phones; the 3D slide keeps its own drag
+  const vw=$("#viewer"); let sx=null, sy=null;
+  vw.addEventListener("touchstart",e=>{ if(e.target.closest(".turn")) { sx=null; return; } sx=e.touches[0].clientX; sy=e.touches[0].clientY; },{passive:true});
+  vw.addEventListener("touchend",e=>{ if(sx===null) return; const dx=e.changedTouches[0].clientX-sx, dy=e.changedTouches[0].clientY-sy; if(Math.abs(dx)>40 && Math.abs(dx)>Math.abs(dy)){ swiped=true; go(cur+(dx<0?1:-1)); setTimeout(()=>swiped=false,350);} sx=null; },{passive:true});
+  // 3D turntable only animates while its slide is showing and the tab is visible
+  const turn=$("#turn"), cube=$("#cube"); let ry=-28, drag=null, idle=true;
+  if(spin) cancelAnimationFrame(spin);
+  spinOn=false;
+  const loop=()=>{ if(spinOn && idle && !reduce && !document.hidden){ ry+=.2; cube.style.setProperty("--ry",ry+"deg"); } spin=requestAnimationFrame(loop); };
+  loop();
+  turn.addEventListener("pointerdown",e=>{ drag={x:e.clientX,ry}; idle=false; turn.setPointerCapture(e.pointerId); });
+  turn.addEventListener("pointermove",e=>{ if(!drag) return; ry=drag.ry+(e.clientX-drag.x)*.5; cube.style.setProperty("--ry",ry+"deg"); });
+  const end=()=>{ drag=null; setTimeout(()=>idle=true,1800); };
+  turn.addEventListener("pointerup",end); turn.addEventListener("pointercancel",end);
+  $("#pqm").onclick=()=>{pq=Math.max(1,pq-1);$("#pqo").textContent=pq};
+  $("#pqp").onclick=()=>{pq=Math.min(10,pq+1);$("#pqo").textContent=pq};
+  $("#pdpAdd").onclick=()=>addToBag(p.id,pq);
+  $("#mobileBuy").innerHTML=`<div class="n">${p.name} ${p.ed}<small>${inr(PRICE)} · 50 ml</small></div><button class="btn" data-add="${p.id}">Add to bag</button>`;
+  anatomy(p,"pdpAnat");
+}
+/* sticky bar appears only once the main Add to bag button has scrolled up out of view */
+let mbOn=false;
+function checkSticky(){ const btn=mbOn && $("#pdpAdd"); const show=!!btn && btn.getBoundingClientRect().bottom<0; const bar=$("#mobileBuy"); if(bar.classList.contains("on")!==show){ bar.classList.toggle("on",show); bar.setAttribute("aria-hidden",String(!show)); bar.inert=!show; } }
+addEventListener("scroll",()=>{ if(mbOn) checkSticky(); },{passive:true});
+const mb={ observe(){ mbOn=true; checkSticky(); }, disconnect(){ mbOn=false; } };
+
+/* maison, help, newsletter */
+$("#strip").innerHTML=P.map(p=>`<a href="#${p.id}" aria-label="${p.name} ${p.ed}">${pic("orig-"+p.id,"","(max-width:1020px) 33vw, 16vw")}</a>`).join("");
+$("#copyEmail").onclick=()=>{ const t=$("#emailText").textContent;
+  const fallback=()=>{ const r=document.createRange(); r.selectNodeContents($("#emailText")); getSelection().removeAllRanges(); getSelection().addRange(r); toast("Address selected. Copy it from here."); };
+  try{ navigator.clipboard.writeText(t).then(()=>toast("Email address copied."),fallback); }catch(e){ fallback(); } };
+$("#newsForm").addEventListener("submit",e=>{
+  e.preventDefault(); const v=$("#email").value.trim();
+  $("#newsNote").textContent = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(v) ? "Thank you. You're on the list." : "Enter a valid email address, like name@example.com.";
+});
+
+/* router */
+const helpIds={shipping:"h-shipping",returns:"h-returns",contact:"h-contact",track:"h-track"};
+function route(){
+  const h=location.hash.slice(1);
+  $$(".view").forEach(v=>v.classList.remove("on"));
+  $$("[data-nav]").forEach(a=>a.removeAttribute("aria-current"));
+  const bar=$("#mobileBuy"); bar.classList.remove("on"); bar.inert=true; mb.disconnect(); clearAnat();
+  if(spin){ cancelAnimationFrame(spin); spin=null; }
+  let target=null;
+  if(byId[h]){ renderPDP(byId[h]); $("#v-product").classList.add("on"); mb.observe($("#pdpAdd")); document.title=`${byId[h].name} ${byId[h].ed} · ARS SHI Parfums`; }
+  else if(h.startsWith("shop")){ filter=({"shop-her":"her","shop-him":"him"})[h]||"all"; renderShop(); $("#v-shop").classList.add("on"); document.title="Shop · ARS SHI Parfums"; }
+  else if(h==="maison"){ $("#v-maison").classList.add("on"); document.title="The maison · ARS SHI Parfums"; }
+  else if(helpIds[h]){ $("#v-help").classList.add("on"); target=$("#"+helpIds[h]); document.title="Help · ARS SHI Parfums"; }
+  else { $("#v-home").classList.add("on"); renderHomeAnat(); if(h==="finder") target=$("#finderBlock"); document.title="ARS SHI Parfums"; }
+  const nav=document.querySelector(`[data-nav="${h}"]`); if(nav) nav.setAttribute("aria-current","page");
+  closeDrawers(true);
+  if(target) requestAnimationFrame(()=>target.scrollIntoView({block:"start"})); else window.scrollTo(0,0);
+  if(mbOn) checkSticky();
+}
+addEventListener("hashchange",route);
+renderBag(); route();
+</script>

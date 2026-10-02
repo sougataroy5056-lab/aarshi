@@ -1,0 +1,7 @@
+node_modules/
+public/
+.vercel/
+.DS_Store
+.claude/
+# old JPEG working files; the site ships WebP from site/img/w
+site/img/*.jpg
