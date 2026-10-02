@@ -4,7 +4,8 @@
 // HTML document, pre-renders the JavaScript-built content (products, prices, Add to bag
 // buttons) into the HTML so search engines, link previews and no-JS visitors see it,
 // and copies the assets it references.
-import { readFileSync, writeFileSync, mkdirSync, cpSync, rmSync } from "node:fs";
+import { readFileSync, writeFileSync, mkdirSync, cpSync, rmSync, readdirSync } from "node:fs";
+import { createHash } from "node:crypto";
 import { JSDOM, VirtualConsole } from "jsdom";
 
 const src = readFileSync("site/index.html", "utf8");
@@ -63,10 +64,17 @@ w.renderShop(); // fill the collection grid too, so every product is in the HTML
 // leave no runtime-only state in the saved HTML
 w.document.body.removeAttribute("style");
 w.document.querySelectorAll("[inert]").forEach(el => { if (!el.classList.contains("drawer")) el.removeAttribute("inert"); });
-const html = "<!doctype html>\n" + w.document.documentElement.outerHTML + "\n";
+// cache-busting: images and fonts are cached for a year, so stamp every reference
+// with a hash of the asset files; any changed image gets a new URL on the next deploy
+const hash = createHash("sha1");
+for (const dir of ["site/img/w", "site/fonts"]) for (const f of readdirSync(dir).sort()) hash.update(f).update(readFileSync(`${dir}/${f}`));
+const ver = hash.digest("hex").slice(0, 8);
+const html = ("<!doctype html>\n" + w.document.documentElement.outerHTML + "\n")
+  .replace(/\.(webp|woff2)(?=[\s"')])/g, `.$1?v=${ver}`);
 w.close();
 
 const count = (re) => (html.match(re) || []).length;
+console.log(`Asset version ${ver}`);
 console.log(`Pre-rendered: ${count(/Add to bag/g)} "Add to bag" buttons, ${count(/₹899/g)} prices`);
 
 rmSync("public", { recursive: true, force: true });
