@@ -11,12 +11,16 @@
   --stone:#FFFFFF;      /* page ground */
   --paper:#EEF3FA;      /* pale blue surfaces */
   /* Rule from the brand owner: text on white is royal blue; text on any other background is gold. */
-  --ink:#203E98;        /* royal blue: all text on white */
-  --muted:#4A5FA0;      /* secondary text on white: lighter royal blue (5.8:1) */
+  --ink:#1A2F7A;        /* dark royal blue: all text on white */
+  --muted:#3B4F8C;      /* secondary text on white (7:1) */
   --navy:#0E1B36;       /* dark surfaces: announcement bar, buttons, scent finder, footer */
   --gold-lt:#D9BC78;    /* gold text on dark and royal-blue surfaces (6:1 or better) */
   --gold-deep:#5A3E0E;  /* gold text on light coloured surfaces such as amber and pink (5:1 or better) */
   --gold:#8A6A35;       /* antique gold, ornaments only */
+  --royal-foil:linear-gradient(104deg,#0F1F55 0%,#1A2F7A 18%,#2E4FB4 32%,#7E98E2 41%,#3556BE 49%,#16296E 64%,#2442A0 82%,#0F1F55 100%);
+  --gold-foil:linear-gradient(104deg,#8A6526 0%,#C29A4E 16%,#EBD08E 30%,#FFF3CF 39%,#D6B064 48%,#9A7432 64%,#E2C580 83%,#8A6526 100%);
+  --gold-foil-deep:linear-gradient(104deg,#3A2604 0%,#5A3E0E 20%,#8A6524 36%,#B08A3E 42%,#6E4D14 52%,#3E2A06 70%,#5A3E0E 100%);
+  --foil-img:var(--royal-foil);
   --gold-line:#C9AE7C;  /* champagne hairlines and ornaments */
   --line:rgba(32,62,152,.15);
   --foil:#2A55C4;       /* sapphire accent */
@@ -58,6 +62,22 @@ p{margin:0}
 .iconbtn{display:inline-grid;place-items:center;min-width:var(--tap);min-height:var(--tap)}
 .iconbtn svg{width:20px;height:20px}
 
+/* ---------- foil lettering ----------
+   Display text is printed through a metallic gradient (background-clip:text). The gradient
+   switches with the surface, so the brand rule holds: royal blue on white, gold elsewhere. */
+.announce,.finder,footer,.chapter,.slide .cap,.toast{--foil-img:var(--gold-foil)}
+.chapter.on-light{--foil-img:var(--gold-foil-deep)}
+@supports ((-webkit-background-clip:text) or (background-clip:text)){
+  h1,h2,h3,.eyebrow,.hero-meta strong,.price,.buy .pr strong,.dfoot .tot strong,.line .lp,.nav a,.mnav a,.ch-body .ed,
+  .announce span,.fgrid .h6,.lexicon dt,.act .notes,.result h4,.msg .pick-card b,.card h3 a,.sres span{
+    background-image:var(--foil-img);background-size:100% 100%;
+    -webkit-background-clip:text;background-clip:text;color:transparent;-webkit-text-fill-color:transparent}
+  .card h3{-webkit-text-fill-color:initial}
+  /* the hero lines slide in on their own layers, so the foil is printed on each line rather than the heading */
+  .hero-top h1{background:none;-webkit-text-fill-color:initial;color:var(--ink)}
+  .hero-top h1 .ln>span{background-image:var(--foil-img);background-size:100% 100%;-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;padding-bottom:.06em}
+}
+
 /* header */
 .announce{background:var(--navy);color:var(--gold-lt);text-align:center;padding:9px 16px;font-size:14px;letter-spacing:.16em;text-transform:uppercase;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 .announce .short{display:none}
@@ -76,8 +96,8 @@ header.site.compact .mono{height:0;margin-bottom:0;opacity:0}
 .wordmark{--f:24px;display:flex;flex-direction:column;align-items:center;line-height:1}
 /* ASH monogram, cut from the box artwork; painted with currentColor through a mask */
 .mono{display:block;width:calc(var(--f) * 2.33);height:calc(var(--f) * 2.55);margin-bottom:calc(var(--f) * .26);transition:height .45s var(--ease),margin .45s var(--ease),opacity .3s var(--ease);background:currentColor;-webkit-mask:url(img/w/monogram.webp) center/contain no-repeat;mask:url(img/w/monogram.webp) center/contain no-repeat}
-header.site .wordmark .mono{color:var(--ink)}
-.wordmark b{font-family:var(--display);font-weight:400;font-size:var(--f);letter-spacing:.08em;margin-right:-.08em;transition:font-size .45s var(--ease);background:linear-gradient(100deg,var(--ink) 40%,var(--foil) 50%,var(--ink) 60%) 0 0/300% 100%;-webkit-background-clip:text;background-clip:text;color:transparent;animation:foil 7s ease-in-out infinite}
+header.site .wordmark .mono{background:var(--royal-foil);background-size:100% 100%}
+.wordmark b{font-family:var(--display);font-weight:400;font-size:var(--f);letter-spacing:.08em;margin-right:-.08em;transition:font-size .45s var(--ease);background:var(--foil-img) 0 0/220% 100%;-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;color:transparent;animation:foil 7s ease-in-out infinite}
 @keyframes foil{0%,70%{background-position:100% 0}100%{background-position:0 0}}
 .wordmark small{font-size:max(11px, calc(var(--f) * .42));letter-spacing:.38em;margin-right:-.38em;margin-top:calc(var(--f) * .3);color:var(--muted);text-transform:uppercase}
 .hright{display:flex;justify-content:flex-end;gap:6px;align-items:center}
@@ -404,8 +424,8 @@ footer{background:var(--navy);color:var(--gold-lt)}
 .fgrid{display:grid;grid-template-columns:1.4fr repeat(3,minmax(0,1fr));gap:36px;padding-block:64px 40px}
 .fgrid .wordmark{display:inline-flex;align-items:center}
 .fgrid .wordmark{--f:28px}
-.fgrid .wordmark .mono{color:var(--gold-lt)}
-.fgrid .wordmark b{background:none;color:var(--gold-lt);animation:none}
+.fgrid .wordmark .mono{background:var(--gold-foil);background-size:100% 100%}
+.fgrid .wordmark b{animation:none;background-size:100% 100%}
 .fgrid .wordmark small{color:var(--gold-lt);opacity:.85}
 .fgrid p{opacity:.75;font-size:15px;max-width:34ch;margin-top:20px}
 .fgrid .trust span{background:transparent;color:var(--gold-lt);border-color:rgba(217,188,120,.4)}
