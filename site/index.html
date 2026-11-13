@@ -135,10 +135,13 @@ header.site{position:sticky;top:env(safe-area-inset-top,0px);z-index:40;backgrou
 .scene .sc-box img{width:100%;height:100%;object-fit:cover}
 .scene .sc-bottle{position:absolute;left:51%;bottom:13.6%;height:47%;aspect-ratio:200/340;animation:float 6s ease-in-out infinite}
 .scene .sc-bottle svg{width:100%;height:100%;overflow:visible}
+.scene .sc-minis{position:absolute;left:44%;right:4%;bottom:13.6%;height:27%;display:flex;align-items:flex-end;gap:2%}
+.scene .sc-minis span{flex:1;height:100%;display:block}
+.scene .sc-minis svg{width:100%;height:100%;overflow:visible}
 @keyframes float{0%,100%{transform:translateY(0)}50%{transform:translateY(-1.6%)}}
 
 /* chapters */
-.chapters{--ch:#2F4A33;background:var(--ch);color:var(--on-dark);transition:background-color 1.1s var(--ease)}
+.chapters{--ch:#1B2850;--chfg:var(--on-dark);background:var(--ch);color:var(--chfg);transition:background-color 1.1s var(--ease),color 1.1s var(--ease)}
 .chapter{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:clamp(28px,6vw,110px);align-items:center;padding-block:clamp(48px,7vw,96px)}
 .chapter:nth-child(even) .ch-img{order:2}
 .ch-img{display:block;box-shadow:0 50px 90px -40px rgba(0,0,0,.55);transform:translateY(var(--py,0))}
@@ -146,7 +149,7 @@ header.site{position:sticky;top:env(safe-area-inset-top,0px);z-index:40;backgrou
 .ch-body h3{font-size:clamp(52px,8vw,124px);line-height:.95;margin-top:16px}
 .ch-body .ed{display:block;font-family:var(--serif);font-style:italic;font-size:clamp(23px,2.4vw,34px);margin-top:8px}
 .ch-body .desc{max-width:42ch;margin-top:22px;font-size:18.5px;line-height:1.7}
-.notes-inline{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:18px;margin:30px 0 0;padding-top:22px;border-top:1px solid rgba(244,247,252,.3);max-width:520px}
+.notes-inline{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:18px;margin:30px 0 0;padding-top:22px;border-top:1px solid color-mix(in srgb,currentColor 30%,transparent);max-width:520px}
 .notes-inline dt{font-size:12px;font-weight:500;letter-spacing:.2em;text-transform:uppercase;margin-bottom:6px}
 .notes-inline dd{margin:0;font-family:var(--serif);font-size:19px;line-height:1.3}
 .ch-buy{display:flex;align-items:center;flex-wrap:wrap;gap:20px;margin-top:32px}
@@ -575,7 +578,7 @@ footer{background:var(--ink);color:var(--on-dark)}
       <h1><span class="ln"><span>Ars, the art of</span></span> <span class="ln"><span class="it">leaving a trace.</span></span></h1>
     </div>
     <div>
-      <p class="lede">Six compositions, each dressed in its own textured, foil-pressed box. Made to be worn every day and remembered long after you leave the room.</p>
+      <p class="lede">Four compositions, each dressed in its own textured box and pressed in gold foil, and a gift set that holds them all.</p>
       <div class="ctas"><a class="btn" href="#shop">Shop the collection</a><a class="btn ghost" href="#finder">Find your scent</a></div>
     </div>
   </div>
@@ -585,15 +588,15 @@ footer{background:var(--ink);color:var(--on-dark)}
     <p class="shelf-hint">Tap a box to explore it</p>
   </div>
   <div class="wrap hero-meta">
-    <div><strong>₹899</strong><span>Every fragrance</span></div>
-    <div><strong>50 ml</strong><span>Eau de Parfum</span></div>
-    <div><strong>Six</strong><span>Compositions</span></div>
+    <div><strong>Four</strong><span>Eaux de Parfum</span></div>
+    <div><strong>₹899</strong><span>50 ml each</span></div>
+    <div><strong>₹1,999</strong><span>Gift set of four</span></div>
     <div><strong>COD</strong><span>Pay on delivery</span></div>
   </div>
   <div class="marquee" aria-hidden="true"><div class="track" id="marquee"></div></div>
 
   <div class="wrap shead">
-    <div><span class="label eyebrow">The collection</span><h2>Six boxes.<br><span class="it">Six moods.</span></h2><span class="ornament" aria-hidden="true">✦</span></div>
+    <div><span class="label eyebrow">The collection</span><h2>Four boxes.<br><span class="it">Four moods.</span></h2><span class="ornament" aria-hidden="true">✦</span></div>
     <p>Each fragrance is named in French for the feeling it carries. Scroll through, and let the colour of each box fill the room.</p>
   </div>
   <div class="chapters" id="chapters"></div>
@@ -662,7 +665,7 @@ footer{background:var(--ink);color:var(--on-dark)}
       <div><h3 class="h5">Eau de Parfum</h3><p>A higher concentration of perfume oil than eau de toilette, for a longer wear.</p></div>
       <div><h3 class="h5">Gift-ready box</h3><p>Every bottle arrives in its signature textured, foil-pressed box.</p></div>
       <div><h3 class="h5">Cash on delivery</h3><p>Pay when it arrives, anywhere we deliver in India.</p></div>
-      <div><h3 class="h5">Free shipping</h3><p>On every order above ₹1,499. Two bottles and you're there.</p></div>
+      <div><h3 class="h5">Free shipping</h3><p>On every order above ₹1,499. Two bottles, or the gift set, and you're there.</p></div>
     </div>
   </div>
 </section>
@@ -670,14 +673,15 @@ footer{background:var(--ink);color:var(--on-dark)}
 <section class="view" id="v-shop">
   <div class="wrap">
     <div class="shead" style="padding-bottom:28px">
-      <div><span class="label eyebrow">Eau de Parfum · 50 ml · ₹899</span><h2 id="shopTitle">The collection</h2></div>
-      <p>Six compositions, one size, one price. Choose by mood, by moment, or by the colour of the box.</p>
+      <div><span class="label eyebrow">Eau de Parfum · from ₹899</span><h2 id="shopTitle">The collection</h2></div>
+      <p>Four compositions and a gift set that holds them all. Choose by mood, by moment, or by the colour of the box.</p>
     </div>
     <div class="filters" role="group" aria-label="Filter fragrances">
       <button data-f="all" aria-pressed="true">All</button>
       <button data-f="her" aria-pressed="false">For her</button>
       <button data-f="him" aria-pressed="false">For him</button>
       <button data-f="unisex" aria-pressed="false">Unisex</button>
+      <button data-f="gift" aria-pressed="false">Gift sets</button>
       <span class="count" id="shopCount" aria-live="polite"></span>
     </div>
     <div class="grid" id="shopGrid"></div>
@@ -695,7 +699,7 @@ footer{background:var(--ink);color:var(--on-dark)}
   <div class="wrap"><div class="strip" id="strip"></div></div>
   <div class="wrap chapters-text">
     <div><span class="label eyebrow">I</span><h3>Composed</h3><p>Each fragrance starts as a brief: a feeling, a place, a time of day. It is then built, revised and worn for weeks before it earns a name.</p></div>
-    <div><span class="label eyebrow">II</span><h3>Dressed</h3><p>Textured paper in deep fuchsia, forest, midnight, rose, cognac and taupe. Pressed with gold or silver foil and finished by hand.</p></div>
+    <div><span class="label eyebrow">II</span><h3>Dressed</h3><p>Textured paper in navy, amber, baby pink and black, pressed in gold foil and finished by hand. The gift set comes in white, lettered in royal blue.</p></div>
     <div><span class="label eyebrow">III</span><h3>Worn</h3><p>Eau de Parfum concentration means fewer sprays and a longer trail. Two on the pulse points, one on the collar.</p></div>
   </div>
   <div class="wrap lexicon">
@@ -782,30 +786,29 @@ footer{background:var(--ink);color:var(--on-dark)}
    { products: {handle: {v: variantId, price: paise, ok: available}}, cart: <cart json>, route }.
    Without it (Vercel / preview) the bag works locally. */
 const SHOP = window.SHOP || null;
-const PRICE = (SHOP && Object.values(SHOP.products||{})[0] && Object.values(SHOP.products)[0].price/100) || 899, FREE_SHIP = 1499;
+const FREE_SHIP = 1499;
 const P = [
-  {id:"femme-fuchsia", name:"Femme", ed:"Fuchsia", color:"#8A1E5B", foil:"silver", who:"her", fam:"Floral · Fruity", tags:["floral"], when:["day","all"], meaning:"woman",
-   desc:"Bright, confident and impossible to ignore. Litchi and pink pepper open onto Turkish rose and peony, resting on white musk and cashmere wood.",
-   top:["Pink pepper","Litchi"], heart:["Turkish rose","Peony"], base:["White musk","Cashmere wood"], line:"For celebrations, and for days that should feel like one."},
-  {id:"femme-rose", name:"Femme", ed:"Rosé", color:"#9C5A58", foil:"gold", who:"her", fam:"Floral · Gourmand", tags:["floral","warm"], when:["evening","all"], meaning:"woman",
-   desc:"Soft, luminous and close to the skin. Bergamot and pear melt into jasmine sambac and iris, then into Madagascar vanilla and sandalwood.",
-   top:["Bergamot","Pear"], heart:["Jasmine sambac","Iris"], base:["Madagascar vanilla","Sandalwood"], line:"For dinners that run late and conversations that run longer."},
-  {id:"creer-vert", name:"Créer", ed:"Vert", color:"#2E4733", foil:"silver", who:"unisex", fam:"Green · Woody", tags:["woody","fresh"], when:["day","all"], meaning:"to create",
-   desc:"The scent of a studio window left open. Fig leaf and green cardamom snap like fresh-cut stems, then settle into vetiver, cedar and a soft moss.",
-   top:["Fig leaf","Green cardamom"], heart:["Violet leaf","Vetiver"], base:["Cedarwood","Oakmoss"], line:"For the hour you begin something new."},
-  {id:"creer-ambre", name:"Créer", ed:"Ambre", color:"#A85A33", foil:"gold", who:"unisex", fam:"Amber · Spicy", tags:["warm","woody"], when:["evening"], meaning:"to create",
+  {id:"raviver", name:"Raviver", color:"#1E2D57", ch:"#1B2850", fg:"light", liquid:"#7C93C4", ink:"#1E2D57", foil:"gold", who:"unisex", fam:"Musky · Woody", tags:["woody","fresh","warm"], when:["all","day"], meaning:"to revive", price:899, size:"50 ml",
+   desc:"A second wind in a bottle. Neroli and black tea lift the spirits; orris and pink pepper add texture; suede and white musk keep it close.",
+   top:["Neroli","Black tea"], heart:["Orris","Pink peppercorn"], base:["Suede","White musk"], line:"For Sunday mornings, long flights and fresh starts."},
+  {id:"creer", name:"Créer", color:"#FFBF00", ch:"#E8AE0C", fg:"dark", liquid:"#E9A21B", ink:"#8A5A00", foil:"gold", who:"unisex", fam:"Amber · Spicy", tags:["warm","woody"], when:["evening"], meaning:"to create", price:899, size:"50 ml",
    desc:"Warmth you can almost see. Saffron and mandarin glow over a heart of supple leather and tobacco leaf, sinking into amber and tonka bean.",
    top:["Saffron","Mandarin"], heart:["Leather accord","Tobacco leaf"], base:["Amber","Tonka bean"], line:"For cold evenings, candlelight and slow music."},
-  {id:"homme", name:"Homme", ed:"Minuit", color:"#1E2839", foil:"silver", who:"him", fam:"Fresh · Aromatic", tags:["fresh"], when:["day","all"], meaning:"man",
+  {id:"femme", name:"Femme", color:"#F4C2C8", ch:"#EBB7BE", fg:"dark", liquid:"#F0A3B3", ink:"#B04A64", foil:"gold", who:"her", fam:"Floral · Gourmand", tags:["floral","warm"], when:["evening","all"], meaning:"woman", price:899, size:"50 ml",
+   desc:"Soft, luminous and close to the skin. Bergamot and pear melt into jasmine sambac and iris, then into Madagascar vanilla and sandalwood.",
+   top:["Bergamot","Pear"], heart:["Jasmine sambac","Iris"], base:["Madagascar vanilla","Sandalwood"], line:"For dinners that run late and conversations that run longer."},
+  {id:"homme", name:"Homme", color:"#141418", ch:"#16161A", fg:"light", liquid:"#8E9AAB", ink:"#141418", foil:"gold", who:"him", fam:"Fresh · Aromatic", tags:["fresh"], when:["day","all"], meaning:"man", price:899, size:"50 ml",
    desc:"Clean lines and a cool head. Grapefruit and sea salt over lavender and geranium, finished with an ambergris accord and dry vetiver.",
    top:["Grapefruit","Sea salt"], heart:["Lavender","Geranium"], base:["Ambergris accord","Vetiver"], line:"For the boardroom, the commute and the late drive home."},
-  {id:"raviver", name:"Raviver", ed:"Taupe", color:"#665A50", foil:"silver", who:"unisex", fam:"Musky · Woody", tags:["woody","fresh","warm"], when:["all","day"], meaning:"to revive",
-   desc:"A second wind in a bottle. Neroli and black tea lift the spirits; orris and pink pepper add texture; suede and white musk keep it close.",
-   top:["Neroli","Black tea"], heart:["Orris","Pink peppercorn"], base:["Suede","White musk"], line:"For Sunday mornings, long flights and fresh starts."}
+  {id:"gift-set", name:"Luxury Gift Set", set:true, color:"#F7F7F4", ch:"#22398C", fg:"light", liquid:"#2747A6", ink:"#2747A6", foil:"royal", who:"gift", fam:"Gift set · 4 × 20 ml", tags:["gift"], when:["all"], meaning:"the whole collection", price:1999, size:"4 × 20 ml",
+   desc:"All four ARS SHI Eaux de Parfum in one white box: Raviver, Créer, Femme and Homme, 20 ml each. Find your signature, or give someone the whole collection.",
+   top:[], heart:[], base:[], line:"For gifting, and for finding your signature."}
 ];
+const SINGLES = P.filter(p=>!p.set);
 const byId = Object.fromEntries(P.map(p=>[p.id,p]));
+if(SHOP && SHOP.products) P.forEach(p=>{ const sp=SHOP.products[p.id]; if(sp && sp.price) p.price=sp.price/100; });
 const inr = n => "₹" + n.toLocaleString("en-IN");
-const whoLabel = w => ({her:"For her",him:"For him",unisex:"Unisex"})[w];
+const whoLabel = w => ({her:"For her",him:"For him",unisex:"Unisex",gift:"Gift set"})[w];
 const $ = s => document.querySelector(s);
 const $$ = s => [...document.querySelectorAll(s)];
 const reduce = matchMedia("(prefers-reduced-motion: reduce)").matches;
@@ -822,8 +825,8 @@ const mix = (h,w,t) => { const a=hex(h), b=w==="w"?[250,250,252]:[10,12,20]; ret
 let uid = 0;
 function bottle(p, strata){
   const u = "b"+(++uid);
-  const metal = p.foil==="gold" ? ["#7d5f33","#e9d3a1","#a4814c","#f6e7c3","#86683a"] : ["#6f7277","#eceef1","#9a9da2","#fafbfc","#73767b"];
-  const lt = mix(p.color,"w",.38), md = mix(p.color,"w",.06), dk = mix(p.color,"k",.32);
+  const metal = p.foil==="gold" ? ["#7d5f33","#e9d3a1","#a4814c","#f6e7c3","#86683a"] : p.foil==="royal" ? ["#14286e","#6e8ce0","#2747a6","#a9bdf0","#1c327a"] : ["#6f7277","#eceef1","#9a9da2","#fafbfc","#73767b"];
+  const lt = mix(p.liquid,"w",.38), md = mix(p.liquid,"w",.06), dk = mix(p.liquid,"k",.32);
   const liquid = strata
     ? `<g clip-path="url(#${u}c)"><rect class="L3" x="36" y="96" width="128" height="222" fill="${dk}"/><rect class="L2" x="36" y="96" width="128" height="222" fill="${md}"/><rect class="L1" x="36" y="96" width="128" height="222" fill="${lt}"/><rect class="men" x="36" y="96" width="128" height="2.5" fill="rgba(255,255,255,.6)"/></g>`
     : `<g clip-path="url(#${u}c)"><rect x="36" y="110" width="128" height="208" fill="url(#${u}l)"/><rect x="36" y="110" width="128" height="2.5" fill="rgba(255,255,255,.55)"/></g>`;
@@ -848,8 +851,8 @@ function bottle(p, strata){
     <rect x="-46" y="-52" width="92" height="104" fill="rgba(252,252,253,.96)" stroke="url(#${u}m)" stroke-width="1.8"/>
     <rect x="-41" y="-47" width="82" height="94" fill="none" stroke="url(#${u}m)" stroke-width=".7"/>
     <text y="-24" text-anchor="middle" font-family="'Palatino Linotype',Palatino,'Book Antiqua',Pagella,serif" font-size="10.5" letter-spacing="2.6" fill="#0e1b36">ARS SHI</text>
-    <text y="8" text-anchor="middle" font-family="'Palatino Linotype',Palatino,'Book Antiqua',Pagella,serif" font-style="italic" font-size="21" fill="${p.color}">${p.name}</text>
-    <text y="28" text-anchor="middle" font-family="'Palatino Linotype',Palatino,'Book Antiqua',Pagella,serif" font-style="italic" font-size="12" fill="#4f607c">${p.ed}</text>
+    <text y="8" text-anchor="middle" font-family="'Palatino Linotype',Palatino,'Book Antiqua',Pagella,serif" font-style="italic" font-size="21" fill="${p.ink}">${p.name}</text>
+    <text y="28" text-anchor="middle" font-family="'Palatino Linotype',Palatino,'Book Antiqua',Pagella,serif" font-style="italic" font-size="11" fill="#4f607c">${p.meaning}</text>
   </g>
   <rect x="80" y="60" width="40" height="18" fill="url(#${u}m)"/>
   <rect x="68" y="8" width="64" height="56" rx="3" fill="url(#${u}m)"/>
@@ -858,11 +861,11 @@ function bottle(p, strata){
   <rect x="68" y="58" width="64" height="2" fill="rgba(0,0,0,.2)"/>
 </svg>`;
 }
-function scene(p){ return `<div class="scene" style="--c:${p.color}"><img class="sc-bg" src="img/w/stage-tall-600.webp" srcset="img/w/stage-tall-600.webp 600w, img/w/stage-tall.webp 1200w" sizes="(max-width:640px) 100vw, 50vw" alt="" loading="lazy" decoding="async"><div class="sc-box">${pic("face-"+p.id, p.name+" "+p.ed+" box", "40vw")}</div><div class="sc-bottle">${bottle(p)}</div></div>`; }
+function scene(p){ return `<div class="scene" style="--c:${p.color}"><img class="sc-bg" src="img/w/stage-tall-600.webp" srcset="img/w/stage-tall-600.webp 600w, img/w/stage-tall.webp 1200w" sizes="(max-width:640px) 100vw, 50vw" alt="" loading="lazy" decoding="async"><div class="sc-box">${pic("face-"+p.id, p.name+" box", "40vw")}</div>${p.set ? `<div class="sc-minis">${SINGLES.map(x=>`<span>${bottle(x)}</span>`).join("")}</div>` : `<div class="sc-bottle">${bottle(p)}</div>`}</div>`; }
 
 /* ---------- compact scent map: three acts on one time line ---------- */
 function scentMap(p){
-  const c=[mix(p.color,"w",.38), mix(p.color,"w",.06), mix(p.color,"k",.32)];
+  const c=[mix(p.liquid,"w",.38), mix(p.liquid,"w",.06), mix(p.liquid,"k",.32)];
   const acts=[["Top","0–15 min",p.top,15],["Heart","15 min–3 h",p.heart,33],["Base","3 h on",p.base,52]];
   return `<div class="smap" aria-label="Scent map">
     <div class="smap-bar">${acts.map((a,i)=>`<i style="flex:${a[3]};background:${c[i]}"></i>`).join("")}</div>
@@ -876,11 +879,11 @@ document.addEventListener("click",e=>{ if(e.target.closest("[data-unfold]")){ co
 let anatStops = [];
 function anatomy(p, mountId){
   const host = document.getElementById(mountId);
-  const cols = [mix(p.color,"w",.38), mix(p.color,"w",.06), mix(p.color,"k",.32)];
+  const cols = [mix(p.liquid,"w",.38), mix(p.liquid,"w",.06), mix(p.liquid,"k",.32)];
   host.innerHTML = `<div class="anat" style="--c:${p.color};--c1:${cols[0]}">
     <div class="anat-left">
       <div class="anat-visual">
-        <div class="clock"><span data-clock>On spray</span><small>${p.name} ${p.ed}</small></div>
+        <div class="clock"><span data-clock>On spray</span><small>${p.name}</small></div>
         <div class="mist">${[0,1,2,3,4,5].map(k=>`<i style="--k:${k};--x:${[-14,10,-4,16,-18,4][k]}"></i>`).join("")}</div>
         ${bottle(p,true)}
         <div class="nowcap" aria-hidden="true"><b data-capname>Top notes</b><span data-capnotes></span></div>
@@ -953,13 +956,13 @@ const cartJSON = (url, body) => fetch(url,{method:"POST",headers:{"Content-Type"
   .then(r=>r.json().then(j=>{ if(!r.ok) throw new Error(j.description||j.message||"Shopify could not update the bag."); return j; }));
 function bagChanged(id, open){
   renderBag();
-  if(open) openDrawer("bag"); else if(id) toast(`${byId[id].name} ${byId[id].ed} added to your bag.`);
+  if(open) openDrawer("bag"); else if(id) toast(`${byId[id].name} added to your bag.`);
   const c=$("#bagCount"); c.classList.add("bump"); setTimeout(()=>c.classList.remove("bump"),400);
 }
 function addToBag(id, qty=1, open=true){
   if(SHOP){
     const pr=SHOP.products[id];
-    if(!pr || !pr.ok){ toast(`${byId[id].name} ${byId[id].ed} is not available right now.`); return; }
+    if(!pr || !pr.ok){ toast(`${byId[id].name} is not available right now.`); return; }
     cartJSON("/cart/add.js",{items:[{id:pr.v,quantity:qty}]})
       .then(()=>fetch("/cart.js",{headers:{Accept:"application/json"}}).then(r=>r.json()))
       .then(c=>{ fromShopify(c); bagChanged(id,open); })
@@ -975,18 +978,18 @@ function setQty(id,q){
   l.qty=q; if(q<=0) cart=cart.filter(x=>x.id!==id); saveCart(); renderBag();
 }
 function renderBag(){
-  const count = cart.reduce((a,l)=>a+l.qty,0), sub = count*PRICE, left = FREE_SHIP - sub;
+  const count = cart.reduce((a,l)=>a+l.qty,0), sub = cart.reduce((a,l)=>a+l.qty*byId[l.id].price,0), left = FREE_SHIP - sub;
   $("#bagCount").textContent = count; $("#tabCount").textContent = count; $("#tabCount").hidden = count===0;
   $("#bagBtn").setAttribute("aria-label", `Open bag, ${count} item${count===1?"":"s"}`);
   $("#shipMsg").innerHTML = (count===0 ? `Free shipping on orders above ${inr(FREE_SHIP)}.` : left>0 ? `You're <b>${inr(left)}</b> away from free shipping.` : `Your order ships free.`) + `<div class="bar"><i style="width:${Math.min(100,sub/FREE_SHIP*100)}%"></i></div>`;
   const others=P.filter(p=>!cart.some(l=>l.id===p.id));
-  const upsell = cart.length && others.length ? `<div class="upsell"><h3 class="h5">${left>0?"Add a second fragrance for free shipping":"Complete your collection"}</h3><div class="uplist">${others.map(p=>`<div class="up">${pic("orig-"+p.id,"","120px")}<span>${p.name} <span class="it">${p.ed}</span></span><button type="button" data-addq="${p.id}" aria-label="Add ${p.name} ${p.ed}">Add</button></div>`).join("")}</div></div>` : "";
+  const upsell = cart.length && others.length ? `<div class="upsell"><h3 class="h5">${left>0?"Add a second fragrance for free shipping":"Complete your collection"}</h3><div class="uplist">${others.map(p=>`<div class="up">${pic("orig-"+p.id,"","120px")}<span>${p.name}</span><button type="button" data-addq="${p.id}" aria-label="Add ${p.name}">Add</button></div>`).join("")}</div></div>` : "";
   $("#lines").innerHTML = cart.length ? cart.map(l=>{const p=byId[l.id];return `
     <div class="line">${pic("orig-"+p.id,"","80px")}
-      <div><h4>${p.name} <span class="it">${p.ed}</span></h4><div class="sub">Eau de Parfum · 50 ml</div>
-        <div class="ctrl"><div class="qty"><button aria-label="Decrease ${p.name} ${p.ed}" data-q="${p.id}" data-d="-1">−</button><output>${l.qty}</output><button aria-label="Increase ${p.name} ${p.ed}" data-q="${p.id}" data-d="1">+</button></div>
+      <div><h4>${p.name}</h4><div class="sub">Eau de Parfum · ${p.size}</div>
+        <div class="ctrl"><div class="qty"><button aria-label="Decrease ${p.name}" data-q="${p.id}" data-d="-1">−</button><output>${l.qty}</output><button aria-label="Increase ${p.name}" data-q="${p.id}" data-d="1">+</button></div>
         <button class="rm" data-rm="${p.id}">Remove</button></div></div>
-      <div class="lp">${inr(l.qty*PRICE)}</div></div>`}).join("") + upsell
+      <div class="lp">${inr(l.qty*p.price)}</div></div>`}).join("") + upsell
     : `<div class="empty"><p>Your bag is empty.</p><a class="btn ghost" href="#shop" data-close>Explore the collection</a></div>`;
   $("#dfoot").innerHTML = cart.length ? `<div class="tot"><span>Subtotal</span><strong>${inr(sub)}</strong></div>
     <small>Inclusive of GST. Shipping ${left>0?"calculated":"is free"} at checkout.</small>
@@ -1035,46 +1038,47 @@ let tt; function toast(m){ const t=$("#toast"); t.textContent=m; t.classList.add
 /* ---------- search ---------- */
 function runSearch(){
   const q=$("#q").value.trim().toLowerCase();
-  const hits=P.filter(p=>!q || [p.name,p.ed,p.fam,p.meaning,whoLabel(p.who),...p.top,...p.heart,...p.base].join(" ").toLowerCase().includes(q));
-  $("#sres").innerHTML = hits.length ? `<div class="sres">${hits.map(p=>`<a href="#${p.id}" data-close>${pic("orig-"+p.id,"","160px")}<span>${p.name} <span class="it">${p.ed}</span></span><small>${p.fam}</small></a>`).join("")}</div>`
+  const hits=P.filter(p=>!q || [p.name,p.fam,p.meaning,whoLabel(p.who),...p.top,...p.heart,...p.base].join(" ").toLowerCase().includes(q));
+  $("#sres").innerHTML = hits.length ? `<div class="sres">${hits.map(p=>`<a href="#${p.id}" data-close>${pic("orig-"+p.id,"","160px")}<span>${p.name}</span><small>${p.fam}</small></a>`).join("")}</div>`
     : `<p class="snone">No fragrance matches “${q.replace(/[<>&"]/g,"")}”. Try a note like rose, vanilla or vetiver.</p>`;
 }
 $("#q").addEventListener("input",runSearch);
 
 /* ---------- home ---------- */
-const shelfOrder=["femme-fuchsia","femme-rose","creer-vert","creer-ambre","homme","raviver"];
-function sbox(id,i,style){ const p=byId[id]; return `<a class="sbox" href="#${id}" style="--i:${i};${style}" aria-label="${p.name} ${p.ed}"><span class="lift" style="background:${p.color}">${pic("face-"+id,"","(max-width:640px) 25vw, 14vw")}<span class="glint" style="--i:${i}"></span></span><span class="tag">${p.name} · ${p.ed}</span></a>`; }
+const shelfOrder=["raviver","creer","femme","homme","gift-set"];
+function sbox(id,i,style){ const p=byId[id]; return `<a class="sbox" href="#${id}" style="--i:${i};${style}" aria-label="${p.name}"><span class="lift" style="background:${p.color}">${pic("face-"+id,"","(max-width:640px) 25vw, 14vw")}<span class="glint" style="--i:${i}"></span></span><span class="tag">${p.name} · ${inr(p.price)}</span></a>`; }
 (function(){
-  const bw = 46*600/1016/2, gap = (100 - 6*bw - 8)/5;
+  const n=shelfOrder.length, bw = 46*600/1016/2, gap = (100 - n*bw - 12)/(n-1);
   $$(".stage .sbox").forEach(n=>n.remove());
-  $("#stageWide").insertAdjacentHTML("beforeend", shelfOrder.map((id,i)=>sbox(id,i,`left:${(4+i*(bw+gap)).toFixed(2)}%`)).join(""));
-  // phone: two shelves of three (ledges sit at 42.7% and 92% of the image height)
-  const lefts=[6,37.8,69.6];
-  $("#stageTall").insertAdjacentHTML("beforeend", shelfOrder.map((id,i)=>sbox(id,i,`left:${lefts[i%3]}%;bottom:${i<3?57.6:8.3}%`)).join(""));
+  $("#stageWide").insertAdjacentHTML("beforeend", shelfOrder.map((id,i)=>sbox(id,i,`left:${(6+i*(bw+gap)).toFixed(2)}%`)).join(""));
+  // phone: three boxes on the upper shelf, two on the lower (ledges at 42.7% and 92% of the image height)
+  const lefts=[6,37.8,69.6,21.9,53.7];
+  $("#stageTall").insertAdjacentHTML("beforeend", shelfOrder.map((id,i)=>sbox(id,i,`left:${lefts[i]}%;bottom:${i<3?57.6:8.3}%`)).join(""));
 })();
-const mq = ["Eau de Parfum","Femme","Créer","Homme","Raviver","50 ml · ₹899","Foil-pressed by hand","Free shipping over ₹1,499"];
+const mq = ["Raviver","Créer","Femme","Homme","Eau de Parfum · 50 ml · ₹899","Luxury Gift Set · 4 × 20 ml · ₹1,999","Pressed in gold foil","Free shipping over ₹1,499"];
 $("#marquee").innerHTML = [...mq,...mq].map(s=>`<span>${s}</span>`).join("");
 $("#chapters").innerHTML = P.map((p,i)=>`
-  <article class="chapter wrap" data-color="${mix(p.color,"k",.14)}">
+  <article class="chapter wrap ${p.fg==="dark"?"on-light":""}" data-color="${p.ch}" data-fg="${p.fg}">
     <a class="ch-img" href="#${p.id}">${scene(p)}</a>
     <div class="ch-body">
-      <span class="ch-no">${i+1} of 6 &nbsp;·&nbsp; ${p.fam}</span>
-      <h3>${p.name}</h3><span class="ed">${p.ed} — ${p.meaning}</span>
+      <span class="ch-no">${i+1} of ${P.length} &nbsp;·&nbsp; ${p.fam}</span>
+      <h3>${p.name}</h3><span class="ed">${p.meaning}</span>
       <p class="desc">${p.desc}</p>
-      <dl class="notes-inline"><div><dt>Top</dt><dd>${p.top.join(", ")}</dd></div><div><dt>Heart</dt><dd>${p.heart.join(", ")}</dd></div><div><dt>Base</dt><dd>${p.base.join(", ")}</dd></div></dl>
-      <div class="ch-buy"><span class="price">${inr(PRICE)}</span><button class="btn light" data-add="${p.id}">Add to bag</button><a class="link" href="#${p.id}">Discover</a></div>
+      ${p.set ? `<dl class="notes-inline"><div><dt>Inside</dt><dd>${SINGLES.map(x=>x.name).join(", ")}</dd></div><div><dt>Each</dt><dd>20 ml Eau de Parfum</dd></div></dl>`
+              : `<dl class="notes-inline"><div><dt>Top</dt><dd>${p.top.join(", ")}</dd></div><div><dt>Heart</dt><dd>${p.heart.join(", ")}</dd></div><div><dt>Base</dt><dd>${p.base.join(", ")}</dd></div></dl>`}
+      <div class="ch-buy"><span class="price">${inr(p.price)}</span><button class="btn ${p.fg==="dark"?"":"light"}" data-add="${p.id}">Add to bag</button><a class="link" href="#${p.id}">Discover</a></div>
     </div>
   </article>`).join("");
-const chWrap=$("#chapters"); chWrap.style.setProperty("--ch",mix(P[0].color,"k",.14));
-const chObs=new IntersectionObserver(es=>es.forEach(en=>{ if(en.isIntersecting) chWrap.style.setProperty("--ch",en.target.dataset.color); }),{rootMargin:"-45% 0px -45% 0px"});
+const chWrap=$("#chapters"); chWrap.style.setProperty("--ch",P[0].ch); chWrap.style.setProperty("--chfg",P[0].fg==="dark"?"var(--ink)":"var(--on-dark)");
+const chObs=new IntersectionObserver(es=>es.forEach(en=>{ if(en.isIntersecting){ chWrap.style.setProperty("--ch",en.target.dataset.color); chWrap.style.setProperty("--chfg",en.target.dataset.fg==="dark"?"var(--ink)":"var(--on-dark)"); } }),{rootMargin:"-45% 0px -45% 0px"});
 $$(".chapter").forEach(c=>chObs.observe(c));
 let ticking=false;
 if(!reduce) addEventListener("scroll",()=>{ if(ticking || isPhone() || !$("#v-home").classList.contains("on")) return; ticking=true; requestAnimationFrame(()=>{ ticking=false; $$(".ch-img").forEach(el=>{ const r=el.getBoundingClientRect(); if(r.bottom<0||r.top>innerHeight) return; const k=(r.top+r.height/2-innerHeight/2)/innerHeight; el.style.setProperty("--py",(k*-32).toFixed(1)+"px"); }); }); },{passive:true});
-$("#maisonDuo").innerHTML = pic("orig-raviver","Raviver box","(max-width:640px) 50vw, 25vw") + pic("orig-femme-rose","Femme Rosé box","(max-width:640px) 50vw, 25vw");
+$("#maisonDuo").innerHTML = pic("orig-raviver","Raviver box","(max-width:640px) 50vw, 25vw") + pic("orig-gift-set","Luxury Gift Set box","(max-width:640px) 50vw, 25vw");
 
-let homeSel="creer-vert";
+let homeSel="creer";
 function renderHomeAnat(){
-  $("#homePick").innerHTML=P.map(p=>`<button type="button" data-pick="${p.id}" aria-pressed="${p.id===homeSel}"><span class="sw" style="background:${p.color}"></span>${p.name} ${p.ed}</button>`).join("");
+  $("#homePick").innerHTML=SINGLES.map(p=>`<button type="button" data-pick="${p.id}" aria-pressed="${p.id===homeSel}"><span class="sw" style="background:${p.color}"></span>${p.name}</button>`).join("");
   anatomy(byId[homeSel],"homeAnat");
 }
 $("#homePick").addEventListener("click",e=>{ const b=e.target.closest("[data-pick]"); if(!b) return; homeSel=b.dataset.pick; clearAnat(); renderHomeAnat(); });
@@ -1093,25 +1097,25 @@ const LEX = [
   [/\b(musk|skin|soft|subtle|close|quiet)/, {soft:2}],
 ];
 const WHO = [[/\b(him|man|men|male|husband|boyfriend|father|dad|brother)\b/,"him"],[/\b(her|woman|women|female|wife|girlfriend|mother|mom|mum|sister)\b/,"her"],[/\b(unisex|anyone|everyone|share)\b/,"unisex"]];
-const OCC = [[/wedding|party|celebrat|festive|diwali/,"femme-fuchsia creer-ambre"],[/date|dinner|romance/,"femme-rose creer-ambre"],[/travel|flight|sunday|morning|revive|tired/,"raviver"],[/office|meeting|interview|commute/,"homme creer-vert"]];
+const OCC = [[/wedding|party|celebrat|festive|diwali/,"femme creer"],[/date|dinner|romance/,"femme creer"],[/travel|flight|sunday|morning|revive|tired/,"raviver"],[/office|meeting|interview|commute/,"homme raviver"]];
 const FAQ = [
   [/\bcod\b|cash on delivery|pay on delivery|cash/, "Yes, cash on delivery is available at checkout, along with UPI and cards."],
-  [/ship|deliver|dispatch|how long|when will/, "We dispatch within 24–48 hours and deliver in 3–7 working days across India. Shipping is free on orders above ₹1,499, which is any two bottles."],
+  [/ship|deliver|dispatch|how long|when will/, "We dispatch within 24–48 hours and deliver in 3–7 working days across India. Shipping is free on orders above ₹1,499: any two bottles, or the gift set."],
   [/return|refund|exchange/, "Unopened bottles in their sealed box can be returned within 7 days of delivery. If anything arrives damaged, write to us within 48 hours with a photo and we'll replace it."],
-  [/price|cost|how much|₹|rupee/, "Every ARS SHI Eau de Parfum is ₹899 for 50 ml, inclusive of GST."],
+  [/price|cost|how much|₹|rupee/, "Each ARS SHI Eau de Parfum is ₹899 for 50 ml. The Luxury Gift Set, with all four in 20 ml bottles, is ₹1,999. Prices include GST."],
   [/last|longevity|how long does|stay|projection/, "These are Eaux de Parfum, a higher concentration than eau de toilette. How long a scent lasts depends on skin; two sprays on the pulse points and one on clothing help it carry through the day."],
   [/sample|tester|try before/, "We don't offer samples yet. If you're unsure, the advisor can narrow it down, and sealed bottles can be returned within 7 days."],
 ];
-const ADV_SUGG = ["Warm but not too sweet","Fresh for the office","A gift for her","Something for him","For a summer wedding","Difference between the two Femme"];
+const ADV_SUGG = ["Warm but not too sweet","Fresh for the office","What's in the gift set?","Something for him","For a summer wedding","A gift for her"];
 function advisorReply(q){
   const t=q.toLowerCase();
   // compare the two editions people ask about
-  if(/(differ|compare|vs|versus)/.test(t) && /femme/.test(t)) return {text:`Both are for her, with different moods. Femme Fuchsia is bright and fruity: ${notesText(byId["femme-fuchsia"].top)} over ${notesText(byId["femme-fuchsia"].heart)}. Femme Rosé is softer and warmer: ${notesText(byId["femme-rose"].heart)} on ${notesText(byId["femme-rose"].base)}. Daytime and celebrations: Fuchsia. Evenings and closeness: Rosé.`, picks:["femme-fuchsia","femme-rose"]};
-  if(/(differ|compare|vs|versus)/.test(t) && /cr[eé]er/.test(t)) return {text:`Créer Vert is green and woody, ${notesText(byId["creer-vert"].top)} over vetiver and cedar: crisp, daytime. Créer Ambre is warm and spiced, saffron over leather and tobacco: made for evenings.`, picks:["creer-vert","creer-ambre"]};
+  if(/(differ|compare|vs|versus|which)/.test(t) && /(femme|homme)/.test(t) && /(femme|homme).*(femme|homme)/.test(t)) return {text:`Femme is soft and floral: ${notesText(byId.femme.heart)} on ${notesText(byId.femme.base)}. Homme is fresh and aromatic: ${notesText(byId.homme.top)} over ${notesText(byId.homme.heart)}. Many people wear either; choose by mood rather than label.`, picks:["femme","homme"]};
   for(const [re,ans] of FAQ) if(re.test(t)) return {text:ans, picks:[]};
   // named product
-  const named=P.find(p=>t.includes(p.ed.toLowerCase()) || (t.includes(p.name.toLowerCase()) && P.filter(x=>x.name===p.name).length===1));
-  if(named && !/(similar|like|instead|other)/.test(t)) return {text:`${named.name} ${named.ed} is ${named.fam.toLowerCase()}. ${named.desc}`, picks:[named.id]};
+  const plain = x => x.toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g,"");
+  const named=P.find(p=> p.set ? /gift ?set|coffret|all four|sampler|20 ?ml/.test(t) : plain(t).includes(plain(p.name)));
+  if(named && !/(similar|like|instead|other)/.test(t)) return {text: named.set ? `The Luxury Gift Set holds all four of our Eaux de Parfum, Raviver, Créer, Femme and Homme, in 20 ml bottles, inside a white box lettered in royal blue. ₹1,999.` : `${named.name} is ${named.fam.toLowerCase()}. ${named.desc}`, picks:[named.id]};
   // preference scoring
   const want={}; let signal=0;
   LEX.forEach(([re,w])=>{ if(re.test(t)) { Object.entries(w).forEach(([k,v])=>want[k]=(want[k]||0)+v); signal++; } });
@@ -1120,7 +1124,7 @@ function advisorReply(q){
   let who=null; WHO.forEach(([re,w])=>{ if(re.test(t)) who=w; });
   let occ=""; OCC.forEach(([re,ids])=>{ if(re.test(t)) occ+=" "+ids; });
   const words=NOTE_WORDS(t);
-  const scored=P.map(p=>{
+  const scored=SINGLES.map(p=>{
     let s=0, why=[];
     p.tags.forEach((tag,i)=>{ if(want[tag]) { s+=want[tag]*(i===0?1.3:1); why.push(tag); } });
     const isSweet = /vanilla|gourmand/i.test(p.base.join(" ")+p.fam);
@@ -1133,13 +1137,14 @@ function advisorReply(q){
     return {p,s,why};
   }).sort((a,b)=>b.s-a.s);
   const gift=/gift|present|surprise/.test(t);
-  if(!signal && gift) return {text:"Every bottle arrives in its textured, foil-pressed box, ready to give. Tell me who it's for and what they like, and I'll suggest one.", picks:[]};
+  if(!signal && gift) return {text:"The Luxury Gift Set is our most-given choice: all four fragrances in 20 ml bottles, in a white box lettered in royal blue. If you know what they like, tell me and I'll suggest a single bottle too.", picks:["gift-set"]};
   if(!signal) return {text:"I can help by mood, notes, person or occasion. Try “fresh for the office”, “a gift for her”, or name a note you love, like rose or vetiver.", picks:[]};
   const best=scored[0].p, alt=scored[1];
-  let text=`${gift?"As a gift, ":""}${best.name} ${best.ed} ${gift?"would be a lovely choice":"would suit you"}. ${notesText(best.top,true)} open onto ${notesText(best.heart)}, settling into ${notesText(best.base)}.`;
+  let text=`${gift?"As a gift, ":""}${best.name} ${gift?"would be a lovely choice":"would suit you"}. ${notesText(best.top,true)} open onto ${notesText(best.heart)}, settling into ${notesText(best.base)}.`;
   if(negSweet && best.tags.includes("warm") && !/vanilla|gourmand/i.test(best.base.join(" ")+best.fam)) text+=" It's warm and spiced without tipping into sweet.";
   const picks=[best.id];
-  if(alt && alt.s>0 && scored[0].s-alt.s<=2){ text+=` If you'd like a second option, try ${alt.p.name} ${alt.p.ed}.`; picks.push(alt.p.id); }
+  if(alt && alt.s>0 && scored[0].s-alt.s<=2){ text+=` If you'd like a second option, try ${alt.p.name}.`; picks.push(alt.p.id); }
+  if(gift){ text+=" Or give the Luxury Gift Set, with all four in 20 ml bottles."; picks.push("gift-set"); }
   return {text, picks};
 }
 function chatSay(who, html){ const log=$("#chatLog"); log.insertAdjacentHTML("beforeend",`<div class="msg ${who}">${html}</div>`); log.scrollTop=log.scrollHeight; }
@@ -1148,7 +1153,7 @@ function ask(q){
   q=q.trim(); if(!q) return;
   chatSay("me", esc(q));
   const r=advisorReply(q);
-  const cards=r.picks.map(id=>{const p=byId[id]; return `<div class="pick-card">${pic("orig-"+id,"","72px")}<div><b>${p.name} <span class="it">${p.ed}</span></b><span style="opacity:.8;font-size:13px">${p.fam} · ${inr(PRICE)}</span><div class="acts2"><a href="#${id}">Discover</a><button type="button" data-addq="${id}">Add to bag</button></div></div></div>`;}).join("");
+  const cards=r.picks.map(id=>{const p=byId[id]; return `<div class="pick-card">${pic("orig-"+id,"","72px")}<div><b>${p.name}</b><span style="opacity:.8;font-size:13px">${p.fam} · ${inr(p.price)}</span><div class="acts2"><a href="#${id}">Discover</a><button type="button" data-addq="${id}">Add to bag</button></div></div></div>`;}).join("");
   setTimeout(()=>chatSay("bot", esc(r.text)+cards), reduce?0:350);
 }
 function initAdvisor(){
@@ -1168,14 +1173,14 @@ function quiz(){
   const res=$("#quizResult");
   if(!who||!fam||!when){ const n=[who,fam,when].filter(Boolean).length; res.className="result empty-r"; res.textContent = n===0 ? "Answer all three to see your match." : `${3-n} more to go.`; return; }
   let best=null,score=-99;
-  P.forEach(p=>{ let s=0;
+  SINGLES.forEach(p=>{ let s=0;
     if(who==="any") s+= p.who==="unisex"?2:1; else s+= p.who===who?3:(p.who==="unisex"?2:-4);
     if(p.tags.includes(fam)) s+=3; if(p.tags[0]===fam) s+=1;
     if(p.when.includes(when)) s+=1;
     if(s>score){score=s;best=p;} });
   res.className="result";
   res.innerHTML=`<div class="match">${pic("orig-"+best.id,"","110px")}
-    <div><span class="label" style="opacity:.8">Your match</span><h4>${best.name} <span class="it">${best.ed}</span></h4><p>${best.line}</p></div></div>
+    <div><span class="label" style="opacity:.8">Your match</span><h4>${best.name}</h4><p>${best.line}</p></div></div>
     <div class="row"><button type="button" class="btn light" data-add="${best.id}">Add to bag</button><a class="link" href="#${best.id}">Discover</a><button type="button" class="reset" id="quizReset">Start over</button></div>`;
 }
 $("#quiz").addEventListener("change",quiz);
@@ -1185,17 +1190,17 @@ $("#quiz").addEventListener("click",e=>{ if(e.target.id==="quizReset"){ $("#quiz
 let filter="all";
 function card(p){return `
   <article class="card">
-    <div class="ph"><a href="#${p.id}" aria-label="${p.name} ${p.ed}">${pic("orig-"+p.id, p.name+" "+p.ed+" box", "(max-width:1020px) 50vw, 33vw", "main")}${pic(p.id+"-angle","","(max-width:1020px) 50vw, 33vw","alt")}</a><span class="tag">${whoLabel(p.who)}</span>
+    <div class="ph"><a href="#${p.id}" aria-label="${p.name}">${pic("orig-"+p.id, p.name+" box", "(max-width:1020px) 50vw, 33vw", "main")}${pic(p.id+"-angle","","(max-width:1020px) 50vw, 33vw","alt")}</a><span class="tag">${whoLabel(p.who)}</span>
       <div class="quick"><button class="btn" data-add="${p.id}">Add to bag</button></div></div>
-    <div class="meta"><div><h3><a href="#${p.id}">${p.name} <span class="it">${p.ed}</span></a></h3><div class="fam"><span class="swatch" style="background:${p.color}"></span>${p.fam}</div><div class="sig">${p.top[0]} · ${p.heart[0]} · ${p.base[0]}</div></div><span class="price">${inr(PRICE)}</span></div>
-    <button class="madd" data-addq="${p.id}" aria-label="Add ${p.name} ${p.ed} to bag">Add to bag</button>
+    <div class="meta"><div><h3><a href="#${p.id}">${p.name}</a></h3><div class="fam"><span class="swatch" style="background:${p.color}"></span>${p.fam}</div><div class="sig">${p.set ? SINGLES.map(x=>x.name).join(" · ") : p.top[0]+" · "+p.heart[0]+" · "+p.base[0]}</div></div><span class="price">${inr(p.price)}</span></div>
+    <button class="madd" data-addq="${p.id}" aria-label="Add ${p.name} to bag">Add to bag</button>
   </article>`}
 function renderShop(){
   const list=P.filter(p=>filter==="all"||p.who===filter);
   $("#shopGrid").innerHTML=list.map(card).join("");
   $("#shopCount").textContent=`${list.length} fragrance${list.length===1?"":"s"}`;
   $$(".filters button").forEach(b=>b.setAttribute("aria-pressed",b.dataset.f===filter));
-  $("#shopTitle").textContent={all:"The collection",her:"For her",him:"For him",unisex:"Unisex"}[filter];
+  $("#shopTitle").textContent={all:"The collection",her:"For her",him:"For him",unisex:"Unisex",gift:"Gift sets"}[filter];
 }
 $$(".filters button").forEach(b=>b.onclick=()=>{filter=b.dataset.f;renderShop();});
 
@@ -1204,11 +1209,12 @@ const COMP={floral:["woody","fresh"],woody:["floral","warm"],fresh:["woody","flo
 function viewed(){ try{ return JSON.parse(localStorage.getItem("arsshi-viewed")||"[]"); }catch(e){ return []; } }
 function rememberView(id){ try{ const v=viewed().filter(x=>x!==id); v.unshift(id); localStorage.setItem("arsshi-viewed",JSON.stringify(v.slice(0,12))); }catch(e){} }
 function recommend(p){
+  if(p.set) return SINGLES;
   const seen=viewed(), inBag=new Set(cart.map(l=>l.id));
-  const fits=(a,b)=>a===b||a==="unisex"||b==="unisex";
+  const fits=(a,b)=>a===b||a==="unisex"||b==="unisex"||a==="gift"||b==="gift";
   return P.filter(x=>x.id!==p.id).map(x=>{
-    let s=0;
-    if(COMP[p.tags[0]].includes(x.tags[0])) s+=2;
+    let s= x.set ? 3 : 0;                     // the gift set is always a good companion
+    if((COMP[p.tags[0]]||[]).includes(x.tags[0])) s+=2;
     if(x.tags.some(t=>p.tags.includes(t))) s+=1;
     s+= fits(p.who,x.who) ? 2 : -3;
     if(seen.includes(x.id)) s+= 1;            // they showed interest
@@ -1224,15 +1230,15 @@ function renderPDP(p){
   rememberView(p.id);
   const others=recommend(p);
   const slides=[
-    {thumb:"orig-"+p.id, html:pic("orig-"+p.id, p.name+" "+p.ed+" box","(max-width:640px) 100vw, 55vw","",true), zoom:1, cap:"The box"},
-    {thumb:p.id, html:pic(p.id, p.name+" "+p.ed+" box in the studio","(max-width:640px) 100vw, 55vw"), zoom:1, cap:"Studio"},
-    {thumb:p.id+"-angle", html:pic(p.id+"-angle", p.name+" "+p.ed+" box at an angle","(max-width:640px) 100vw, 55vw"), zoom:1, cap:"Three-quarter"},
+    {thumb:"orig-"+p.id, html:pic("orig-"+p.id, p.name+" box","(max-width:640px) 100vw, 55vw","",true), zoom:1, cap:"The box"},
+    {thumb:p.id, html:pic(p.id, p.name+" box in the studio","(max-width:640px) 100vw, 55vw"), zoom:1, cap:"Studio"},
+    {thumb:p.id+"-angle", html:pic(p.id+"-angle", p.name+" box at an angle","(max-width:640px) 100vw, 55vw"), zoom:1, cap:"Three-quarter"},
     {thumb:null, kind:"duo", html:scene(p), cap:"Bottle and box"},
     {thumb:p.id+"-detail", html:pic(p.id+"-detail", (p.foil==="gold"?"Gold":"Silver")+" foil logo close-up","(max-width:640px) 100vw, 55vw"), zoom:1, cap:"Foil detail"},
     {thumb:null, kind:"3d", html:`<div class="turn" id="turn"><div class="floor"></div><div class="cube" id="cube" style="--c:${p.color}"><div class="f fr" style="background-image:url(img/w/face-${p.id}.webp)"></div><div class="f bk" style="background-image:url(img/w/face-${p.id}.webp)"></div><div class="f sd rt"></div><div class="f sd lt"></div><div class="f tp"></div></div><div class="hint">Drag to turn the box</div></div>`, cap:""}
   ];
   $("#pdp").innerHTML=`
-  <nav class="crumbs" aria-label="Breadcrumb"><a href="#">Home</a><span aria-hidden="true">/</span><a href="#shop">Collection</a><span aria-hidden="true">/</span><span>${p.name} ${p.ed}</span></nav>
+  <nav class="crumbs" aria-label="Breadcrumb"><a href="#">Home</a><span aria-hidden="true">/</span><a href="#shop">Collection</a><span aria-hidden="true">/</span><span>${p.name}</span></nav>
   <div class="pdp">
     <div>
       <div class="gal">
@@ -1242,11 +1248,11 @@ function renderPDP(p){
       <div class="dots">${slides.map((s,i)=>`<i class="${i===0?"on":""}"></i>`).join("")}<span class="sr" id="slideStatus" aria-live="polite"></span></div>
     </div>
     <div class="buy">
-      <div><span class="label" style="color:var(--foil)">${p.fam} · ${whoLabel(p.who)}</span>
-      <h1 style="margin-top:12px">${p.name}</h1><div class="ed">${p.ed}</div></div>
-      <div class="pr"><strong>${inr(PRICE)}</strong><span>50 ml Eau de Parfum · incl. GST</span></div>
+      <div><span class="label" style="color:var(--foil)">${p.set ? p.fam : p.fam+" · "+whoLabel(p.who)}</span>
+      <h1 style="margin-top:12px">${p.name}</h1><div class="ed">${p.meaning}</div></div>
+      <div class="pr"><strong>${inr(p.price)}</strong><span>${p.size} Eau de Parfum · incl. GST</span></div>
       <p class="desc">${p.desc}</p>
-      ${scentMap(p)}
+      ${p.set ? "" : scentMap(p)}
       <div class="addrow">
         <div class="qty"><button aria-label="Decrease quantity" id="pqm">−</button><output id="pqo" aria-live="polite">1</output><button aria-label="Increase quantity" id="pqp">+</button></div>
         <button class="btn" id="pdpAdd">Add to bag</button>
@@ -1260,11 +1266,11 @@ function renderPDP(p){
       </div>
     </div>
   </div>
-  <div class="pdp-anat">
-    <div class="shead" style="padding-top:0;padding-bottom:24px"><div><span class="label eyebrow">Anatomy of ${p.name} ${p.ed}</span><h2 style="font-size:clamp(28px,3.6vw,52px)">Three acts,<br><span class="it">one day on skin.</span></h2></div><p>Press play or drag the dial to watch the notes lift away in order: top, heart, then base.</p></div>
+  ${p.set ? `<div class="pdp-anat"><div class="shead" style="padding-top:0;padding-bottom:24px"><div><span class="label eyebrow">Inside the set</span><h2 style="font-size:clamp(28px,3.6vw,52px)">Four fragrances,<br><span class="it">20 ml each.</span></h2></div><p>Wear one a day and find your signature, then come back for the 50 ml.</p></div><div class="grid">${SINGLES.map(card).join("")}</div></div>` : `<div class="pdp-anat">
+    <div class="shead" style="padding-top:0;padding-bottom:24px"><div><span class="label eyebrow">Anatomy of ${p.name}</span><h2 style="font-size:clamp(28px,3.6vw,52px)">Three acts,<br><span class="it">one day on skin.</span></h2></div><p>Press play or drag the dial to watch the notes lift away in order: top, heart, then base.</p></div>
     <div id="pdpAnat"></div>
-  </div>
-  <div class="pairs"><div class="shead" style="padding-top:0;padding-bottom:24px"><div><h2 style="font-size:clamp(26px,3.2vw,44px)">Chosen to pair with ${p.name} ${p.ed}</h2><p style="margin-top:8px">Picked from what you've browsed and what complements its ${p.fam.toLowerCase()} character.</p></div><a class="link" href="#shop">View all</a></div><div class="grid">${others.map(card).join("")}</div></div>`;
+  </div>`}
+  <div class="pairs"><div class="shead" style="padding-top:0;padding-bottom:24px"><div><h2 style="font-size:clamp(26px,3.2vw,44px)">${p.set ? "Or choose a full 50 ml" : "Chosen to pair with "+p.name}</h2><p style="margin-top:8px">Picked from what you've browsed and what complements its ${p.fam.toLowerCase()} character.</p></div><a class="link" href="#shop">View all</a></div><div class="grid">${others.map(card).join("")}</div></div>`;
 
   const slidesEl=$$("#pdp .slide"), th=$$("#pdp .thumbs button"), dots=$$("#pdp .dots i");
   let cur=0, swiped=false;
@@ -1288,8 +1294,8 @@ function renderPDP(p){
   $("#pqm").onclick=()=>{pq=Math.max(1,pq-1);$("#pqo").textContent=pq};
   $("#pqp").onclick=()=>{pq=Math.min(10,pq+1);$("#pqo").textContent=pq};
   $("#pdpAdd").onclick=()=>addToBag(p.id,pq);
-  $("#mobileBuy").innerHTML=`<div class="n">${p.name} ${p.ed}<small>${inr(PRICE)} · 50 ml</small></div><button class="btn" data-add="${p.id}">Add to bag</button>`;
-  anatomy(p,"pdpAnat");
+  $("#mobileBuy").innerHTML=`<div class="n">${p.name}<small>${inr(p.price)} · ${p.size}</small></div><button class="btn" data-add="${p.id}">Add to bag</button>`;
+  if(!p.set) anatomy(p,"pdpAnat");
 }
 /* sticky bar appears whenever the main Add to bag button is off screen (scrolled past, or below the fold on short phones) */
 let mbOn=false;
@@ -1298,7 +1304,7 @@ addEventListener("scroll",()=>{ if(mbOn) checkSticky(); },{passive:true});
 const mb={ observe(){ mbOn=true; checkSticky(); }, disconnect(){ mbOn=false; } };
 
 /* maison, help, newsletter */
-$("#strip").innerHTML=P.map(p=>`<a href="#${p.id}" aria-label="${p.name} ${p.ed}">${pic("orig-"+p.id,"","(max-width:1020px) 33vw, 16vw")}</a>`).join("");
+$("#strip").innerHTML=P.map(p=>`<a href="#${p.id}" aria-label="${p.name}">${pic("orig-"+p.id,"","(max-width:1020px) 33vw, 16vw")}</a>`).join("");
 $("#copyEmail").onclick=()=>{ const t=$("#emailText").textContent;
   const fallback=()=>{ const r=document.createRange(); r.selectNodeContents($("#emailText")); getSelection().removeAllRanges(); getSelection().addRange(r); toast("Address selected. Copy it from here."); };
   try{ navigator.clipboard.writeText(t).then(()=>toast("Email address copied."),fallback); }catch(e){ fallback(); } };
@@ -1325,7 +1331,7 @@ function route(){
   const bar=$("#mobileBuy"); bar.classList.remove("on"); bar.inert=true; mb.disconnect(); clearAnat();
   if(spin){ cancelAnimationFrame(spin); spin=null; }
   let target=null;
-  if(byId[h]){ renderPDP(byId[h]); $("#v-product").classList.add("on"); mb.observe($("#pdpAdd")); document.title=`${byId[h].name} ${byId[h].ed} · ARS SHI Parfums`; }
+  if(byId[h]){ renderPDP(byId[h]); $("#v-product").classList.add("on"); mb.observe($("#pdpAdd")); document.title=`${byId[h].name} · ARS SHI Parfums`; }
   else if(h.startsWith("shop")){ filter=({"shop-her":"her","shop-him":"him"})[h]||"all"; renderShop(); $("#v-shop").classList.add("on"); document.title="Shop · ARS SHI Parfums"; }
   else if(h==="maison"){ $("#v-maison").classList.add("on"); document.title="The maison · ARS SHI Parfums"; }
   else if(helpIds[h]){ $("#v-help").classList.add("on"); target=$("#"+helpIds[h]); document.title="Help · ARS SHI Parfums"; }
