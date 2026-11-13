@@ -58,13 +58,16 @@ p{margin:0}
 .announce{background:var(--ink);color:var(--on-dark);text-align:center;padding:9px 16px;font-size:12px;letter-spacing:.16em;text-transform:uppercase;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 .announce .short{display:none}
 header.site{position:sticky;top:env(safe-area-inset-top,0px);z-index:40;background:color-mix(in srgb,var(--stone) 92%,transparent);backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);border-bottom:1px solid var(--line)}
-.hbar{display:grid;grid-template-columns:1fr auto 1fr;align-items:center;height:72px}
+.hbar{display:grid;grid-template-columns:1fr auto 1fr;align-items:center;height:100px}
 .hleft{display:flex;align-items:center;gap:30px}
 .nav{display:flex;gap:30px}
 .nav a{display:inline-flex;align-items:center;min-height:var(--tap);font-size:12px;font-weight:500;letter-spacing:.2em;text-transform:uppercase;position:relative}
 .nav a::after{content:"";position:absolute;left:0;right:0;bottom:10px;height:1px;background:currentColor;transform:scaleX(0);transform-origin:left;transition:transform .4s var(--ease)}
 .nav a:hover::after,.nav a[aria-current="page"]::after{transform:scaleX(1)}
-.wordmark{display:flex;flex-direction:column;align-items:center;gap:3px;line-height:1}
+.wordmark{--mh:34px;display:flex;flex-direction:column;align-items:center;gap:3px;line-height:1}
+/* ASH monogram, cut from the box artwork; painted with currentColor through a mask */
+.mono{display:block;width:calc(var(--mh) * .909);height:var(--mh);margin-bottom:5px;background:currentColor;-webkit-mask:url(img/w/monogram.webp) center/contain no-repeat;mask:url(img/w/monogram.webp) center/contain no-repeat}
+header.site .wordmark .mono{color:var(--ink)}
 .wordmark b{font-family:var(--display);font-weight:400;font-size:29px;letter-spacing:.32em;margin-right:-.32em;background:linear-gradient(100deg,var(--ink) 40%,var(--foil) 50%,var(--ink) 60%) 0 0/300% 100%;-webkit-background-clip:text;background-clip:text;color:transparent;animation:foil 7s ease-in-out infinite}
 @keyframes foil{0%,70%{background-position:100% 0}100%{background-position:0 0}}
 .wordmark small{font-size:9.5px;letter-spacing:.46em;margin-right:-.46em;color:var(--muted);text-transform:uppercase}
@@ -319,7 +322,7 @@ fieldset{border:0;margin:0;padding:0;min-width:0}
 .cube .tp{left:0;width:100%;height:var(--d);top:calc((var(--h) - var(--d))/2);background:var(--c);transform:rotateX(90deg) translateZ(calc(var(--h)/2))}
 .turn .floor{position:absolute;bottom:12%;left:50%;width:56%;height:5%;transform:translateX(-50%);background:radial-gradient(closest-side,rgba(16,28,56,.35),transparent)}
 .turn .hint{position:absolute;bottom:14px;left:0;right:0;text-align:center;font-size:12px;letter-spacing:.18em;text-transform:uppercase;color:var(--muted)}
-.buy{position:sticky;top:calc(env(safe-area-inset-top,0px) + 96px);align-self:start;display:flex;flex-direction:column;gap:20px}
+.buy{position:sticky;top:calc(env(safe-area-inset-top,0px) + 124px);align-self:start;display:flex;flex-direction:column;gap:20px}
 .buy h1{font-size:clamp(46px,5.6vw,84px);line-height:.95}
 .buy .ed{font-family:var(--serif);font-style:italic;font-size:28px;color:var(--muted);margin-top:4px}
 .buy .pr{display:flex;justify-content:space-between;align-items:baseline;gap:12px;flex-wrap:wrap;border-block:1px solid var(--line);padding-block:14px}
@@ -371,7 +374,7 @@ details .dbody{padding-bottom:18px;color:var(--muted);font-size:15.5px;max-width
 .lexicon dd{margin:6px 0 0;font-family:var(--serif);font-style:italic;font-size:19px;color:var(--muted)}
 .help{max-width:820px;margin-inline:auto;padding-block:clamp(40px,7vw,96px)}
 .help h1{font-size:clamp(40px,6vw,72px);line-height:1}
-.help section{padding-block:32px;border-top:1px solid var(--line);scroll-margin-top:90px}
+.help section{padding-block:32px;border-top:1px solid var(--line);scroll-margin-top:116px}
 .help section:first-of-type{margin-top:36px}
 .help h2{font-size:28px;margin-bottom:14px}
 .help p,.help li{color:var(--muted);font-size:17.5px}
@@ -391,6 +394,8 @@ details .dbody{padding-bottom:18px;color:var(--muted);font-size:15.5px;max-width
 footer{background:var(--ink);color:var(--on-dark)}
 .fgrid{display:grid;grid-template-columns:1.4fr repeat(3,minmax(0,1fr));gap:36px;padding-block:64px 40px}
 .fgrid .wordmark{align-items:flex-start}
+.fgrid .wordmark{--mh:44px}
+.fgrid .wordmark .mono{color:var(--gold-line)}
 .fgrid .wordmark b{font-size:30px;background:none;color:var(--on-dark);animation:none}
 .fgrid .wordmark small{color:rgba(244,247,252,.6)}
 .fgrid p{opacity:.75;font-size:15px;max-width:34ch;margin-top:20px}
@@ -476,7 +481,8 @@ footer{background:var(--ink);color:var(--on-dark)}
 }
 @media (max-width:640px){
   .announce .long{display:none}.announce .short{display:inline}
-  .hbar{height:60px}
+  .hbar{height:80px}
+  .wordmark{--mh:27px}
   .wordmark b{font-size:23px}
   .hero-top .ctas .btn{flex:1 1 100%}
   .stage.wide{display:none}.stage.tall{display:block}
@@ -561,7 +567,7 @@ footer{background:var(--ink);color:var(--on-dark)}
         <a href="#maison" data-nav="maison">The maison</a>
       </nav>
     </div>
-    <a href="#" class="wordmark"><b>ARS SHI</b><small>Parfums</small></a>
+    <a href="#" class="wordmark"><span class="mono" aria-hidden="true"></span><b>ARS SHI</b><small>Parfums</small></a>
     <div class="hright">
       <a href="#finder" class="label finder-link">Scent finder</a>
       <button class="iconbtn" id="searchBtn" aria-label="Search" aria-controls="search" aria-expanded="false"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4"><circle cx="10.5" cy="10.5" r="6.5"/><path d="M15.5 15.5 21 21"/></svg></button>
@@ -745,7 +751,7 @@ footer{background:var(--ink);color:var(--on-dark)}
 
 <footer id="siteFooter">
   <div class="wrap fgrid">
-    <div><span class="wordmark"><b>ARS SHI</b><small>Parfums</small></span><p>Eau de Parfum in textured, foil-pressed boxes. Composed with care, priced for every day.</p>
+    <div><span class="wordmark"><span class="mono" aria-hidden="true"></span><b>ARS SHI</b><small>Parfums</small></span><p>Eau de Parfum in textured, foil-pressed boxes. Composed with care, priced for every day.</p>
       <div class="trust" style="margin-top:20px"><span class="lock">Secure checkout</span><span>UPI</span><span>Cards</span><span>COD</span></div></div>
     <div><h2 class="h6">Shop</h2><ul><li><a href="#shop">All fragrances</a></li><li><a href="#shop-her">For her</a></li><li><a href="#shop-him">For him</a></li><li><a href="#finder">Scent finder</a></li></ul></div>
     <div><h2 class="h6">Maison</h2><ul><li><a href="#maison">Our story</a></li><li><a href="#contact">Contact</a></li></ul></div>
@@ -762,7 +768,7 @@ footer{background:var(--ink);color:var(--on-dark)}
   <div class="dfoot" id="dfoot"></div>
 </aside>
 <aside class="drawer left" id="menu" aria-label="Menu" role="dialog" aria-modal="true" inert>
-  <div class="dhead"><span class="wordmark" style="align-items:flex-start"><b style="font-size:20px">ARS SHI</b></span><button class="close" data-close>Close</button></div>
+  <div class="dhead"><span class="wordmark" style="align-items:flex-start;flex-direction:row;gap:10px;--mh:24px"><span class="mono" aria-hidden="true" style="margin:0;color:var(--ink)"></span><b style="font-size:20px">ARS SHI</b></span><button class="close" data-close>Close</button></div>
   <nav class="mnav"><a href="#shop">Shop all</a><a href="#shop-her">For her</a><a href="#shop-him">For him</a><a href="#finder">Scent finder</a><a href="#maison">The maison</a>
     <div style="height:16px"></div><a class="small" href="#shipping">Shipping</a><a class="small" href="#returns">Returns</a><a class="small" href="#contact">Contact</a></nav>
 </aside>
