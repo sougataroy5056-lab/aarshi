@@ -77,7 +77,7 @@ w.close();
 
 const count = (re) => (html.match(re) || []).length;
 console.log(`Asset version ${ver}`);
-console.log(`Pre-rendered: ${count(/Add to bag/g)} "Add to bag" buttons, ${count(/₹899/g)} prices`);
+console.log(`Pre-rendered: ${count(/Add to bag/g)} "Add to bag" buttons, ${count(/₹[0-9,]+/g)} prices`);
 
 rmSync("public", { recursive: true, force: true });
 mkdirSync("public/img", { recursive: true });

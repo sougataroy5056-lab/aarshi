@@ -70,12 +70,12 @@ p{margin:0}
 @supports ((-webkit-background-clip:text) or (background-clip:text)){
   h1,h2,h3,.eyebrow,.hero-meta strong,.price,.buy .pr strong,.dfoot .tot strong,.line .lp,.nav a,.mnav a,.ch-body .ed,
   .announce span,.fgrid .h6,.lexicon dt,.act .notes,.result h4,.msg .pick-card b,.card h3 a,.sres span{
-    background-image:var(--foil-img);background-size:100% 100%;
+    background-image:var(--foil-img);background-size:250% 100%;background-position:var(--sx,42%) 0;
     -webkit-background-clip:text;background-clip:text;color:transparent;-webkit-text-fill-color:transparent}
   .card h3{-webkit-text-fill-color:initial}
   /* the hero lines slide in on their own layers, so the foil is printed on each line rather than the heading */
   .hero-top h1{background:none;-webkit-text-fill-color:initial;color:var(--ink)}
-  .hero-top h1 .ln>span{background-image:var(--foil-img);background-size:100% 100%;-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;padding-bottom:.06em}
+  .hero-top h1 .ln>span{background-image:var(--foil-img);background-size:250% 100%;background-position:var(--sx,42%) 0;-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;padding-bottom:.06em}
 }
 
 /* header */
@@ -96,9 +96,9 @@ header.site.compact .mono{height:0;margin-bottom:0;opacity:0}
 .wordmark{--f:24px;display:flex;flex-direction:column;align-items:center;line-height:1}
 /* ASH monogram, cut from the box artwork; painted with currentColor through a mask */
 .mono{display:block;width:calc(var(--f) * 2.33);height:calc(var(--f) * 2.55);margin-bottom:calc(var(--f) * .26);transition:height .45s var(--ease),margin .45s var(--ease),opacity .3s var(--ease);background:currentColor;-webkit-mask:url(img/w/monogram.webp) center/contain no-repeat;mask:url(img/w/monogram.webp) center/contain no-repeat}
-header.site .wordmark .mono{background:var(--royal-foil);background-size:100% 100%}
-.wordmark b{font-family:var(--display);font-weight:400;font-size:var(--f);letter-spacing:.08em;margin-right:-.08em;transition:font-size .45s var(--ease);background:var(--foil-img) 0 0/220% 100%;-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;color:transparent;animation:foil 7s ease-in-out infinite}
-@keyframes foil{0%,70%{background-position:100% 0}100%{background-position:0 0}}
+header.site .wordmark .mono{background:var(--royal-foil);background-size:250% 100%;background-position:var(--sx,42%) 0;}
+.wordmark b{font-family:var(--display);font-weight:400;font-size:var(--f);letter-spacing:.08em;margin-right:-.08em;transition:font-size .45s var(--ease);background:var(--foil-img) var(--sx,42%) 0/250% 100%;-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;color:transparent;animation:none}
+
 .wordmark small{font-size:max(11px, calc(var(--f) * .42));letter-spacing:.38em;margin-right:-.38em;margin-top:calc(var(--f) * .3);color:var(--muted);text-transform:uppercase}
 .hright{display:flex;justify-content:flex-end;gap:6px;align-items:center}
 .hright .label{display:inline-flex;align-items:center;min-height:var(--tap);padding-inline:10px}
@@ -424,8 +424,8 @@ footer{background:var(--navy);color:var(--gold-lt)}
 .fgrid{display:grid;grid-template-columns:1.4fr repeat(3,minmax(0,1fr));gap:36px;padding-block:64px 40px}
 .fgrid .wordmark{display:inline-flex;align-items:center}
 .fgrid .wordmark{--f:28px}
-.fgrid .wordmark .mono{background:var(--gold-foil);background-size:100% 100%}
-.fgrid .wordmark b{animation:none;background-size:100% 100%}
+.fgrid .wordmark .mono{background:var(--gold-foil);background-size:250% 100%;background-position:var(--sx,42%) 0;}
+.fgrid .wordmark b{animation:none}
 .fgrid .wordmark small{color:var(--gold-lt);opacity:.85}
 .fgrid p{opacity:.75;font-size:15px;max-width:34ch;margin-top:20px}
 .fgrid .trust span{background:transparent;color:var(--gold-lt);border-color:rgba(217,188,120,.4)}
@@ -1379,6 +1379,27 @@ function route(){
   closeDrawers(true);
   if(target) requestAnimationFrame(()=>target.scrollIntoView({block:"start"})); else window.scrollTo(0,0);
   if(mbOn) checkSticky();
+}
+/* Foil sheen: as foil lettering moves up the screen, its highlight band slides across it, like
+   light catching stamped foil. The header logo, which stays put, shimmers with scroll distance. */
+const FOIL_SEL='h1,h2,h3,.eyebrow,.hero-meta strong,.price,.buy .pr strong,.dfoot .tot strong,.line .lp,.nav a,.mnav a,.ch-body .ed,.announce span,.fgrid .h6,.lexicon dt,.act .notes,.result h4,.msg .pick-card b,.card h3 a,.sres span,.hero-top h1 .ln>span,.wordmark b,.mono';
+let foilEls=[];
+function foilScan(){ foilEls=$$(FOIL_SEL); }
+let foilTick=false;
+function foilUpdate(){
+  foilTick=false; const vh=innerHeight, y=scrollY;
+  foilEls.forEach(el=>{
+    let k;
+    if(el.closest("header.site,.announce,.tabbar")) k=.5+.5*Math.sin(y/260);           // fixed elements: ping-pong with scroll
+    else { const r=el.getBoundingClientRect(); if(r.bottom<0||r.top>vh||!r.height) return; k=1-(r.top+r.height/2)/vh; }   // 0 at the bottom of the screen, 1 at the top
+    el.style.setProperty("--sx",(Math.max(-.1,Math.min(1.1,k))*100).toFixed(1)+"%");
+  });
+}
+if(!reduce){
+  addEventListener("scroll",()=>{ if(!foilTick){ foilTick=true; requestAnimationFrame(foilUpdate); } },{passive:true});
+  addEventListener("resize",()=>requestAnimationFrame(foilUpdate));
+  let scanT; new MutationObserver(()=>{ clearTimeout(scanT); scanT=setTimeout(()=>{ foilScan(); requestAnimationFrame(foilUpdate); },60); }).observe(document.body,{childList:true,subtree:true});
+  foilScan(); setTimeout(foilUpdate,120);
 }
 const hdr=$("#siteHeader"); let hdrCompact=false;
 function headerState(){ const c=scrollY>40; if(c!==hdrCompact){ hdrCompact=c; hdr.classList.toggle("compact",c); } }
