@@ -83,7 +83,7 @@ p{margin:0}
 .announce{background:var(--navy);color:var(--gold-lt);text-align:center;padding:9px 16px;font-size:14px;letter-spacing:.16em;text-transform:uppercase;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 .announce .short{display:none}
 header.site{position:sticky;top:env(safe-area-inset-top,0px);z-index:40;background:color-mix(in srgb,var(--stone) 92%,transparent);backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);border-bottom:1px solid var(--line)}
-.hbar{display:grid;grid-template-columns:1fr auto 1fr;align-items:center;height:124px;transition:height .45s var(--ease)}
+.hbar{display:grid;grid-template-columns:1fr auto 1fr;align-items:center;height:150px;transition:height .45s var(--ease)}
 /* once the page scrolls, the lockup condenses to the wordmark so the header stays slim */
 header.site.compact .hbar{height:72px}
 header.site.compact .mono{height:0;margin-bottom:0;opacity:0}
@@ -94,10 +94,10 @@ header.site.compact .mono{height:0;margin-bottom:0;opacity:0}
 .nav a:hover::after,.nav a[aria-current="page"]::after{transform:scaleX(1)}
 /* The logo lockup copies the box: "ARS SHI" at .08em tracking is 6.4× its cap height wide; the monogram is
    58% of that width tall, 53% wide, and sits 7.7% of that width above the capitals. Everything scales from --f. */
-.wordmark{--f:24px;display:flex;flex-direction:column;align-items:center;line-height:1}
+.wordmark{--f:30px;display:flex;flex-direction:column;align-items:center;line-height:1}
 /* ASH monogram, cut from the box artwork; painted with currentColor through a mask */
 .mono{display:block;width:calc(var(--f) * 2.33);height:calc(var(--f) * 2.55);margin-bottom:calc(var(--f) * .26);transition:height .45s var(--ease),margin .45s var(--ease),opacity .3s var(--ease);background:currentColor;-webkit-mask:url(img/w/monogram.webp) center/contain no-repeat;mask:url(img/w/monogram.webp) center/contain no-repeat}
-header.site .wordmark .mono{background:var(--royal-foil);background-size:250% 100%;background-position:var(--sx,42%) 0;}
+header.site .wordmark .mono{background:var(--royal-foil);background-size:250% 100%;background-position:var(--sx,42%) 0;;-webkit-mask-image:url(img/w/monogram-bold.webp);mask-image:url(img/w/monogram-bold.webp)}
 .wordmark b{font-family:var(--display);font-weight:400;font-size:var(--f);letter-spacing:.08em;margin-right:-.08em;transition:font-size .45s var(--ease);background:var(--foil-img) var(--sx,42%) 0/250% 100%;-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;color:transparent;animation:none}
 
 .wordmark small{font-size:max(11px, calc(var(--f) * .42));letter-spacing:.38em;margin-right:-.38em;margin-top:calc(var(--f) * .3);color:var(--muted);text-transform:uppercase}
@@ -511,9 +511,9 @@ footer{background:var(--navy);color:var(--gold-lt)}
 }
 @media (max-width:640px){
   .announce .long{display:none}.announce .short{display:inline}
-  .hbar{height:96px}
+  .hbar{height:112px}
   header.site.compact .hbar{height:60px}
-  .wordmark{--f:17px}
+  .wordmark{--f:21px}
   .hero-top .ctas .btn{flex:1 1 100%}
   .stage.wide{display:none}.stage.tall{display:block}
   .shelf-hint{display:block}
