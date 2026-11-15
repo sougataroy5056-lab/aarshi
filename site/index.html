@@ -82,11 +82,16 @@ p{margin:0}
 /* header */
 .announce{background:var(--navy);color:var(--gold-lt);text-align:center;padding:9px 16px;font-size:14px;letter-spacing:.16em;text-transform:uppercase;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 .announce .short{display:none}
-header.site{position:sticky;top:env(safe-area-inset-top,0px);z-index:40;background:color-mix(in srgb,var(--stone) 92%,transparent);backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);border-bottom:1px solid var(--line)}
-.hbar{display:grid;grid-template-columns:1fr auto 1fr;align-items:center;height:150px;transition:height .45s var(--ease)}
+/* The header shell keeps one height at all times, so condensing it never shifts the page (which used to
+   make the browser re-adjust the scroll position, re-expand the header and flicker in a loop). Only the
+   inner bar shrinks; the shell below it is transparent and lets clicks through. */
+header.site{--hh:150px;position:sticky;top:env(safe-area-inset-top,0px);z-index:40;height:var(--hh);pointer-events:none;contain:layout style}
+header.site .hbg{pointer-events:auto;background:var(--stone);border-bottom:1px solid var(--line)}
+.hbar{display:grid;grid-template-columns:1fr auto 1fr;align-items:center;height:var(--hh);transition:height .4s var(--ease)}
 /* once the page scrolls, the lockup condenses to the wordmark so the header stays slim */
 header.site.compact .hbar{height:72px}
-header.site.compact .mono{height:0;margin-bottom:0;opacity:0}
+header.site.compact .lockup{transform:scale(.46)}
+
 .hleft{display:flex;align-items:center;gap:30px}
 .nav{display:flex;gap:30px}
 .nav a{display:inline-flex;align-items:center;min-height:var(--tap);font-size:14px;font-weight:500;letter-spacing:.2em;text-transform:uppercase;position:relative}
@@ -94,7 +99,14 @@ header.site.compact .mono{height:0;margin-bottom:0;opacity:0}
 .nav a:hover::after,.nav a[aria-current="page"]::after{transform:scaleX(1)}
 /* The logo lockup copies the box: "ARS SHI" at .08em tracking is 6.4× its cap height wide; the monogram is
    58% of that width tall, 53% wide, and sits 7.7% of that width above the capitals. Everything scales from --f. */
-.wordmark{--f:30px;display:flex;flex-direction:column;align-items:center;line-height:1}
+.wordmark{--lh:104px;display:flex;flex-direction:column;align-items:center;line-height:1}
+/* The logo is the brand artwork traced to vector (img/w/logo-lockup.svg: monogram over "ARS SHI").
+   It is used as a mask, so it can be printed in royal-blue or gold foil and catch the scroll sheen. */
+.lockup{display:block;height:var(--lh);aspect-ratio:1.1702;background:var(--foil-img) var(--sx,42%) 0/250% 100%;
+  -webkit-mask:url(img/w/logo-lockup.svg) center/contain no-repeat;mask:url(img/w/logo-lockup.svg) center/contain no-repeat;
+  transform-origin:50% 50%;transition:transform .4s var(--ease)}
+.logo-full{display:block;height:var(--lh);aspect-ratio:1.0427;background:var(--foil-img) var(--sx,42%) 0/250% 100%;
+  -webkit-mask:url(img/w/logo-full.svg) center/contain no-repeat;mask:url(img/w/logo-full.svg) center/contain no-repeat}
 /* ASH monogram, redrawn as an even-stroke vector from the box artwork; painted through a mask so it takes any colour or foil */
 .mono{display:block;width:calc(var(--f) * 2.33);height:calc(var(--f) * 2.55);margin-bottom:calc(var(--f) * .26);transition:height .45s var(--ease),margin .45s var(--ease),opacity .3s var(--ease);background:currentColor;-webkit-mask:url(img/w/monogram.svg) center/contain no-repeat;mask:url(img/w/monogram.svg) center/contain no-repeat}
 header.site .wordmark .mono{background:var(--royal-foil);background-size:250% 100%;background-position:var(--sx,42%) 0;;-webkit-mask-image:url(img/w/monogram-bold.svg);mask-image:url(img/w/monogram-bold.svg)}
@@ -138,7 +150,7 @@ header.site .wordmark .mono{background:var(--royal-foil);background-size:250% 10
 .sbox:focus-visible .lift{transform:translateY(-7%)}
 .sbox:active .lift{transform:translateY(-4%)}
 .glint{position:absolute;inset:0;overflow:hidden;pointer-events:none}
-.glint::after{content:"";position:absolute;top:-10%;bottom:-10%;width:45%;left:-60%;background:linear-gradient(100deg,transparent,rgba(255,255,255,.42),transparent);mix-blend-mode:soft-light;animation:glint 7s ease-in-out infinite;animation-delay:calc(1.6s + var(--i)*.35s)}
+.glint::after{content:"";position:absolute;top:-10%;bottom:-10%;width:45%;left:-60%;background:linear-gradient(100deg,transparent,rgba(255,255,255,.22),transparent);animation:glint 7s ease-in-out infinite;animation-delay:calc(1.6s + var(--i)*.35s)}
 @keyframes glint{0%{left:-60%}22%,100%{left:130%}}
 .sbox .tag{position:absolute;left:50%;bottom:calc(100% + 12px);transform:translate(-50%,8px);white-space:nowrap;background:var(--stone);color:var(--ink);padding:7px 12px;font-size:14px;letter-spacing:.14em;text-transform:uppercase;opacity:0;transition:all .45s var(--ease);pointer-events:none}
 .sbox:focus-visible .tag{opacity:1;transform:translate(-50%,-7%)}
@@ -200,7 +212,7 @@ header.site .wordmark .mono{background:var(--royal-foil);background-size:250% 10
 .anat-visual>svg{position:absolute;left:50%;top:50%;height:78%;width:auto;transform:translate(-50%,-50%);overflow:visible}
 .anat-visual .clock{position:absolute;left:18px;top:16px;font-size:15px;font-weight:500;letter-spacing:.06em}
 .anat-visual .clock small{display:block;font-size:14px;letter-spacing:.16em;text-transform:uppercase;color:var(--muted);margin-top:2px;font-weight:400}
-.anat-visual .nowcap{position:absolute;left:12px;right:12px;bottom:12px;background:rgba(255,255,255,.9);backdrop-filter:blur(6px);padding:10px 14px;display:none}
+.anat-visual .nowcap{position:absolute;left:12px;right:12px;bottom:12px;background:rgba(255,255,255,.94);padding:10px 14px;display:none}
 .anat-visual .nowcap b{display:block;font-size:14px;font-weight:600;letter-spacing:.18em;text-transform:uppercase;color:var(--foil)}
 .anat-visual .nowcap span{font-family:var(--serif);font-size:21px;line-height:1.2}
 .mist{position:absolute;left:50%;top:12%;width:0;height:0}
@@ -424,7 +436,7 @@ details .dbody{padding-bottom:18px;color:var(--muted);font-size:15.5px;max-width
 footer{background:var(--navy);color:var(--gold-lt)}
 .fgrid{display:grid;grid-template-columns:1.4fr repeat(3,minmax(0,1fr));gap:36px;padding-block:64px 40px}
 .fgrid .wordmark{display:inline-flex;align-items:center}
-.fgrid .wordmark{--f:28px}
+.fgrid .wordmark{--lh:150px}
 .fgrid .wordmark .mono{background:var(--gold-foil);background-size:250% 100%;background-position:var(--sx,42%) 0;}
 .fgrid .wordmark b{animation:none}
 .fgrid .wordmark small{color:var(--gold-lt);opacity:.85}
@@ -511,9 +523,10 @@ footer{background:var(--navy);color:var(--gold-lt)}
 }
 @media (max-width:640px){
   .announce .long{display:none}.announce .short{display:inline}
-  .hbar{height:112px}
+  header.site{--hh:104px}
   header.site.compact .hbar{height:60px}
-  .wordmark{--f:21px}
+  header.site.compact .lockup{transform:scale(.52)}
+  .wordmark{--lh:74px}
   .hero-top .ctas .btn{flex:1 1 100%}
   .stage.wide{display:none}.stage.tall{display:block}
   .shelf-hint{display:block}
@@ -561,7 +574,7 @@ footer{background:var(--navy);color:var(--gold-lt)}
   .mobile-buy .btn{min-height:48px;padding-inline:22px}
   .fgrid{gap:28px 16px;padding-block:48px 28px}
   /* thumb-zone navigation */
-  .tabbar{display:grid;grid-template-columns:repeat(4,1fr);position:fixed;left:0;right:0;bottom:0;z-index:30;background:color-mix(in srgb,var(--stone) 94%,transparent);backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);border-top:1px solid var(--line);padding-bottom:env(safe-area-inset-bottom,0px);transition:transform .4s var(--ease)}
+  .tabbar{display:grid;grid-template-columns:repeat(4,1fr);position:fixed;left:0;right:0;bottom:0;z-index:30;background:rgba(255,255,255,.97);border-top:1px solid var(--line);padding-bottom:env(safe-area-inset-bottom,0px);transition:transform .4s var(--ease)}
   .tabbar a,.tabbar button{position:relative;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:3px;min-height:58px;font-size:14px;letter-spacing:.04em;color:var(--muted)}
   .tabbar svg{width:22px;height:22px}
   .tabbar [aria-current="page"]{color:var(--ink);font-weight:600}
@@ -587,7 +600,7 @@ footer{background:var(--navy);color:var(--gold-lt)}
 <div class="announce"><span class="long">Free shipping across India on orders of ₹1,499 and above &nbsp;·&nbsp; Cash on delivery available</span><span class="short">Free shipping · COD available</span></div>
 
 <header class="site" id="siteHeader">
-  <div class="wrap hbar">
+  <div class="hbg"><div class="wrap hbar">
     <div class="hleft">
       <button class="iconbtn menubtn" id="menuBtn" aria-label="Open menu" aria-controls="menu" aria-expanded="false"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4"><path d="M3 7h18M3 12h18M3 17h12"/></svg></button>
       <nav class="nav" aria-label="Main">
@@ -597,13 +610,13 @@ footer{background:var(--navy);color:var(--gold-lt)}
         <a href="#maison" data-nav="maison">The maison</a>
       </nav>
     </div>
-    <a href="#" class="wordmark"><span class="mono" aria-hidden="true"></span><b>ARS SHI</b><small>Parfums</small></a>
+    <a href="#" class="wordmark" aria-label="ARS SHI Parfums, home"><span class="lockup" aria-hidden="true"></span></a>
     <div class="hright">
       <a href="#finder" class="label finder-link">Scent finder</a>
       <button class="iconbtn" id="searchBtn" aria-label="Search" aria-controls="search" aria-expanded="false"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4"><circle cx="10.5" cy="10.5" r="6.5"/><path d="M15.5 15.5 21 21"/></svg></button>
       <button class="iconbtn bagbtn" id="bagBtn" aria-label="Open bag" aria-controls="bag" aria-expanded="false"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4"><path d="M5 8h14l-1 13H6L5 8Z"/><path d="M9 8V6a3 3 0 0 1 6 0v2"/></svg><span class="bagcount" id="bagCount" aria-hidden="true">0</span></button>
     </div>
-  </div>
+  </div></div>
 </header>
 
 <main id="main">
@@ -781,7 +794,7 @@ footer{background:var(--navy);color:var(--gold-lt)}
 
 <footer id="siteFooter">
   <div class="wrap fgrid">
-    <div><span class="wordmark"><span class="mono" aria-hidden="true"></span><b>ARS SHI</b><small>Parfums</small></span><p>Eau de Parfum in textured, foil-pressed boxes. Composed with care, priced for every day.</p>
+    <div><span class="wordmark" role="img" aria-label="ARS SHI Eau de Parfum"><span class="logo-full"></span></span><p>Eau de Parfum in textured, foil-pressed boxes. Composed with care, priced for every day.</p>
       <div class="trust" style="margin-top:20px"><span class="lock">Secure checkout</span><span>UPI</span><span>Cards</span><span>COD</span></div></div>
     <div><h2 class="h6">Shop</h2><ul><li><a href="#shop">All fragrances</a></li><li><a href="#shop-her">For her</a></li><li><a href="#shop-him">For him</a></li><li><a href="#finder">Scent finder</a></li></ul></div>
     <div><h2 class="h6">Maison</h2><ul><li><a href="#maison">Our story</a></li><li><a href="#contact">Contact</a></li></ul></div>
@@ -798,7 +811,7 @@ footer{background:var(--navy);color:var(--gold-lt)}
   <div class="dfoot" id="dfoot"></div>
 </aside>
 <aside class="drawer left" id="menu" aria-label="Menu" role="dialog" aria-modal="true" inert>
-  <div class="dhead"><span class="wordmark" style="align-items:center;flex-direction:row;gap:10px;--f:12px"><span class="mono" aria-hidden="true" style="margin:0;color:var(--ink)"></span><b style="font-size:20px;letter-spacing:.08em">ARS SHI</b></span><button class="close" data-close>Close</button></div>
+  <div class="dhead"><span class="wordmark" style="--lh:46px;--foil-img:var(--royal-foil)" role="img" aria-label="ARS SHI"><span class="lockup"></span></span><button class="close" data-close>Close</button></div>
   <nav class="mnav"><a href="#shop">Shop all</a><a href="#shop-her">For her</a><a href="#shop-him">For him</a><a href="#finder">Scent finder</a><a href="#maison">The maison</a>
     <div style="height:16px"></div><a class="small" href="#shipping">Shipping</a><a class="small" href="#returns">Returns</a><a class="small" href="#contact">Contact</a></nav>
 </aside>
@@ -1109,7 +1122,7 @@ const chWrap=$("#chapters"); chWrap.style.setProperty("--ch",P[0].ch); chWrap.st
 const chObs=new IntersectionObserver(es=>es.forEach(en=>{ if(en.isIntersecting){ chWrap.style.setProperty("--ch",en.target.dataset.color); chWrap.style.setProperty("--chfg",en.target.dataset.fg==="dark"?"var(--gold-deep)":"var(--gold-lt)"); } }),{rootMargin:"-45% 0px -45% 0px"});
 $$(".chapter").forEach(c=>chObs.observe(c));
 let ticking=false;
-if(!reduce) addEventListener("scroll",()=>{ if(ticking || isPhone() || !$("#v-home").classList.contains("on")) return; ticking=true; requestAnimationFrame(()=>{ ticking=false; $$(".ch-img").forEach(el=>{ const r=el.getBoundingClientRect(); if(r.bottom<0||r.top>innerHeight) return; const k=(r.top+r.height/2-innerHeight/2)/innerHeight; el.style.setProperty("--py",(k*-32).toFixed(1)+"px"); }); }); },{passive:true});
+if(!reduce) addEventListener("scroll",()=>{ if(ticking || isPhone() || !$("#v-home").classList.contains("on")) return; ticking=true; requestAnimationFrame(()=>{ ticking=false; const vh=innerHeight, w=[]; for(const el of $$(".ch-img")){ const r=el.getBoundingClientRect(); if(r.bottom<0||r.top>vh) continue; w.push([el,((r.top+r.height/2-vh/2)/vh*-32).toFixed(1)+"px"]); } for(const [el,v] of w) el.style.setProperty("--py",v); }); },{passive:true});
 $("#maisonDuo").innerHTML = pic("orig-raviver","Raviver box","(max-width:640px) 50vw, 25vw") + pic("orig-gift-set","Luxury Gift Set box","(max-width:640px) 50vw, 25vw");
 
 let homeSel="creer";
@@ -1383,18 +1396,21 @@ function route(){
 }
 /* Foil sheen: as foil lettering moves up the screen, its highlight band slides across it, like
    light catching stamped foil. The header logo, which stays put, shimmers with scroll distance. */
-const FOIL_SEL='h1,h2,h3,.eyebrow,.hero-meta strong,.price,.buy .pr strong,.dfoot .tot strong,.line .lp,.nav a,.mnav a,.ch-body .ed,.announce span,.fgrid .h6,.lexicon dt,.act .notes,.result h4,.msg .pick-card b,.card h3 a,.sres span,.hero-top h1 .ln>span,.wordmark b,.mono';
+const FOIL_SEL='.lockup,.logo-full,h1,h2,h3,.eyebrow,.hero-meta strong,.price,.buy .pr strong,.dfoot .tot strong,.line .lp,.nav a,.mnav a,.ch-body .ed,.announce span,.fgrid .h6,.lexicon dt,.act .notes,.result h4,.msg .pick-card b,.card h3 a,.sres span,.hero-top h1 .ln>span';
 let foilEls=[];
 function foilScan(){ foilEls=$$(FOIL_SEL); }
 let foilTick=false;
 function foilUpdate(){
-  foilTick=false; const vh=innerHeight, y=scrollY;
-  foilEls.forEach(el=>{
+  foilTick=false; const vh=innerHeight, y=scrollY, fixedK=.5+.5*Math.sin(y/260), todo=[];
+  for(const el of foilEls){                                   // 1) read
     let k;
-    if(el.closest("header.site,.announce,.tabbar")) k=.5+.5*Math.sin(y/260);           // fixed elements: ping-pong with scroll
-    else { const r=el.getBoundingClientRect(); if(r.bottom<0||r.top>vh||!r.height) return; k=1-(r.top+r.height/2)/vh; }   // 0 at the bottom of the screen, 1 at the top
-    el.style.setProperty("--sx",(Math.max(-.1,Math.min(1.1,k))*100).toFixed(1)+"%");
-  });
+    if(el.__fixed===undefined) el.__fixed=!!el.closest("header.site,.announce,.tabbar");
+    if(el.__fixed) k=fixedK;
+    else { const r=el.getBoundingClientRect(); if(r.bottom<0||r.top>vh||!r.height) continue; k=1-(r.top+r.height/2)/vh; }
+    const v=Math.round(Math.max(-.1,Math.min(1.1,k))*200)/2;   // half-percent steps
+    if(v!==el.__sx) todo.push([el,v]);
+  }
+  for(const [el,v] of todo){ el.__sx=v; el.style.setProperty("--sx",v+"%"); }   // 2) write
 }
 if(!reduce){
   addEventListener("scroll",()=>{ if(!foilTick){ foilTick=true; requestAnimationFrame(foilUpdate); } },{passive:true});
@@ -1403,7 +1419,7 @@ if(!reduce){
   foilScan(); setTimeout(foilUpdate,120);
 }
 const hdr=$("#siteHeader"); let hdrCompact=false;
-function headerState(){ const c=scrollY>40; if(c!==hdrCompact){ hdrCompact=c; hdr.classList.toggle("compact",c); } }
+function headerState(){ const y=scrollY, c = hdrCompact ? y>8 : y>64; if(c!==hdrCompact){ hdrCompact=c; hdr.classList.toggle("compact",c); } }
 addEventListener("scroll",headerState,{passive:true});
 addEventListener("hashchange",route);
 renderBag(); route(); headerState();
