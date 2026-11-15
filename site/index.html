@@ -85,12 +85,12 @@ p{margin:0}
 /* The header shell keeps one height at all times, so condensing it never shifts the page (which used to
    make the browser re-adjust the scroll position, re-expand the header and flicker in a loop). Only the
    inner bar shrinks; the shell below it is transparent and lets clicks through. */
-header.site{--hh:150px;position:sticky;top:env(safe-area-inset-top,0px);z-index:40;height:var(--hh);pointer-events:none;contain:layout style}
+header.site{--hh:158px;position:sticky;top:env(safe-area-inset-top,0px);z-index:40;height:var(--hh);pointer-events:none;contain:layout style}
 header.site .hbg{pointer-events:auto;background:var(--stone);border-bottom:1px solid var(--line)}
 .hbar{display:grid;grid-template-columns:1fr auto 1fr;align-items:center;height:var(--hh);transition:height .4s var(--ease)}
 /* once the page scrolls, the lockup condenses to the wordmark so the header stays slim */
 header.site.compact .hbar{height:72px}
-header.site.compact .lockup{transform:scale(.46)}
+header.site.compact .mono{height:0;margin-bottom:0;opacity:0}
 
 .hleft{display:flex;align-items:center;gap:30px}
 .nav{display:flex;gap:30px}
@@ -99,20 +99,17 @@ header.site.compact .lockup{transform:scale(.46)}
 .nav a:hover::after,.nav a[aria-current="page"]::after{transform:scaleX(1)}
 /* The logo lockup copies the box: "ARS SHI" at .08em tracking is 6.4× its cap height wide; the monogram is
    58% of that width tall, 53% wide, and sits 7.7% of that width above the capitals. Everything scales from --f. */
-.wordmark{--lh:104px;display:flex;flex-direction:column;align-items:center;line-height:1}
-/* The logo is the brand artwork traced to vector (img/w/logo-lockup.svg: monogram over "ARS SHI").
-   It is used as a mask, so it can be printed in royal-blue or gold foil and catch the scroll sheen. */
-.lockup{display:block;height:var(--lh);aspect-ratio:1.1702;background:var(--foil-img) var(--sx,42%) 0/250% 100%;
-  -webkit-mask:url(img/w/logo-lockup.svg) center/contain no-repeat;mask:url(img/w/logo-lockup.svg) center/contain no-repeat;
-  transform-origin:50% 50%;transition:transform .4s var(--ease)}
-.logo-full{display:block;height:var(--lh);aspect-ratio:1.0427;background:var(--foil-img) var(--sx,42%) 0/250% 100%;
-  -webkit-mask:url(img/w/logo-full.svg) center/contain no-repeat;mask:url(img/w/logo-full.svg) center/contain no-repeat}
-/* ASH monogram, redrawn as an even-stroke vector from the box artwork; painted through a mask so it takes any colour or foil */
-.mono{display:block;width:calc(var(--f) * 2.33);height:calc(var(--f) * 2.55);margin-bottom:calc(var(--f) * .26);transition:height .45s var(--ease),margin .45s var(--ease),opacity .3s var(--ease);background:currentColor;-webkit-mask:url(img/w/monogram.svg) center/contain no-repeat;mask:url(img/w/monogram.svg) center/contain no-repeat}
-header.site .wordmark .mono{background:var(--royal-foil);background-size:250% 100%;background-position:var(--sx,42%) 0;;-webkit-mask-image:url(img/w/monogram-bold.svg);mask-image:url(img/w/monogram-bold.svg)}
-.wordmark b{font-family:var(--display);font-weight:400;font-size:var(--f);letter-spacing:.08em;margin-right:-.08em;transition:font-size .45s var(--ease);background:var(--foil-img) var(--sx,42%) 0/250% 100%;-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;color:transparent;animation:none}
+/* Logo = the brand artwork traced to vector, in two pieces so the monogram can tuck away on scroll.
+   Proportions from the artwork: monogram is 3.88x the wordmark's height, with a gap of 0.55x. Both are
+   masks printed through the foil gradient, so they take royal-blue or gold foil and catch the sheen. */
+.wordmark{--wh:24px;display:flex;flex-direction:column;align-items:center;line-height:1}
+.mono,.wm{display:block;background:var(--foil-img) var(--sx,42%) 0/250% 100%}
+.mono{height:calc(var(--wh) * 3.88);aspect-ratio:.9496;margin-bottom:calc(var(--wh) * .55);
+  -webkit-mask:url(img/w/logo-mono-bold.svg) center/contain no-repeat;mask:url(img/w/logo-mono-bold.svg) center/contain no-repeat;
+  transition:height .4s var(--ease),margin .4s var(--ease),opacity .3s var(--ease)}
+.wm{height:var(--wh);aspect-ratio:5.2704;
+  -webkit-mask:url(img/w/logo-wm-bold.svg) center/contain no-repeat;mask:url(img/w/logo-wm-bold.svg) center/contain no-repeat}
 
-.wordmark small{font-size:max(11px, calc(var(--f) * .42));letter-spacing:.38em;margin-right:-.38em;margin-top:calc(var(--f) * .3);color:var(--muted);text-transform:uppercase}
 .hright{display:flex;justify-content:flex-end;gap:6px;align-items:center}
 .hright .label{display:inline-flex;align-items:center;min-height:var(--tap);padding-inline:10px}
 .bagbtn{position:relative}
@@ -191,7 +188,7 @@ header.site .wordmark .mono{background:var(--royal-foil);background-size:250% 10
 .chapter:nth-child(even) .ch-img{order:2}
 .ch-img{display:block;box-shadow:0 50px 90px -40px rgba(0,0,0,.55);transform:translateY(var(--py,0))}
 .ch-no{font-size:14px;font-weight:500;letter-spacing:.2em;text-transform:uppercase}
-.ch-body h3{font-size:clamp(52px,8vw,124px);line-height:.95;margin-top:16px}
+.ch-body h3{letter-spacing:.04em;font-size:clamp(52px,8vw,124px);line-height:.95;margin-top:16px}
 .ch-body .ed{display:block;font-family:var(--serif);font-style:italic;font-size:clamp(23px,2.4vw,34px);margin-top:8px}
 .ch-body .desc{max-width:42ch;margin-top:22px;font-size:18.5px;line-height:1.7}
 .notes-inline{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:18px;margin:30px 0 0;padding-top:22px;border-top:1px solid color-mix(in srgb,currentColor 30%,transparent);max-width:520px}
@@ -436,7 +433,7 @@ details .dbody{padding-bottom:18px;color:var(--muted);font-size:15.5px;max-width
 footer{background:var(--navy);color:var(--gold-lt)}
 .fgrid{display:grid;grid-template-columns:1.4fr repeat(3,minmax(0,1fr));gap:36px;padding-block:64px 40px}
 .fgrid .wordmark{display:inline-flex;align-items:center}
-.fgrid .wordmark{--lh:150px}
+.fgrid .wordmark{--wh:30px}
 .fgrid .wordmark .mono{background:var(--gold-foil);background-size:250% 100%;background-position:var(--sx,42%) 0;}
 .fgrid .wordmark b{animation:none}
 .fgrid .wordmark small{color:var(--gold-lt);opacity:.85}
@@ -523,10 +520,9 @@ footer{background:var(--navy);color:var(--gold-lt)}
 }
 @media (max-width:640px){
   .announce .long{display:none}.announce .short{display:inline}
-  header.site{--hh:104px}
+  header.site{--hh:116px}
   header.site.compact .hbar{height:60px}
-  header.site.compact .lockup{transform:scale(.52)}
-  .wordmark{--lh:74px}
+  .wordmark{--wh:17px}
   .hero-top .ctas .btn{flex:1 1 100%}
   .stage.wide{display:none}.stage.tall{display:block}
   .shelf-hint{display:block}
@@ -610,7 +606,7 @@ footer{background:var(--navy);color:var(--gold-lt)}
         <a href="#maison" data-nav="maison">The maison</a>
       </nav>
     </div>
-    <a href="#" class="wordmark" aria-label="ARS SHI Parfums, home"><span class="lockup" aria-hidden="true"></span></a>
+    <a href="#" class="wordmark" aria-label="ARS SHI Parfums, home"><span class="mono" aria-hidden="true"></span><span class="wm" aria-hidden="true"></span></a>
     <div class="hright">
       <a href="#finder" class="label finder-link">Scent finder</a>
       <button class="iconbtn" id="searchBtn" aria-label="Search" aria-controls="search" aria-expanded="false"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4"><circle cx="10.5" cy="10.5" r="6.5"/><path d="M15.5 15.5 21 21"/></svg></button>
@@ -755,10 +751,10 @@ footer{background:var(--navy);color:var(--gold-lt)}
     <span class="label eyebrow">A small lexicon</span>
     <h2 style="font-size:clamp(28px,3.6vw,48px)">Why French names?</h2>
     <dl>
-      <div><dt>Femme</dt><dd>woman</dd></div>
-      <div><dt>Homme</dt><dd>man</dd></div>
-      <div><dt>Créer</dt><dd>to create</dd></div>
-      <div><dt>Raviver</dt><dd>to revive, to rekindle</dd></div>
+      <div><dt>FEMME</dt><dd>woman</dd></div>
+      <div><dt>HOMME</dt><dd>man</dd></div>
+      <div><dt>CRÉER</dt><dd>to create</dd></div>
+      <div><dt>RAVIVER</dt><dd>to revive, to rekindle</dd></div>
     </dl>
   </div>
 </section>
@@ -794,7 +790,7 @@ footer{background:var(--navy);color:var(--gold-lt)}
 
 <footer id="siteFooter">
   <div class="wrap fgrid">
-    <div><span class="wordmark" role="img" aria-label="ARS SHI Eau de Parfum"><span class="logo-full"></span></span><p>Eau de Parfum in textured, foil-pressed boxes. Composed with care, priced for every day.</p>
+    <div><span class="wordmark" role="img" aria-label="ARS SHI"><span class="mono"></span><span class="wm"></span></span><p>Eau de Parfum in textured, foil-pressed boxes. Composed with care, priced for every day.</p>
       <div class="trust" style="margin-top:20px"><span class="lock">Secure checkout</span><span>UPI</span><span>Cards</span><span>COD</span></div></div>
     <div><h2 class="h6">Shop</h2><ul><li><a href="#shop">All fragrances</a></li><li><a href="#shop-her">For her</a></li><li><a href="#shop-him">For him</a></li><li><a href="#finder">Scent finder</a></li></ul></div>
     <div><h2 class="h6">Maison</h2><ul><li><a href="#maison">Our story</a></li><li><a href="#contact">Contact</a></li></ul></div>
@@ -811,7 +807,7 @@ footer{background:var(--navy);color:var(--gold-lt)}
   <div class="dfoot" id="dfoot"></div>
 </aside>
 <aside class="drawer left" id="menu" aria-label="Menu" role="dialog" aria-modal="true" inert>
-  <div class="dhead"><span class="wordmark" style="--lh:46px;--foil-img:var(--royal-foil)" role="img" aria-label="ARS SHI"><span class="lockup"></span></span><button class="close" data-close>Close</button></div>
+  <div class="dhead"><span class="wordmark" style="--wh:14px;--foil-img:var(--royal-foil);flex-direction:row;gap:10px" role="img" aria-label="ARS SHI"><span class="mono" style="margin:0;height:46px"></span><span class="wm"></span></span><button class="close" data-close>Close</button></div>
   <nav class="mnav"><a href="#shop">Shop all</a><a href="#shop-her">For her</a><a href="#shop-him">For him</a><a href="#finder">Scent finder</a><a href="#maison">The maison</a>
     <div style="height:16px"></div><a class="small" href="#shipping">Shipping</a><a class="small" href="#returns">Returns</a><a class="small" href="#contact">Contact</a></nav>
 </aside>
@@ -837,20 +833,20 @@ footer{background:var(--navy);color:var(--gold-lt)}
 const SHOP = window.SHOP || null;
 const FREE_SHIP = 1499;
 const P = [
-  {id:"raviver", name:"Raviver", color:"#1E2D57", ch:"#1B2850", fg:"light", liquid:"#7C93C4", ink:"#1E2D57", foil:"gold", who:"unisex", fam:"Musky · Woody", tags:["woody","fresh","warm"], when:["all","day"], meaning:"to revive", price:1499, size:"50 ml",
+  {id:"raviver", name:"RAVIVER", color:"#1E2D57", ch:"#1B2850", fg:"light", liquid:"#7C93C4", ink:"#1E2D57", foil:"gold", who:"unisex", fam:"Musky · Woody", tags:["woody","fresh","warm"], when:["all","day"], meaning:"to revive", price:1499, size:"50 ml",
    desc:"A second wind in a bottle. Neroli and black tea lift the spirits; orris and pink pepper add texture; suede and white musk keep it close.",
    top:["Neroli","Black tea"], heart:["Orris","Pink peppercorn"], base:["Suede","White musk"], line:"For Sunday mornings, long flights and fresh starts."},
-  {id:"creer", name:"Créer", color:"#FFBF00", ch:"#E8AE0C", fg:"dark", liquid:"#E9A21B", ink:"#8A5A00", foil:"gold", who:"unisex", fam:"Amber · Spicy", tags:["warm","woody"], when:["evening"], meaning:"to create", price:1499, size:"50 ml",
+  {id:"creer", name:"CRÉER", color:"#FFBF00", ch:"#E8AE0C", fg:"dark", liquid:"#E9A21B", ink:"#8A5A00", foil:"gold", who:"unisex", fam:"Amber · Spicy", tags:["warm","woody"], when:["evening"], meaning:"to create", price:1499, size:"50 ml",
    desc:"Warmth you can almost see. Saffron and mandarin glow over a heart of supple leather and tobacco leaf, sinking into amber and tonka bean.",
    top:["Saffron","Mandarin"], heart:["Leather accord","Tobacco leaf"], base:["Amber","Tonka bean"], line:"For cold evenings, candlelight and slow music."},
-  {id:"femme", name:"Femme", color:"#F4C2C8", ch:"#EBB7BE", fg:"dark", liquid:"#F0A3B3", ink:"#B04A64", foil:"gold", who:"her", fam:"Floral · Gourmand", tags:["floral","warm"], when:["evening","all"], meaning:"woman", price:1499, size:"50 ml",
+  {id:"femme", name:"FEMME", color:"#F4C2C8", ch:"#EBB7BE", fg:"dark", liquid:"#F0A3B3", ink:"#B04A64", foil:"gold", who:"her", fam:"Floral · Gourmand", tags:["floral","warm"], when:["evening","all"], meaning:"woman", price:1499, size:"50 ml",
    desc:"Soft, luminous and close to the skin. Bergamot and pear melt into jasmine sambac and iris, then into Madagascar vanilla and sandalwood.",
    top:["Bergamot","Pear"], heart:["Jasmine sambac","Iris"], base:["Madagascar vanilla","Sandalwood"], line:"For dinners that run late and conversations that run longer."},
-  {id:"homme", name:"Homme", color:"#141418", ch:"#16161A", fg:"light", liquid:"#8E9AAB", ink:"#141418", foil:"gold", who:"him", fam:"Fresh · Aromatic", tags:["fresh"], when:["day","all"], meaning:"man", price:1499, size:"50 ml",
+  {id:"homme", name:"HOMME", color:"#141418", ch:"#16161A", fg:"light", liquid:"#8E9AAB", ink:"#141418", foil:"gold", who:"him", fam:"Fresh · Aromatic", tags:["fresh"], when:["day","all"], meaning:"man", price:1499, size:"50 ml",
    desc:"Clean lines and a cool head. Grapefruit and sea salt over lavender and geranium, finished with an ambergris accord and dry vetiver.",
    top:["Grapefruit","Sea salt"], heart:["Lavender","Geranium"], base:["Ambergris accord","Vetiver"], line:"For the boardroom, the commute and the late drive home."},
   {id:"gift-set", name:"Luxury Gift Set", set:true, color:"#F7F7F4", ch:"#22398C", fg:"light", liquid:"#2747A6", ink:"#2747A6", foil:"royal", who:"gift", fam:"Gift set · 4 × 20 ml", tags:["gift"], when:["all"], meaning:"the whole collection", price:1999, size:"4 × 20 ml",
-   desc:"All four ARS SHI Eaux de Parfum in one white box: Raviver, Créer, Femme and Homme, 20 ml each. Find your signature, or give someone the whole collection.",
+   desc:"All four ARS SHI Eaux de Parfum in one white box: RAVIVER, CRÉER, FEMME and HOMME, 20 ml each. Find your signature, or give someone the whole collection.",
    top:[], heart:[], base:[], line:"For gifting, and for finding your signature."}
 ];
 const SINGLES = P.filter(p=>!p.set);
@@ -1104,7 +1100,7 @@ function sbox(id,i,style){ const p=byId[id]; return `<a class="sbox" href="#${id
   const lefts=[6,37.8,69.6,21.9,53.7];
   $("#stageTall").insertAdjacentHTML("beforeend", shelfOrder.map((id,i)=>sbox(id,i,`left:${lefts[i]}%;bottom:${i<3?57.6:8.3}%`)).join(""));
 })();
-const mq = ["Raviver","Créer","Femme","Homme","Eau de Parfum · 50 ml · ₹1,499","Luxury Gift Set · 4 × 20 ml · ₹1,999","Pressed in gold foil","Free shipping over ₹1,499"];
+const mq = ["RAVIVER","CRÉER","FEMME","HOMME","Eau de Parfum · 50 ml · ₹1,499","Luxury Gift Set · 4 × 20 ml · ₹1,999","Pressed in gold foil","Free shipping over ₹1,499"];
 $("#marquee").innerHTML = [...mq,...mq].map(s=>`<span>${s}</span>`).join("");
 $("#chapters").innerHTML = P.map((p,i)=>`
   <article class="chapter wrap ${p.fg==="dark"?"on-light":""}" data-color="${p.ch}" data-fg="${p.fg}">
@@ -1123,7 +1119,7 @@ const chObs=new IntersectionObserver(es=>es.forEach(en=>{ if(en.isIntersecting){
 $$(".chapter").forEach(c=>chObs.observe(c));
 let ticking=false;
 if(!reduce) addEventListener("scroll",()=>{ if(ticking || isPhone() || !$("#v-home").classList.contains("on")) return; ticking=true; requestAnimationFrame(()=>{ ticking=false; const vh=innerHeight, w=[]; for(const el of $$(".ch-img")){ const r=el.getBoundingClientRect(); if(r.bottom<0||r.top>vh) continue; w.push([el,((r.top+r.height/2-vh/2)/vh*-32).toFixed(1)+"px"]); } for(const [el,v] of w) el.style.setProperty("--py",v); }); },{passive:true});
-$("#maisonDuo").innerHTML = pic("orig-raviver","Raviver box","(max-width:640px) 50vw, 25vw") + pic("orig-gift-set","Luxury Gift Set box","(max-width:640px) 50vw, 25vw");
+$("#maisonDuo").innerHTML = pic("orig-raviver","RAVIVER box","(max-width:640px) 50vw, 25vw") + pic("orig-gift-set","Luxury Gift Set box","(max-width:640px) 50vw, 25vw");
 
 let homeSel="creer";
 function renderHomeAnat(){
@@ -1159,12 +1155,12 @@ const ADV_SUGG = ["Warm but not too sweet","Fresh for the office","What's in the
 function advisorReply(q){
   const t=q.toLowerCase();
   // compare the two editions people ask about
-  if(/(differ|compare|vs|versus|which)/.test(t) && /(femme|homme)/.test(t) && /(femme|homme).*(femme|homme)/.test(t)) return {text:`Femme is soft and floral: ${notesText(byId.femme.heart)} on ${notesText(byId.femme.base)}. Homme is fresh and aromatic: ${notesText(byId.homme.top)} over ${notesText(byId.homme.heart)}. Many people wear either; choose by mood rather than label.`, picks:["femme","homme"]};
+  if(/(differ|compare|vs|versus|which)/.test(t) && /(femme|homme)/.test(t) && /(femme|homme).*(femme|homme)/.test(t)) return {text:`FEMME is soft and floral: ${notesText(byId.femme.heart)} on ${notesText(byId.femme.base)}. HOMME is fresh and aromatic: ${notesText(byId.homme.top)} over ${notesText(byId.homme.heart)}. Many people wear either; choose by mood rather than label.`, picks:["femme","homme"]};
   for(const [re,ans] of FAQ) if(re.test(t)) return {text:ans, picks:[]};
   // named product
   const plain = x => x.toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g,"");
   const named=P.find(p=> p.set ? /gift ?set|coffret|all four|sampler|20 ?ml/.test(t) : plain(t).includes(plain(p.name)));
-  if(named && !/(similar|like|instead|other)/.test(t)) return {text: named.set ? `The Luxury Gift Set holds all four of our Eaux de Parfum, Raviver, Créer, Femme and Homme, in 20 ml bottles, inside a white box lettered in royal blue. ₹1,999.` : `${named.name} is ${named.fam.toLowerCase()}. ${named.desc}`, picks:[named.id]};
+  if(named && !/(similar|like|instead|other)/.test(t)) return {text: named.set ? `The Luxury Gift Set holds all four of our Eaux de Parfum, RAVIVER, CRÉER, FEMME and HOMME, in 20 ml bottles, inside a white box lettered in royal blue. ₹1,999.` : `${named.name} is ${named.fam.toLowerCase()}. ${named.desc}`, picks:[named.id]};
   // preference scoring
   const want={}; let signal=0;
   LEX.forEach(([re,w])=>{ if(re.test(t)) { Object.entries(w).forEach(([k,v])=>want[k]=(want[k]||0)+v); signal++; } });
@@ -1396,7 +1392,7 @@ function route(){
 }
 /* Foil sheen: as foil lettering moves up the screen, its highlight band slides across it, like
    light catching stamped foil. The header logo, which stays put, shimmers with scroll distance. */
-const FOIL_SEL='.lockup,.logo-full,h1,h2,h3,.eyebrow,.hero-meta strong,.price,.buy .pr strong,.dfoot .tot strong,.line .lp,.nav a,.mnav a,.ch-body .ed,.announce span,.fgrid .h6,.lexicon dt,.act .notes,.result h4,.msg .pick-card b,.card h3 a,.sres span,.hero-top h1 .ln>span';
+const FOIL_SEL='.mono,.wm,h1,h2,h3,.eyebrow,.hero-meta strong,.price,.buy .pr strong,.dfoot .tot strong,.line .lp,.nav a,.mnav a,.ch-body .ed,.announce span,.fgrid .h6,.lexicon dt,.act .notes,.result h4,.msg .pick-card b,.card h3 a,.sres span,.hero-top h1 .ln>span';
 let foilEls=[];
 function foilScan(){ foilEls=$$(FOIL_SEL); }
 let foilTick=false;
