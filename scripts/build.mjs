@@ -72,7 +72,7 @@ const hash = createHash("sha1");
 for (const dir of ["site/img/w", "site/fonts"]) for (const f of readdirSync(dir).sort()) hash.update(f).update(readFileSync(`${dir}/${f}`));
 const ver = hash.digest("hex").slice(0, 8);
 const html = ("<!doctype html>\n" + w.document.documentElement.outerHTML + "\n")
-  .replace(/\.(webp|woff2)(?=[\s"')])/g, `.$1?v=${ver}`);
+  .replace(/\.(webp|woff2|svg)(?=[\s"')])/g, `.$1?v=${ver}`);
 w.close();
 
 const count = (re) => (html.match(re) || []).length;
