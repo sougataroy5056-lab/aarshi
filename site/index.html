@@ -100,11 +100,11 @@ header.site.compact .mono{height:0;margin-bottom:0;opacity:0}
 /* The logo lockup copies the box: "ARS SHI" at .08em tracking is 6.4× its cap height wide; the monogram is
    58% of that width tall, 53% wide, and sits 7.7% of that width above the capitals. Everything scales from --f. */
 /* Logo = the brand artwork traced to vector, in two pieces so the monogram can tuck away on scroll.
-   Proportions from the artwork: monogram is 3.88x the wordmark's height, with a gap of 0.55x. Both are
+   The lockup forms an equilateral triangle: monogram (3.01x the wordmark height) + gap (0.55x) + wordmark (1x) = 4.56x, i.e. 0.866 of the wordmark's 5.27x width, with the narrower monogram as the apex. Both are
    masks printed through the foil gradient, so they take royal-blue or gold foil and catch the sheen. */
 .wordmark{--wh:24px;display:flex;flex-direction:column;align-items:center;line-height:1}
 .mono,.wm{display:block;background:var(--foil-img) var(--sx,42%) 0/250% 100%}
-.mono{height:calc(var(--wh) * 3.88);aspect-ratio:.9496;margin-bottom:calc(var(--wh) * .55);
+.mono{height:calc(var(--wh) * 3.01);aspect-ratio:.9496;margin-bottom:calc(var(--wh) * .55);
   -webkit-mask:url(img/w/logo-mono-bold.svg) center/contain no-repeat;mask:url(img/w/logo-mono-bold.svg) center/contain no-repeat;
   transition:height .4s var(--ease),margin .4s var(--ease),opacity .3s var(--ease)}
 .wm{height:var(--wh);aspect-ratio:5.2704;
