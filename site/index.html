@@ -11,21 +11,21 @@
   --stone:#FFFFFF;      /* page ground */
   --paper:#EEF3FA;      /* pale blue surfaces */
   /* Rule from the brand owner: text on white is royal blue; text on any other background is gold. */
-  --ink:#10257A;        /* midnight royal blue: all text on white */
-  --muted:#2F4290;      /* secondary text on white (7:1) */
+  --ink:#0E1E5C;        /* lapis night blue: all text on white */
+  --muted:#2C3D80;      /* secondary text on white (7:1) */
   --navy:#0E1B36;       /* dark surfaces: announcement bar, buttons, scent finder, footer */
   --gold-lt:#D9BC78;    /* gold text on dark and royal-blue surfaces (6:1 or better) */
   --gold-deep:#5A3E0E;  /* gold text on light coloured surfaces such as amber and pink (5:1 or better) */
   --gold:#8A6A35;       /* antique gold, ornaments only */
-  /* midnight royal blue with a silver-blue flash */
-  --royal-foil:linear-gradient(104deg,#0A1A55 0%,#10257A 30%,#1A3594 40%,#B7C3E0 45%,#1A3594 50%,#10257A 64%,#0A1A55 100%);
+  /* lapis night: deep metallic blue with lapis bands and a pale flash */
+  --royal-foil:linear-gradient(104deg,#07103A 0%,#0E1E5C 14%,#2A43A0 22%,#0B1A52 32%,#0E1E5C 40%,#B4C2EA 45%,#0E1E5C 50%,#0A184C 62%,#24399A 76%,#07103A 100%);
   /* top bar and footer: the same royal blue as a satin surface, lettering stays gold */
-  --royal-satin:linear-gradient(104deg,#0A1A55 0%,#10257A 40%,#152D88 50%,#10257A 60%,#0A1A55 100%);
+  --royal-satin:linear-gradient(104deg,#07103A 0%,#0E1E5C 40%,#13276E 50%,#0E1E5C 60%,#07103A 100%);
   --gold-foil:linear-gradient(104deg,#8A6526 0%,#C29A4E 16%,#EBD08E 30%,#FFF3CF 39%,#D6B064 48%,#9A7432 64%,#E2C580 83%,#8A6526 100%);
   --gold-foil-deep:linear-gradient(104deg,#3A2604 0%,#5A3E0E 20%,#8A6524 36%,#B08A3E 42%,#6E4D14 52%,#3E2A06 70%,#5A3E0E 100%);
   --foil-img:var(--royal-foil);
   --gold-line:#C9AE7C;  /* champagne hairlines and ornaments */
-  --line:rgba(16,37,122,.15);
+  --line:rgba(14,30,92,.15);
   --foil:#2A55C4;       /* sapphire accent */
   --foil-hi:#A9C2F5;
   --on-dark:#F4F7FC;
@@ -82,7 +82,7 @@ p{margin:0}
 }
 
 /* header */
-.announce{background:#10257A var(--royal-satin);color:var(--gold-lt);text-align:center;padding:9px 16px;font-size:14px;letter-spacing:.16em;text-transform:uppercase;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.announce{background:#0E1E5C var(--royal-satin);color:var(--gold-lt);text-align:center;padding:9px 16px;font-size:14px;letter-spacing:.16em;text-transform:uppercase;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 .announce .short{display:none}
 /* The header shell keeps one height at all times, so condensing it never shifts the page (which used to
    make the browser re-adjust the scroll position, re-expand the header and flicker in a loop). Only the
@@ -432,7 +432,7 @@ details .dbody{padding-bottom:18px;color:var(--muted);font-size:15.5px;max-width
 .news input::placeholder{color:var(--muted)}
 .news button{min-height:52px;padding-left:16px;font-size:14px;font-weight:600;letter-spacing:.2em;text-transform:uppercase}
 .news .note{grid-column:2;font-size:14px;color:var(--muted);margin-top:-12px}
-footer{background:#10257A var(--royal-satin);color:var(--gold-lt)}
+footer{background:#0E1E5C var(--royal-satin);color:var(--gold-lt)}
 .fgrid{display:grid;grid-template-columns:1.4fr repeat(3,minmax(0,1fr));gap:36px;padding-block:64px 40px}
 .fgrid .wordmark{display:inline-flex;align-items:center}
 .fgrid .wordmark{--wh:30px}
