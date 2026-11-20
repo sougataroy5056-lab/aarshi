@@ -160,5 +160,11 @@ walk(OUT);
 writeFileSync("public/theme/ars-shi-theme.zip", zipSync(files, { level: 6 }));
 // Theme files also published one by one, so an existing unpublished theme can be updated in place
 // (themeFilesUpsert with a URL body) when the store has reached Shopify's 20-theme limit.
-cpSync(OUT, "public/theme/files", { recursive: true, filter: f => !/\.(webp|woff2)$/.test(f) });
+// Each file gets a .txt suffix so it is served as text/plain, which Shopify accepts as a URL body.
+for (const f of readdirSync(OUT, { recursive: true, withFileTypes: true })) {
+  if (!f.isFile() || /\.(webp|woff2)$/.test(f.name)) continue;
+  const rel = `${f.parentPath || f.path}/${f.name}`.slice(OUT.length + 1);
+  mkdirSync(`public/theme/files/${rel}`.replace(/\/[^/]+$/, ""), { recursive: true });
+  cpSync(`${OUT}/${rel}`, `public/theme/files/${rel}.txt`);
+}
 console.log(`Theme: ${Object.keys(T).length} files + ${readdirSync(`${OUT}/assets`).length} assets → public/theme/ars-shi-theme.zip`);
