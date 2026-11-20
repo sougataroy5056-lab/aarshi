@@ -70,10 +70,10 @@ p{margin:0}
    Display text is printed through a metallic gradient (background-clip:text). The gradient
    switches with the surface, so the brand rule holds: royal blue on white, gold elsewhere. */
 .announce,.finder,footer,.chapter,.slide .cap,.toast{--foil-img:var(--gold-foil)}
-/* one gold everywhere (owner's rule): on the amber and pink chapters the text sits on a Lapis night card,
-   so the same gold reads clearly while the box colour still frames it */
+/* one gold everywhere (owner's rule): amber and pink chapters keep their single solid box colour and use the same
+   gold as the dark chapters; a soft shadow under the letters helps the light gold separate from the light colour */
 .chapter.on-light{--foil-img:var(--gold-foil)}
-.chapter.on-light .ch-body{background:#0E1E5C var(--royal-satin);padding:clamp(24px,3.4vw,48px);box-shadow:0 24px 50px -24px rgba(7,16,58,.55);outline:1px solid rgba(201,174,124,.45);outline-offset:-10px}
+.chapter.on-light .ch-body *{text-shadow:0 1px 1px rgba(70,40,0,.55),0 0 12px rgba(70,40,0,.28)}
 @supports ((-webkit-background-clip:text) or (background-clip:text)){
   h1,h2,h3,.eyebrow,.hero-meta strong,.price,.buy .pr strong,.dfoot .tot strong,.line .lp,.nav a,.mnav a,.ch-body .ed,
   .announce span,.fgrid .h6,.lexicon dt,.act .notes,.result h4,.msg .pick-card b,.card h3 a,.sres span{
