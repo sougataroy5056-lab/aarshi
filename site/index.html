@@ -70,10 +70,9 @@ p{margin:0}
    Display text is printed through a metallic gradient (background-clip:text). The gradient
    switches with the surface, so the brand rule holds: royal blue on white, gold elsewhere. */
 .announce,.finder,footer,.chapter,.slide .cap,.toast{--foil-img:var(--gold-foil)}
-/* one gold everywhere (owner's rule): amber and pink chapters keep their single solid box colour and use the same
-   gold as the dark chapters; a soft shadow under the letters helps the light gold separate from the light colour */
-.chapter.on-light{--foil-img:var(--gold-foil)}
-.chapter.on-light .ch-body *{text-shadow:0 1px 1px rgba(70,40,0,.55),0 0 12px rgba(70,40,0,.28)}
+/* one gold everywhere, except the amber (CRÉER) and pink (FEMME) chapters, which keep the dark bronze-gold
+   so their text stays easy to read on the light box colour (owner's choice) */
+.chapter.on-light{--foil-img:var(--gold-foil-deep)}
 @supports ((-webkit-background-clip:text) or (background-clip:text)){
   h1,h2,h3,.eyebrow,.hero-meta strong,.price,.buy .pr strong,.dfoot .tot strong,.line .lp,.nav a,.mnav a,.ch-body .ed,
   .announce span,.fgrid .h6,.lexicon dt,.act .notes,.result h4,.msg .pick-card b,.card h3 a,.sres span{
@@ -1120,8 +1119,8 @@ $("#chapters").innerHTML = P.map((p,i)=>`
       <div class="ch-buy"><span class="price">${inr(p.price)}</span><button class="btn ${p.fg==="dark"?"":"light"}" data-add="${p.id}">Add to bag</button><a class="link" href="#${p.id}">Discover</a></div>
     </div>
   </article>`).join("");
-const chWrap=$("#chapters"); chWrap.style.setProperty("--ch",P[0].ch); chWrap.style.setProperty("--chfg","var(--gold-lt)");
-const chObs=new IntersectionObserver(es=>es.forEach(en=>{ if(en.isIntersecting){ chWrap.style.setProperty("--ch",en.target.dataset.color); chWrap.style.setProperty("--chfg","var(--gold-lt)"); } }),{rootMargin:"-45% 0px -45% 0px"});
+const chWrap=$("#chapters"); chWrap.style.setProperty("--ch",P[0].ch); chWrap.style.setProperty("--chfg",P[0].fg==="dark"?"var(--gold-deep)":"var(--gold-lt)");
+const chObs=new IntersectionObserver(es=>es.forEach(en=>{ if(en.isIntersecting){ chWrap.style.setProperty("--ch",en.target.dataset.color); chWrap.style.setProperty("--chfg",en.target.dataset.fg==="dark"?"var(--gold-deep)":"var(--gold-lt)"); } }),{rootMargin:"-45% 0px -45% 0px"});
 $$(".chapter").forEach(c=>chObs.observe(c));
 let ticking=false;
 if(!reduce) addEventListener("scroll",()=>{ if(ticking || isPhone() || !$("#v-home").classList.contains("on")) return; ticking=true; requestAnimationFrame(()=>{ ticking=false; const vh=innerHeight, w=[]; for(const el of $$(".ch-img")){ const r=el.getBoundingClientRect(); if(r.bottom<0||r.top>vh) continue; w.push([el,((r.top+r.height/2-vh/2)/vh*-32).toFixed(1)+"px"]); } for(const [el,v] of w) el.style.setProperty("--py",v); }); },{passive:true});
